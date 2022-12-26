@@ -107,6 +107,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
       const border_radius = trunc(group.borderRadius);
 
       if (border_radius > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (ctx.roundRect) {
           ctx.roundRect(0, 0, width, height, border_radius);
         } else {
@@ -123,6 +124,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function drawGroupAfterChildren(group: SpriteGroup, interp: number) {
   if (
     group._layers.length &&

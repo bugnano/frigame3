@@ -22,6 +22,7 @@ export function pick<T extends object, U extends keyof T>(
   for (const key of keys) {
     const val = obj[key];
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (val !== undefined) {
       result[key] = val;
     }

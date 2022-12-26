@@ -1,9 +1,11 @@
 import { Sprite } from "../Sprite.js";
 import { playgroundMap } from "./renderPlayground.js";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function initSprite(sprite: Sprite) {
   // no-op
 }
+
 export function drawSprite(sprite: Sprite, interp: number) {
   const playground = sprite.playground!;
 

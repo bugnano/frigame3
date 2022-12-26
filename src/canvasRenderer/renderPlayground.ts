@@ -79,7 +79,7 @@ export function initPlayground(
 
 export function drawPlaygroundBeforeChildren(
   playground: Playground,
-  interp: number
+  interp: number // eslint-disable-line @typescript-eslint/no-unused-vars
 ) {
   const playgroundData = playgroundMap.get(playground)!;
 
@@ -88,8 +88,8 @@ export function drawPlaygroundBeforeChildren(
 }
 
 export function drawPlaygroundAfterChildren(
-  playground: Playground,
-  interp: number
+  playground: Playground, // eslint-disable-line @typescript-eslint/no-unused-vars
+  interp: number // eslint-disable-line @typescript-eslint/no-unused-vars
 ) {
   // no-op
 }

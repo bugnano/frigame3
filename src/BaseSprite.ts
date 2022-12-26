@@ -455,6 +455,7 @@ export class BaseSprite extends Rect {
     // no-op
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _draw(interp: number) {
     // no-op
   }
