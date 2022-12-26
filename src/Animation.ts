@@ -32,23 +32,30 @@ export interface FrameOptions {
 }
 
 // TODO: HTMLImageElement is not available on Nodejs
-const images: Record<string, { img: HTMLImageElement; refCount: number }> = {};
+const images = new Map<
+  string,
+  {
+    img: HTMLImageElement;
+    refCount: number;
+  }
+>();
 
 function getImage(imageURL: string) {
   let img: HTMLImageElement;
 
-  if (images[imageURL]) {
-    img = images[imageURL].img;
-    images[imageURL].refCount += 1;
+  const image = images.get(imageURL);
+  if (image) {
+    img = image.img;
+    image.refCount += 1;
   } else {
     // TODO: Use "image-size" when HTMLImageElement is not available
     img = new Image();
     img.src = imageURL;
 
-    images[imageURL] = {
+    images.set(imageURL, {
       img: img,
       refCount: 1,
-    };
+    });
   }
 
   return img;
@@ -56,9 +63,12 @@ function getImage(imageURL: string) {
 
 const imagesRegistry = new FinalizationRegistry((imageURLs: string[]) => {
   for (const imageURL of imageURLs) {
-    images[imageURL].refCount -= 1;
-    if (images[imageURL].refCount <= 0) {
-      delete images[imageURL];
+    const image = images.get(imageURL);
+    if (image) {
+      image.refCount -= 1;
+      if (image.refCount <= 0) {
+        images.delete(imageURL);
+      }
     }
   }
 });

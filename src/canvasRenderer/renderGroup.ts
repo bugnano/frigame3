@@ -47,6 +47,23 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
 
     ctx.save();
 
+    const groupData = spriteGroupMap.get(group)!;
+
+    groupData.oldAlpha = playgroundData.globalAlpha;
+    if (opacity !== 1) {
+      playgroundData.globalAlpha *= opacity;
+      ctx.globalAlpha = playgroundData.globalAlpha;
+    }
+
+    const blendMode = group.blendMode;
+    if (blendMode !== "normal") {
+      if (blendMode === "add") {
+        ctx.globalCompositeOperation = "lighter";
+      } else {
+        ctx.globalCompositeOperation = blendMode;
+      }
+    }
+
     const angle = group.angle;
 
     if (angle || scaleh !== 1 || scalev !== 1) {
@@ -79,23 +96,6 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
       ctx.translate(-transformOriginx, -transformOriginy);
     } else {
       ctx.translate(left, top);
-    }
-
-    const groupData = spriteGroupMap.get(group)!;
-
-    groupData.oldAlpha = playgroundData.globalAlpha;
-    if (opacity !== 1) {
-      playgroundData.globalAlpha *= opacity;
-      ctx.globalAlpha = playgroundData.globalAlpha;
-    }
-
-    const blendMode = group.blendMode;
-    if (blendMode !== "normal") {
-      if (blendMode === "add") {
-        ctx.globalCompositeOperation = "lighter";
-      } else {
-        ctx.globalCompositeOperation = blendMode;
-      }
     }
 
     if (group.crop) {
