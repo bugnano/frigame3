@@ -1,5 +1,5 @@
 import { SpriteGroup } from "./SpriteGroup.js";
-import type { Renderer } from "./Renderer.js";
+import type { Renderer, RendererElement } from "./Renderer.js";
 import { REFRESH_RATE } from "./defines.js";
 
 export class Playground {
@@ -9,14 +9,18 @@ export class Playground {
   running = false;
   frameCounter = 0;
 
-  renderer: Renderer;
   scenegraph: SpriteGroup;
 
   // Implementation details
+  _renderer: Renderer;
   _nextId = 1; // Start from 1 to guarantee that callbackId is always truthy
   _callbacks = new Map<
     number,
-    { callback: () => void; rate: number; idleCounter: number }
+    {
+      callback: () => void;
+      rate: number;
+      idleCounter: number;
+    }
   >();
   _idDraw: number | null = null;
   _accumulator = 0;
@@ -40,11 +44,8 @@ export class Playground {
     return this._height / 2;
   }
 
-  constructor(
-    renderer: Renderer,
-    dom?: string | HTMLElement | HTMLCanvasElement
-  ) {
-    this.renderer = renderer;
+  constructor(renderer: Renderer, dom?: string | RendererElement) {
+    this._renderer = renderer;
 
     const [width, height] = renderer.initPlayground(this, dom);
 
@@ -182,7 +183,11 @@ export class Playground {
       this._idDraw = null;
     }
 
-    this.scenegraph._draw(accumulator / dt);
+    const interp = accumulator / dt;
+
+    this._renderer.drawPlaygroundBeforeChildren(this, interp);
+    this.scenegraph._draw(interp);
+    this._renderer.drawPlaygroundAfterChildren(this, interp);
   };
 
   _insidePlayground(left: number, top: number, width: number, height: number) {

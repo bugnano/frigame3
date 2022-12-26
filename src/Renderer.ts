@@ -3,13 +3,23 @@ import type { SpriteGroup } from "./SpriteGroup.js";
 import type { Sprite } from "./Sprite.js";
 import type { Rectangle } from "./Rectangle.js";
 
+export interface RendererElement {
+  offsetWidth: number;
+  offsetHeight: number;
+}
+
 export interface Renderer {
   initPlayground(
     playground: Playground,
-    dom?: string | HTMLElement | HTMLCanvasElement
+    dom?: string | RendererElement
   ): [number, number];
-  drawPlayground(playground: Playground): void;
-  drawGroup(group: SpriteGroup): void;
-  drawSprite(sprite: Sprite): void;
-  drawRectangle(rectangle: Rectangle): void;
+  drawPlaygroundBeforeChildren(playground: Playground, interp: number): void;
+  drawPlaygroundAfterChildren(playground: Playground, interp: number): void;
+  initGroup(group: SpriteGroup): void;
+  drawGroupBeforeChildren(group: SpriteGroup, interp: number): void;
+  drawGroupAfterChildren(group: SpriteGroup, interp: number): void;
+  initSprite(sprite: Sprite): void;
+  drawSprite(sprite: Sprite, interp: number): void;
+  initRectangle(rectangle: Rectangle): void;
+  drawRectangle(rectangle: Rectangle, interp: number): void;
 }

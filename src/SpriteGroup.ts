@@ -1,5 +1,5 @@
 import { BaseSprite } from "./BaseSprite.js";
-import type { Playground } from "./Playground.js";
+import { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick } from "./utils.js";
 
@@ -52,6 +52,8 @@ export class SpriteGroup extends BaseSprite {
     this._checkUpdate();
 
     this.teleport();
+
+    playground._renderer.initGroup(this);
   }
 
   // Public functions
@@ -149,9 +151,15 @@ export class SpriteGroup extends BaseSprite {
       playground._absLeft += left;
       playground._absTop += top;
 
+      const renderer = playground._renderer;
+
+      renderer.drawGroupBeforeChildren(this, interp);
+
       for (const sprite of this._layers) {
         sprite._draw(interp);
       }
+
+      renderer.drawGroupAfterChildren(this, interp);
 
       playground._absLeft = absLeft;
       playground._absTop = absTop;

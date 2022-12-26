@@ -1,7 +1,7 @@
 import { BaseSprite } from "./BaseSprite.js";
 import { SpriteGroup } from "./SpriteGroup.js";
 import { Gradient } from "./Gradient.js";
-import type { Playground } from "./Playground.js";
+import { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import type { Color } from "./Gradient.js";
 import { pick } from "./utils.js";
@@ -82,6 +82,14 @@ export class Rectangle extends BaseSprite {
     }
 
     this.teleport();
+
+    playground._renderer.initRectangle(this);
+  }
+
+  // Implementation details
+
+  _draw(interp: number) {
+    this.playground?._renderer.drawRectangle(this, interp);
   }
 }
 

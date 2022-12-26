@@ -6,8 +6,8 @@ import type {
   RectSizeY,
   RectOptions,
 } from "./Rect.js";
-import type { Playground } from "./Playground.js";
-import type { SpriteGroup } from "./SpriteGroup.js";
+import { Playground } from "./Playground.js";
+import { SpriteGroup } from "./SpriteGroup.js";
 import { pick, clamp } from "./utils.js";
 
 // source-over, lighter, multiply, screen
@@ -50,7 +50,7 @@ export class BaseSprite extends Rect {
   _fliph = 1;
   _flipv = 1;
 
-  _alpha = 1;
+  _opacity = 1;
   hidden = false;
 
   _scaleh = 1;
@@ -162,11 +162,11 @@ export class BaseSprite extends Rect {
   }
 
   get opacity() {
-    return this._alpha;
+    return this._opacity;
   }
 
   set opacity(value: number) {
-    this._alpha = clamp(value, 0, 1) || 0;
+    this._opacity = clamp(value, 0, 1) || 0;
   }
 
   set left(value: number) {

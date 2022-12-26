@@ -1,8 +1,8 @@
 import { BaseSprite } from "./BaseSprite.js";
 import { SpriteGroup } from "./SpriteGroup.js";
 import { Animation } from "./Animation.js";
+import { Playground } from "./Playground.js";
 import type { AnimationOptions } from "./Animation.js";
-import type { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick } from "./utils.js";
 
@@ -130,6 +130,8 @@ export class Sprite extends BaseSprite {
     }
 
     this.teleport();
+
+    playground._renderer.initSprite(this);
   }
 
   // Public functions
@@ -409,6 +411,10 @@ export class Sprite extends BaseSprite {
         callback?.();
       }
     }
+  }
+
+  _draw(interp: number) {
+    this.playground?._renderer.drawSprite(this, interp);
   }
 }
 
