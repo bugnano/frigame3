@@ -1,15 +1,16 @@
 {
-  "name": "frigame_ts",
-  "version": "1.0.0",
-  "description": "",
+  "name": "frigame3",
+  "version": "3.0.0",
+  "description": "A 2D game development library",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "prettier --write src && tsc && eslint src",
+    "prepare": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Franco Bugnano",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
