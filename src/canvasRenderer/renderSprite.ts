@@ -147,14 +147,14 @@ export function drawSprite(sprite: Sprite, interp: number) {
         width,
         height
       );
-    }
 
-    if (blend_mode_changed) {
-      ctx.globalCompositeOperation = old_blend_mode;
-    }
+      if (blend_mode_changed) {
+        ctx.globalCompositeOperation = old_blend_mode;
+      }
 
-    if (alpha_changed) {
-      ctx.globalAlpha = old_alpha;
+      if (alpha_changed) {
+        ctx.globalAlpha = old_alpha;
+      }
     }
   }
 }

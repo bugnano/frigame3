@@ -1,5 +1,6 @@
 import { SpriteGroup } from "../SpriteGroup.js";
 import { playgroundMap } from "./renderPlayground.js";
+import { roundRect } from "./renderRectangle.js";
 
 export const spriteGroupMap = new WeakMap<
   SpriteGroup,
@@ -144,48 +145,4 @@ export function drawGroupAfterChildren(group: SpriteGroup, interp: number) {
 
     playgroundData.globalAlpha = groupData.oldAlpha;
   }
-}
-
-export function roundRect(
-  ctx: CanvasRenderingContext2D,
-  left: number,
-  top: number,
-  width: number,
-  height: number,
-  border_radius: number
-) {
-  const pi = Math.PI;
-  const pi_2 = pi / 2;
-  const right = left + width;
-  const bottom = top + height;
-  const top_left_x = left + border_radius;
-  const top_right_x = right - border_radius;
-  const bottom_right_y = bottom - border_radius;
-  const bottom_left_x = left + border_radius;
-  const top_left_y = top + border_radius;
-
-  ctx.moveTo(top_left_x, top);
-
-  ctx.lineTo(top_right_x, top);
-
-  ctx.arc(top_right_x, top + border_radius, border_radius, -pi_2, 0, false);
-
-  ctx.lineTo(right, bottom_right_y);
-
-  ctx.arc(right - border_radius, bottom_right_y, border_radius, 0, pi_2, false);
-
-  ctx.lineTo(bottom_left_x, bottom);
-
-  ctx.arc(
-    bottom_left_x,
-    bottom - border_radius,
-    border_radius,
-    pi_2,
-    pi,
-    false
-  );
-
-  ctx.lineTo(left, top_left_y);
-
-  ctx.arc(top_left_x, top_left_y, border_radius, pi, -pi_2, false);
 }

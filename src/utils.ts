@@ -13,11 +13,8 @@ export function isEmptyObject<T extends object>(obj: T) {
 }
 
 // Return a new object with only the keys defined in the keys array parameter
-export function pick<T extends object, U extends keyof T>(
-  obj: T,
-  keys: U[]
-): Pick<T, U> {
-  const result = {} as Pick<T, U>;
+export function pick<T extends object, U extends keyof T>(obj: T, keys: U[]) {
+  const result: Partial<Pick<T, U>> = {};
 
   for (const key of keys) {
     const val = obj[key];
