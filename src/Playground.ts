@@ -1,6 +1,7 @@
 import { SpriteGroup } from "./SpriteGroup.js";
 import type { Renderer, RendererElement } from "./Renderer.js";
 import { REFRESH_RATE } from "./defines.js";
+import { framesFromMs } from "./utils.js";
 
 export class Playground {
   _width = 0;
@@ -62,7 +63,7 @@ export class Playground {
 
     this._callbacks.set(callbackId, {
       callback: callback,
-      rate: Math.max(rate ?? 1, 1) || 1,
+      rate: framesFromMs(rate ?? 0),
       idleCounter: 0,
     });
 

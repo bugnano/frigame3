@@ -19,7 +19,7 @@ export const playgroundMap = new WeakMap<
 export function initPlayground(
   playground: Playground,
   dom?: string | RendererElement
-) {
+): [number, number] {
   const parentDOM = (() => {
     if (typeof dom === "string") {
       // Allow the ID to start with the '#' symbol

@@ -169,44 +169,88 @@ export class BaseSprite extends Rect {
     this._opacity = clamp(value, 0, 1) || 0;
   }
 
+  get left() {
+    return super.left;
+  }
+
   set left(value: number) {
     this._move("left", value);
+  }
+
+  get right() {
+    return super.right;
   }
 
   set right(value: number) {
     this._move("right", value);
   }
 
+  get centerx() {
+    return super.centerx;
+  }
+
   set centerx(value: number) {
     this._move("centerx", value);
+  }
+
+  get top() {
+    return super.top;
   }
 
   set top(value: number) {
     this._move("top", value);
   }
 
+  get bottom() {
+    return super.bottom;
+  }
+
   set bottom(value: number) {
     this._move("bottom", value);
+  }
+
+  get centery() {
+    return super.centery;
   }
 
   set centery(value: number) {
     this._move("centery", value);
   }
 
+  get width() {
+    return super.width;
+  }
+
   set width(value: number) {
     this._resize("width", value);
+  }
+
+  get halfWidth() {
+    return super.halfWidth;
   }
 
   set halfWidth(value: number) {
     this._resize("halfWidth", value);
   }
 
+  get height() {
+    return super.height;
+  }
+
   set height(value: number) {
     this._resize("height", value);
   }
 
+  get halfHeight() {
+    return super.halfHeight;
+  }
+
   set halfHeight(value: number) {
     this._resize("halfHeight", value);
+  }
+
+  get radius() {
+    return super.radius;
   }
 
   set radius(value: number) {
@@ -218,7 +262,7 @@ export class BaseSprite extends Rect {
     parent?: SpriteGroup,
     options?: Partial<BaseSpriteOptions>
   ) {
-    super(options);
+    super();
 
     this._playground = new WeakRef(playground);
 
@@ -229,6 +273,17 @@ export class BaseSprite extends Rect {
     if (options) {
       for (const [prop, val] of Object.entries(
         pick(options, [
+          "left",
+          "right",
+          "centerx",
+          "top",
+          "bottom",
+          "centery",
+          "width",
+          "halfWidth",
+          "height",
+          "halfHeight",
+          "radius",
           "transformOrigin",
           "transformOriginx",
           "transformOriginy",
@@ -397,8 +452,8 @@ export class BaseSprite extends Rect {
   // Implementation details
 
   _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number) {
-    const left = this.left;
-    const top = this.top;
+    const left = this._left;
+    const top = this._top;
     const prevLeft = this._prevLeft;
     const prevTop = this._prevTop;
     const frameCounterLastMove = this._frameCounterLastMove;

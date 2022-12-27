@@ -4,7 +4,7 @@ import { Animation } from "./Animation.js";
 import { Playground } from "./Playground.js";
 import type { AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
-import { pick } from "./utils.js";
+import { pick, framesFromMs } from "./utils.js";
 
 export interface SpriteOptions extends AnimationOptions {
   animation: Animation | null;
@@ -18,10 +18,11 @@ export class Sprite extends BaseSprite {
   _animationIndex = 0;
   _callback: (() => void) | null = null;
   _paused = false;
-  rate = 1;
+  _rate = 1;
+  _reportedRate = 0;
   once = false;
   pingpong = false;
-  backwards = false;
+  _backwards = false;
 
   // Implementation details
   _idleCounter = 0;
@@ -43,19 +44,21 @@ export class Sprite extends BaseSprite {
       this._animation = value;
 
       if (value) {
-        this.rate = value.rate;
+        this._rate = value._rate;
+        this._reportedRate = value._reportedRate;
         this.once = value.once;
         this.pingpong = value.pingpong;
-        this.backwards = value.backwards;
+        this._backwards = value.backwards;
 
         // Force new width and height based on the animation frame size
         super.width = value.frameWidth;
         super.height = value.frameHeight;
       } else {
-        this.rate = 1;
+        this._rate = 1;
+        this._reportedRate = 0;
         this.once = false;
         this.pingpong = false;
-        this.backwards = false;
+        this._backwards = false;
 
         super.width = 0;
         super.height = 0;
@@ -105,6 +108,26 @@ export class Sprite extends BaseSprite {
     this._checkUpdate();
   }
 
+  get rate() {
+    return this._reportedRate;
+  }
+
+  set rate(value: number) {
+    this._rate = framesFromMs(value);
+    this._reportedRate = value;
+  }
+
+  get backwards() {
+    return this._backwards;
+  }
+
+  set backwards(value: boolean) {
+    if (value != this._backwards) {
+      this._backwards = value;
+      this._frameIncrement *= -1;
+    }
+  }
+
   constructor(
     playground: Playground,
     parent?: SpriteGroup,
@@ -129,6 +152,8 @@ export class Sprite extends BaseSprite {
       }
     }
 
+    this.restartAnimation();
+
     this.teleport();
 
     playground._renderer.initSprite(this);
@@ -139,7 +164,7 @@ export class Sprite extends BaseSprite {
   restartAnimation() {
     const animation = this._animation;
 
-    if (animation && this.backwards) {
+    if (animation && this._backwards) {
       this._lastSpriteSheet = animation.frameset.length - 1;
       this._currentSpriteSheet = this._lastSpriteSheet;
       this._numberOfFrame =
@@ -206,10 +231,10 @@ export class Sprite extends BaseSprite {
     if (!(this._endAnimation || this._paused)) {
       if (animation) {
         this._idleCounter += 1;
-        if (this._idleCounter >= this.rate) {
+        if (this._idleCounter >= this._rate) {
           this._idleCounter = 0;
           currentFrame += this._frameIncrement;
-          if (this.backwards) {
+          if (this._backwards) {
             // Backwards animations
             if (this.pingpong) {
               // In pingpong animations the end is when the frame returns to the last frame
