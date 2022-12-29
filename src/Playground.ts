@@ -74,7 +74,7 @@ export class Playground {
     callbackId: number | null,
     options?: { suppressWarning?: boolean }
   ) {
-    if (callbackId == null) {
+    if (callbackId !== 0 && !callbackId) {
       if (
         typeof console !== "undefined" &&
         (!options || options.suppressWarning === false)

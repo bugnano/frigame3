@@ -1,7 +1,7 @@
 {
   "name": "frigame3",
   "version": "3.0.0",
-  "description": "A 2D game development library",
+  "description": "A blazingly fast 2D game development library",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {

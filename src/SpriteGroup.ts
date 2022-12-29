@@ -47,6 +47,11 @@ export class SpriteGroup extends BaseSprite {
           this.height = parent.height;
         }
       }
+    } else {
+      if (parent) {
+        this.width = parent.width;
+        this.height = parent.height;
+      }
     }
 
     this._checkUpdate();
@@ -71,7 +76,7 @@ export class SpriteGroup extends BaseSprite {
     child: BaseSprite | null,
     options?: { suppressWarning?: boolean }
   ) {
-    if (child == null) {
+    if (!child) {
       if (
         typeof console !== "undefined" &&
         (!options || options.suppressWarning === false)

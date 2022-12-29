@@ -15,5 +15,9 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'eqeqeq': 'error',
+    'no-bitwise': 'error',
+    'accessor-pairs': 'error',
+    'no-continue': 'warn',
   },
 };

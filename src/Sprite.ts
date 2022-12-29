@@ -79,7 +79,7 @@ export class Sprite extends BaseSprite {
   }
 
   set animationIndex(value: number) {
-    if (value != this._animationIndex) {
+    if (value !== this._animationIndex) {
       this._animationIndex = value;
       this.callback = null;
       this.paused = false;
@@ -122,7 +122,7 @@ export class Sprite extends BaseSprite {
   }
 
   set backwards(value: boolean) {
-    if (value != this._backwards) {
+    if (value !== this._backwards) {
       this._backwards = value;
       this._frameIncrement *= -1;
     }

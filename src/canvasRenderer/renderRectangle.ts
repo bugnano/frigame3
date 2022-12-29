@@ -1,8 +1,30 @@
 import { Rectangle } from "../Rectangle.js";
 import { playgroundMap } from "./renderPlayground.js";
+import type { GradientType } from "../Gradient.js";
+
+export interface GradientObj {
+  width: number;
+  height: number;
+  startColorStr: string;
+  endColorStr: string;
+  type: GradientType;
+  gradient: CanvasGradient | null;
+}
+
+export const fillMap = new WeakMap<Rectangle, GradientObj>();
+export const strokeMap = new WeakMap<Rectangle, GradientObj>();
 
 export function initRectangle(rectangle: Rectangle) {
-  // no-op
+  for (const map of [fillMap, strokeMap]) {
+    map.set(rectangle, {
+      width: 0,
+      height: 0,
+      startColorStr: "rgba(0,0,0,0)",
+      endColorStr: "rgba(0,0,0,0)",
+      type: "vertical",
+      gradient: null,
+    });
+  }
 }
 
 export function drawRectangle(rectangle: Rectangle, interp: number) {
@@ -132,7 +154,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
 
         ctx.closePath();
 
-        // TODO: Set fill style
+        setFillStyle(ctx, rectangle);
         ctx.fill();
       }
 
@@ -170,71 +192,185 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
 
         ctx.closePath();
 
-        // TODO: Set stroke style
+        setStrokeStyle(ctx, rectangle);
         ctx.lineWidth = border_width;
         ctx.stroke();
       }
 
       ctx.restore();
     } else {
+      let translated = false;
+
       if (background) {
-        // Prepare a rect path for the background and the clipping region
-        ctx.beginPath();
+        const startColorStr = background.startColorStr;
 
-        if (border_radius > 0) {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (ctx.roundRect) {
-            ctx.roundRect(left, top, width, height, border_radius);
+        if (startColorStr === background.endColorStr) {
+          // Solid background
+          ctx.beginPath();
+
+          if (border_radius > 0) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (ctx.roundRect) {
+              ctx.roundRect(left, top, width, height, border_radius);
+            } else {
+              roundRect(ctx, left, top, width, height, border_radius);
+            }
           } else {
-            roundRect(ctx, left, top, width, height, border_radius);
+            ctx.rect(left, top, width, height);
           }
+
+          ctx.closePath();
+
+          ctx.fillStyle = startColorStr;
+          ctx.fill();
         } else {
-          ctx.rect(left, top, width, height);
+          // Gradient background
+          if (left || top) {
+            ctx.translate(left, top);
+          }
+          translated = true;
+
+          // Prepare a rect path for the background and the clipping region
+          ctx.beginPath();
+
+          if (border_radius > 0) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (ctx.roundRect) {
+              ctx.roundRect(0, 0, width, height, border_radius);
+            } else {
+              roundRect(ctx, 0, 0, width, height, border_radius);
+            }
+          } else {
+            ctx.rect(0, 0, width, height);
+          }
+
+          ctx.closePath();
+
+          setFillStyle(ctx, rectangle);
+          ctx.fill();
         }
-
-        ctx.closePath();
-
-        // TODO: Set fill style
-        ctx.fill();
       }
 
       if (border_width > 0 && border_color) {
-        ctx.beginPath();
+        const startColorStr = border_color.startColorStr;
 
-        if (border_radius > 0) {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (ctx.roundRect) {
-            ctx.roundRect(
-              left - border_half_width,
-              top - border_half_width,
-              width + border_width,
-              height + border_width,
-              border_radius + border_half_width
-            );
+        if (startColorStr === border_color.endColorStr) {
+          // Solid border
+          ctx.beginPath();
+
+          if (translated) {
+            if (border_radius > 0) {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+              if (ctx.roundRect) {
+                ctx.roundRect(
+                  -border_half_width,
+                  -border_half_width,
+                  width + border_width,
+                  height + border_width,
+                  border_radius + border_half_width
+                );
+              } else {
+                roundRect(
+                  ctx,
+                  -border_half_width,
+                  -border_half_width,
+                  width + border_width,
+                  height + border_width,
+                  border_radius + border_half_width
+                );
+              }
+            } else {
+              ctx.rect(
+                -border_half_width,
+                -border_half_width,
+                width + border_width,
+                height + border_width
+              );
+            }
           } else {
-            roundRect(
-              ctx,
-              left - border_half_width,
-              top - border_half_width,
+            if (border_radius > 0) {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+              if (ctx.roundRect) {
+                ctx.roundRect(
+                  left - border_half_width,
+                  top - border_half_width,
+                  width + border_width,
+                  height + border_width,
+                  border_radius + border_half_width
+                );
+              } else {
+                roundRect(
+                  ctx,
+                  left - border_half_width,
+                  top - border_half_width,
+                  width + border_width,
+                  height + border_width,
+                  border_radius + border_half_width
+                );
+              }
+            } else {
+              ctx.rect(
+                left - border_half_width,
+                top - border_half_width,
+                width + border_width,
+                height + border_width
+              );
+            }
+          }
+
+          ctx.closePath();
+
+          ctx.strokeStyle = startColorStr;
+          ctx.lineWidth = border_width;
+          ctx.stroke();
+        } else {
+          // Gradient border
+          if (!translated && (left || top)) {
+            ctx.translate(left, top);
+          }
+          translated = true;
+
+          ctx.beginPath();
+
+          if (border_radius > 0) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (ctx.roundRect) {
+              ctx.roundRect(
+                -border_half_width,
+                -border_half_width,
+                width + border_width,
+                height + border_width,
+                border_radius + border_half_width
+              );
+            } else {
+              roundRect(
+                ctx,
+                -border_half_width,
+                -border_half_width,
+                width + border_width,
+                height + border_width,
+                border_radius + border_half_width
+              );
+            }
+          } else {
+            ctx.rect(
+              -border_half_width,
+              -border_half_width,
               width + border_width,
-              height + border_width,
-              border_radius + border_half_width
+              height + border_width
             );
           }
-        } else {
-          ctx.rect(
-            left - border_half_width,
-            top - border_half_width,
-            width + border_width,
-            height + border_width
-          );
+
+          ctx.closePath();
+
+          setStrokeStyle(ctx, rectangle);
+          ctx.lineWidth = border_width;
+          ctx.stroke();
         }
+      }
 
-        ctx.closePath();
-
-        // TODO: Set stroke style
-        ctx.lineWidth = border_width;
-        ctx.stroke();
+      if (translated && (left || top)) {
+        ctx.translate(-left, -top);
       }
 
       if (blend_mode_changed) {
@@ -290,4 +426,102 @@ export function roundRect(
   ctx.lineTo(left, top_left_y);
 
   ctx.arc(top_left_x, top_left_y, border_radius, pi, -pi_2, false);
+}
+
+function setFillStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
+  const background = rectangle._background;
+
+  if (background) {
+    const startColorStr = background.startColorStr;
+    const endColorStr = background.endColorStr;
+
+    if (startColorStr === endColorStr) {
+      // Solid background
+      ctx.fillStyle = startColorStr;
+    } else {
+      // Gradient background
+      const gradient_obj = fillMap.get(rectangle)!;
+
+      const trunc = Math.trunc;
+      const width = trunc(rectangle._width);
+      const height = trunc(rectangle._height);
+      const type = background.type;
+
+      if (
+        !gradient_obj.gradient ||
+        gradient_obj.width !== width ||
+        gradient_obj.height !== height ||
+        gradient_obj.startColorStr !== startColorStr ||
+        gradient_obj.endColorStr !== endColorStr ||
+        gradient_obj.type !== type
+      ) {
+        gradient_obj.width = width;
+        gradient_obj.height = height;
+        gradient_obj.startColorStr = startColorStr;
+        gradient_obj.endColorStr = endColorStr;
+        gradient_obj.type = type;
+
+        const end_x = type === "vertical" ? 0 : width;
+        const end_y = type === "vertical" ? height : 0;
+        const gradient = ctx.createLinearGradient(0, 0, end_x, end_y);
+        gradient.addColorStop(0, startColorStr);
+        gradient.addColorStop(1, endColorStr);
+
+        gradient_obj.gradient = gradient;
+
+        ctx.fillStyle = gradient;
+      } else {
+        ctx.fillStyle = gradient_obj.gradient;
+      }
+    }
+  }
+}
+
+function setStrokeStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
+  const border_color = rectangle._borderColor;
+
+  if (border_color) {
+    const startColorStr = border_color.startColorStr;
+    const endColorStr = border_color.endColorStr;
+
+    if (startColorStr === endColorStr) {
+      // Solid border
+      ctx.strokeStyle = startColorStr;
+    } else {
+      // Gradient border
+      const gradient_obj = strokeMap.get(rectangle)!;
+
+      const trunc = Math.trunc;
+      const width = trunc(rectangle._width);
+      const height = trunc(rectangle._height);
+      const type = border_color.type;
+
+      if (
+        !gradient_obj.gradient ||
+        gradient_obj.width !== width ||
+        gradient_obj.height !== height ||
+        gradient_obj.startColorStr !== startColorStr ||
+        gradient_obj.endColorStr !== endColorStr ||
+        gradient_obj.type !== type
+      ) {
+        gradient_obj.width = width;
+        gradient_obj.height = height;
+        gradient_obj.startColorStr = startColorStr;
+        gradient_obj.endColorStr = endColorStr;
+        gradient_obj.type = type;
+
+        const end_x = type === "vertical" ? 0 : width;
+        const end_y = type === "vertical" ? height : 0;
+        const gradient = ctx.createLinearGradient(0, 0, end_x, end_y);
+        gradient.addColorStop(0, startColorStr);
+        gradient.addColorStop(1, endColorStr);
+
+        gradient_obj.gradient = gradient;
+
+        ctx.strokeStyle = gradient;
+      } else {
+        ctx.strokeStyle = gradient_obj.gradient;
+      }
+    }
+  }
 }

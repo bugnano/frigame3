@@ -79,6 +79,11 @@ export class Rectangle extends BaseSprite {
           this.height = parent.height;
         }
       }
+    } else {
+      if (parent) {
+        this.width = parent.width;
+        this.height = parent.height;
+      }
     }
 
     this.teleport();

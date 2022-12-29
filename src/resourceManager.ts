@@ -80,7 +80,7 @@ export const resourceManager: ResourceManager = {
     resource: Resource | null,
     options?: { suppressWarning?: boolean }
   ) {
-    if (resource == null) {
+    if (!resource) {
       if (
         typeof console !== "undefined" &&
         (!options || options.suppressWarning === false)

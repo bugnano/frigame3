@@ -6,12 +6,24 @@ export const spriteGroupMap = new WeakMap<
   SpriteGroup,
   {
     oldAlpha: number;
+    alphaChanged: boolean;
+    oldBlendMode: GlobalCompositeOperation;
+    blendModeChanged: boolean;
+    left: number;
+    top: number;
+    contextSaved: boolean;
   }
 >();
 
 export function initGroup(group: SpriteGroup) {
   spriteGroupMap.set(group, {
     oldAlpha: 1,
+    alphaChanged: false,
+    oldBlendMode: "source-over",
+    blendModeChanged: false,
+    left: 0,
+    top: 0,
+    contextSaved: false,
   });
 }
 
@@ -46,26 +58,41 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
     const playgroundData = playgroundMap.get(playground)!;
     const ctx = playgroundData.ctx;
 
-    ctx.save();
-
     const groupData = spriteGroupMap.get(group)!;
 
-    groupData.oldAlpha = playgroundData.globalAlpha;
-    if (opacity !== 1) {
-      playgroundData.globalAlpha *= opacity;
-      ctx.globalAlpha = playgroundData.globalAlpha;
+    const angle = group.angle;
+    const crop = group.crop;
+
+    groupData.contextSaved = false;
+    if (angle || scaleh !== 1 || scalev !== 1 || crop) {
+      ctx.save();
+      groupData.contextSaved = true;
     }
 
+    groupData.oldAlpha = playgroundData.globalAlpha;
+    groupData.alphaChanged = false;
+    if (opacity !== 1) {
+      // Don't save the entire context only for opacity changes
+      playgroundData.globalAlpha *= opacity;
+
+      ctx.globalAlpha = playgroundData.globalAlpha;
+
+      groupData.alphaChanged = true;
+    }
+
+    groupData.blendModeChanged = false;
     const blendMode = group.blendMode;
     if (blendMode !== "normal") {
+      groupData.oldBlendMode = ctx.globalCompositeOperation;
+
       if (blendMode === "add") {
         ctx.globalCompositeOperation = "lighter";
       } else {
         ctx.globalCompositeOperation = blendMode;
       }
-    }
 
-    const angle = group.angle;
+      groupData.blendModeChanged = true;
+    }
 
     if (angle || scaleh !== 1 || scalev !== 1) {
       let transformOriginx = group.transformOriginx;
@@ -96,7 +123,12 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
 
       ctx.translate(-transformOriginx, -transformOriginy);
     } else {
-      ctx.translate(left, top);
+      groupData.left = left;
+      groupData.top = top;
+
+      if (left || top) {
+        ctx.translate(left, top);
+      }
     }
 
     if (group.crop) {
@@ -136,13 +168,32 @@ export function drawGroupAfterChildren(group: SpriteGroup, interp: number) {
   ) {
     const playground = group.playground!;
     const playgroundData = playgroundMap.get(playground)!;
-    const ctx = playgroundData.ctx;
-
-    // ctx.restore restores also the globalCompositeOperation and globalAlpha values
-    ctx.restore();
-
     const groupData = spriteGroupMap.get(group)!;
 
-    playgroundData.globalAlpha = groupData.oldAlpha;
+    const ctx = playgroundData.ctx;
+
+    if (groupData.contextSaved) {
+      // ctx.restore restores also the globalCompositeOperation and globalAlpha values
+      ctx.restore();
+
+      playgroundData.globalAlpha = groupData.oldAlpha;
+    } else {
+      const left = groupData.left;
+      const top = groupData.top;
+
+      if (left || top) {
+        ctx.translate(-left, -top);
+      }
+
+      if (groupData.blendModeChanged) {
+        ctx.globalCompositeOperation = groupData.oldBlendMode;
+      }
+
+      if (groupData.alphaChanged) {
+        ctx.globalAlpha = groupData.oldAlpha;
+
+        playgroundData.globalAlpha = groupData.oldAlpha;
+      }
+    }
   }
 }
