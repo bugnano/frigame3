@@ -271,7 +271,8 @@ export class BaseSprite extends Rect {
     }
 
     if (options) {
-      for (const [prop, val] of Object.entries(
+      Object.assign(
+        this,
         pick(options, [
           "left",
           "right",
@@ -298,9 +299,7 @@ export class BaseSprite extends Rect {
           "hidden",
           "blendMode",
         ])
-      )) {
-        (this as any)[prop as keyof BaseSpriteOptions] = val;
-      }
+      );
     }
 
     this.teleport();

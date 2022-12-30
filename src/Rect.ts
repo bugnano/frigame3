@@ -156,7 +156,8 @@ export class Rect {
 
   constructor(options?: Partial<RectOptions>) {
     if (options) {
-      for (const [prop, val] of Object.entries(
+      Object.assign(
+        this,
         pick(options, [
           "left",
           "right",
@@ -170,9 +171,7 @@ export class Rect {
           "halfHeight",
           "radius",
         ])
-      )) {
-        this[prop as keyof RectOptions] = val;
-      }
+      );
     }
   }
 

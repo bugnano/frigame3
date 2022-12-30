@@ -60,11 +60,7 @@ class Color {
 
   constructor(options?: Partial<ColorObj>) {
     if (options) {
-      for (const [prop, val] of Object.entries(
-        pick(options, ["r", "g", "b", "a"])
-      )) {
-        this[prop as keyof ColorObj] = val;
-      }
+      Object.assign(this, pick(options, ["r", "g", "b", "a"]));
     }
   }
 }

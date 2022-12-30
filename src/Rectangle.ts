@@ -51,16 +51,15 @@ export class Rectangle extends BaseSprite {
     super(playground, parent, options);
 
     if (options) {
-      for (const [prop, val] of Object.entries(
+      Object.assign(
+        this,
         pick(options, [
           "background",
           "borderRadius",
           "borderWidth",
           "borderColor",
         ])
-      )) {
-        (this as any)[prop as keyof RectangleOptions] = val;
-      }
+      );
 
       if (parent) {
         if (

@@ -136,7 +136,8 @@ export class Sprite extends BaseSprite {
     super(playground, parent, options);
 
     if (options) {
-      for (const [prop, val] of Object.entries(
+      Object.assign(
+        this,
         pick(options, [
           "animation",
           "animationIndex",
@@ -147,9 +148,7 @@ export class Sprite extends BaseSprite {
           "pingpong",
           "backwards",
         ])
-      )) {
-        (this as any)[prop as keyof SpriteOptions] = val;
-      }
+      );
     }
 
     this.restartAnimation();

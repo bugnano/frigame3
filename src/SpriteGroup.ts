@@ -24,11 +24,7 @@ export class SpriteGroup extends BaseSprite {
     super(playground, parent, options);
 
     if (options) {
-      for (const [prop, val] of Object.entries(
-        pick(options, ["crop", "borderRadius"])
-      )) {
-        (this as any)[prop as keyof SpriteGroupOptions] = val;
-      }
+      Object.assign(this, pick(options, ["crop", "borderRadius"]));
 
       if (parent) {
         if (
