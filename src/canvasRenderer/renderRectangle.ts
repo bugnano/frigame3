@@ -19,8 +19,8 @@ export function initRectangle(rectangle: Rectangle) {
     map.set(rectangle, {
       width: 0,
       height: 0,
-      startColorStr: "rgba(0,0,0,0)",
-      endColorStr: "rgba(0,0,0,0)",
+      startColorStr: "rgba(0,0,0,1)",
+      endColorStr: "rgba(0,0,0,1)",
       type: "vertical",
       gradient: null,
     });
@@ -202,9 +202,9 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
       let translated = false;
 
       if (background) {
-        const startColorStr = background.startColorStr;
+        const startColorStr = background.startColor._str;
 
-        if (startColorStr === background.endColorStr) {
+        if (startColorStr === background.endColor._str) {
           // Solid background
           ctx.beginPath();
 
@@ -252,9 +252,9 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
       }
 
       if (border_width > 0 && border_color) {
-        const startColorStr = border_color.startColorStr;
+        const startColorStr = border_color.startColor._str;
 
-        if (startColorStr === border_color.endColorStr) {
+        if (startColorStr === border_color.endColor._str) {
           // Solid border
           ctx.beginPath();
 
@@ -432,8 +432,8 @@ function setFillStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
   const background = rectangle._background;
 
   if (background) {
-    const startColorStr = background.startColorStr;
-    const endColorStr = background.endColorStr;
+    const startColorStr = background.startColor._str;
+    const endColorStr = background.endColor._str;
 
     if (startColorStr === endColorStr) {
       // Solid background
@@ -481,8 +481,8 @@ function setStrokeStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
   const border_color = rectangle._borderColor;
 
   if (border_color) {
-    const startColorStr = border_color.startColorStr;
-    const endColorStr = border_color.endColorStr;
+    const startColorStr = border_color.startColor._str;
+    const endColorStr = border_color.endColor._str;
 
     if (startColorStr === endColorStr) {
       // Solid border

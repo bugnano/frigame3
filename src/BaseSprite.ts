@@ -299,7 +299,7 @@ export class BaseSprite extends Rect {
           "blendMode",
         ])
       )) {
-        (this as any)[prop as keyof TransformOptions] = val;
+        (this as any)[prop as keyof BaseSpriteOptions] = val;
       }
     }
 

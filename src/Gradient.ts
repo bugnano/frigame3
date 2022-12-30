@@ -1,4 +1,4 @@
-import { clamp } from "./utils.js";
+import { clamp, pick } from "./utils.js";
 
 export interface ColorObj {
   r: number;
@@ -9,24 +9,76 @@ export interface ColorObj {
 
 export type ColorArr = [number, number, number, number];
 
-export type Color = ColorObj | ColorArr;
-
 export type GradientType = "vertical" | "horizontal";
 
+class Color {
+  _r = 0;
+  _g = 0;
+  _b = 0;
+  _a = 1;
+  _str = "rgba(0,0,0,1)";
+
+  get r() {
+    return this._r;
+  }
+
+  set r(value: number) {
+    this._r = clamp(Math.round(value), 0, 255) || 0;
+    this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
+  }
+
+  get g() {
+    return this._g;
+  }
+
+  set g(value: number) {
+    this._g = clamp(Math.round(value), 0, 255) || 0;
+    this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
+  }
+
+  get b() {
+    return this._b;
+  }
+
+  set b(value: number) {
+    this._b = clamp(Math.round(value), 0, 255) || 0;
+    this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
+  }
+
+  get a() {
+    return this._a;
+  }
+
+  set a(value: number) {
+    this._a = clamp(
+      typeof value === "number" && !Number.isNaN(value) ? value : 1,
+      0,
+      1
+    );
+    this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
+  }
+
+  constructor(options?: Partial<ColorObj>) {
+    if (options) {
+      for (const [prop, val] of Object.entries(
+        pick(options, ["r", "g", "b", "a"])
+      )) {
+        this[prop as keyof ColorObj] = val;
+      }
+    }
+  }
+}
+
 export class Gradient {
-  startColor: ColorObj;
-  startColorStr: string;
-  endColor: ColorObj;
-  endColorStr: string;
+  startColor: Color;
+  endColor: Color;
   type: GradientType;
 
   constructor(
-    startColor?: Partial<Color>,
-    endColor?: Partial<Color>,
+    startColor?: Partial<ColorObj | ColorArr>,
+    endColor?: Partial<ColorObj | ColorArr>,
     type: GradientType = "vertical"
   ) {
-    const round = Math.round;
-
     const [r, g, b, a] = (() => {
       if (startColor) {
         if (Array.isArray(startColor)) {
@@ -40,13 +92,7 @@ export class Gradient {
       }
     })();
 
-    this.startColor = {
-      r: clamp(round(r ?? 0), 0, 255),
-      g: clamp(round(g ?? 0), 0, 255),
-      b: clamp(round(b ?? 0), 0, 255),
-      a: clamp(a ?? 1, 0, 1),
-    };
-    this.startColorStr = `rgba(${this.startColor.r},${this.startColor.g},${this.startColor.b},${this.startColor.a})`;
+    this.startColor = new Color({ r, g, b, a });
 
     if (endColor) {
       const [r, g, b, a] = (() => {
@@ -58,16 +104,9 @@ export class Gradient {
         }
       })();
 
-      this.endColor = {
-        r: clamp(round(r ?? 0), 0, 255),
-        g: clamp(round(g ?? 0), 0, 255),
-        b: clamp(round(b ?? 0), 0, 255),
-        a: clamp(a ?? 1, 0, 1),
-      };
-      this.endColorStr = `rgba(${this.endColor.r},${this.endColor.g},${this.endColor.b},${this.endColor.a})`;
+      this.endColor = new Color({ r, g, b, a });
     } else {
       this.endColor = this.startColor;
-      this.endColorStr = this.startColorStr;
     }
 
     this.type = type;

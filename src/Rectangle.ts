@@ -3,14 +3,14 @@ import { SpriteGroup } from "./SpriteGroup.js";
 import { Gradient } from "./Gradient.js";
 import { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
-import type { Color } from "./Gradient.js";
+import type { ColorObj, ColorArr } from "./Gradient.js";
 import { pick } from "./utils.js";
 
 export interface RectangleOptions {
-  background: Gradient | Partial<Color> | null;
+  background: Gradient | Partial<ColorObj | ColorArr> | null;
   borderRadius: number;
   borderWidth: number;
-  borderColor: Gradient | Partial<Color> | null;
+  borderColor: Gradient | Partial<ColorObj | ColorArr> | null;
 }
 
 export class Rectangle extends BaseSprite {
@@ -23,7 +23,7 @@ export class Rectangle extends BaseSprite {
     return this._background;
   }
 
-  set background(value: Gradient | Partial<Color> | null) {
+  set background(value: Gradient | Partial<ColorObj | ColorArr> | null) {
     if (value === null || value instanceof Gradient) {
       this._background = value;
     } else {
@@ -35,7 +35,7 @@ export class Rectangle extends BaseSprite {
     return this._borderColor;
   }
 
-  set borderColor(value: Gradient | Partial<Color> | null) {
+  set borderColor(value: Gradient | Partial<ColorObj | ColorArr> | null) {
     if (value === null || value instanceof Gradient) {
       this._borderColor = value;
     } else {
