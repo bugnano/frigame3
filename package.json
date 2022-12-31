@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "A blazingly fast 2D game development library",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "prettier --write src && tsc && eslint src",
     "prepare": "tsc",
