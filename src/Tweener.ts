@@ -31,13 +31,21 @@ const speeds = {
   _default: 400,
 };
 
-export class Tweener {
+export class Tweener extends EventTarget {
   _nextId = 1; // Start from 1 to guarantee that tweenId is always truthy
   _tween_queue = new Map<number, TweenObj<any>>();
   _tweening = false;
+  _playground: WeakRef<Playground>;
+  _callbackId: number | null = null;
 
   constructor(playground: Playground) {
-    this.registerCallback(playground);
+    super();
+
+    this._playground = new WeakRef(playground);
+
+    this.registerCallback();
+
+    playground.addEventListener("clearCallbacks", this._onClearCallbacks);
   }
 
   _tweenStep = () => {
@@ -82,9 +90,60 @@ export class Tweener {
     }
   };
 
-  registerCallback(playground: Playground) {
-    return playground.registerCallback(this._tweenStep);
+  registerCallback(options?: { suppressWarning?: boolean }) {
+    if (this._callbackId === null) {
+      const playground = this._playground.deref();
+
+      if (playground) {
+        this._callbackId = playground.registerCallback(this._tweenStep);
+      } else {
+        if (
+          typeof console !== "undefined" &&
+          (!options || options.suppressWarning === false)
+        ) {
+          console.warn("playground has been garbage collected");
+          console.trace();
+        }
+      }
+    } else {
+      if (
+        typeof console !== "undefined" &&
+        (!options || options.suppressWarning === false)
+      ) {
+        console.warn("Callback already registered");
+        console.trace();
+      }
+    }
+
+    return this;
   }
+
+  removeCallback(options?: { suppressWarning?: boolean }) {
+    const playground = this._playground.deref();
+
+    if (playground) {
+      playground.removeCallback(this._callbackId, options);
+    } else {
+      if (
+        typeof console !== "undefined" &&
+        (!options || options.suppressWarning === false)
+      ) {
+        console.warn("playground has been garbage collected");
+        console.trace();
+      }
+    }
+
+    this._callbackId = null;
+
+    return this;
+  }
+
+  _onClearCallbacks = () => {
+    if (this._callbackId !== null) {
+      this._callbackId = null;
+      this.registerCallback();
+    }
+  };
 
   tween<T extends object>(
     target_obj: T,
@@ -157,6 +216,8 @@ export class Tweener {
 
   clearTweens() {
     this._tween_queue.clear();
+
+    this.dispatchEvent(new Event("clearTweens"));
 
     return this;
   }

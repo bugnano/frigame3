@@ -438,7 +438,13 @@ export class Sprite extends BaseSprite {
   }
 
   _draw(interp: number) {
+    super._draw(interp);
+
     this.playground?._renderer.drawSprite(this, interp);
+  }
+
+  _remove() {
+    this.playground?._renderer.removeSprite(this);
   }
 }
 

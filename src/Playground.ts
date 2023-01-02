@@ -3,7 +3,7 @@ import type { Renderer, RendererElement } from "./Renderer.js";
 import { REFRESH_RATE } from "./defines.js";
 import { framesFromMs } from "./utils.js";
 
-export class Playground {
+export class Playground extends EventTarget {
   _width = 0;
   _height = 0;
 
@@ -46,6 +46,8 @@ export class Playground {
   }
 
   constructor(renderer: Renderer, dom?: string | RendererElement) {
+    super();
+
     this._renderer = renderer;
 
     const [width, height] = renderer.initPlayground(this, dom);
@@ -54,6 +56,8 @@ export class Playground {
     this._height = height;
 
     this.scenegraph = new SpriteGroup(this, undefined, { width, height });
+
+    this.startGame();
   }
 
   // Public functions
@@ -102,6 +106,8 @@ export class Playground {
   clearCallbacks() {
     this._callbacks.clear();
 
+    this.dispatchEvent(new Event("clearCallbacks"));
+
     return this;
   }
 
@@ -119,6 +125,13 @@ export class Playground {
 
   stopGame() {
     this.running = false;
+
+    // The cancelAnimationFrame is optional, since this._draw will not call
+    // this._update and requestAnimationFrame if this.running is false
+    if (this._idDraw !== null) {
+      cancelAnimationFrame(this._idDraw);
+      this._idDraw = null;
+    }
 
     return this;
   }

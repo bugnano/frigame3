@@ -6,30 +6,19 @@ export function initSprite(sprite: Sprite) {
   // no-op
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function removeSprite(sprite: Sprite) {
+  // no-op
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function drawSprite(sprite: Sprite, interp: number) {
   const playground = sprite.playground!;
 
-  const trunc = Math.trunc;
-  const spriteLeft = sprite._left;
-  const spriteTop = sprite._top;
-  const prevLeft = sprite._prevLeft;
-  const prevTop = sprite._prevTop;
-  let left = trunc(spriteLeft);
-  let top = trunc(spriteTop);
-  const width = trunc(sprite._width);
-  const height = trunc(sprite._height);
-
-  if (left !== prevLeft || top !== prevTop) {
-    if (sprite._frameCounterLastMove === playground.frameCounter - 1) {
-      const round = Math.round;
-
-      left = round(left * interp + trunc(prevLeft) * (1 - interp));
-      top = round(top * interp + trunc(prevTop) * (1 - interp));
-    } else {
-      sprite._prevLeft = spriteLeft;
-      sprite._prevTop = spriteTop;
-    }
-  }
+  const left = sprite._drawLeft;
+  const top = sprite._drawTop;
+  const width = sprite._drawWidth;
+  const height = sprite._drawHeight;
 
   const insidePlayground = playground._insidePlayground(
     left,
@@ -84,6 +73,8 @@ export function drawSprite(sprite: Sprite, interp: number) {
     const currentFrame = sprite._currentFrame;
 
     if (angle || scaleh !== 1 || scalev !== 1) {
+      const trunc = Math.trunc;
+
       ctx.save();
 
       let transformOriginx = sprite.transformOriginx;

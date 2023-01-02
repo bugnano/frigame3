@@ -60,6 +60,10 @@ export class SpriteGroup extends BaseSprite {
   // Public functions
 
   clear() {
+    for (const sprite of this._layers) {
+      sprite._remove();
+    }
+
     this._layers.splice(0, this._layers.length);
     this._updateList.splice(0, this._updateList.length);
 
@@ -96,6 +100,8 @@ export class SpriteGroup extends BaseSprite {
         update_list.splice(i, 1);
       }
 
+      child._remove();
+
       this._checkUpdate();
     } else {
       if (
@@ -131,26 +137,16 @@ export class SpriteGroup extends BaseSprite {
   }
 
   _draw(interp: number) {
+    super._draw(interp);
+
     const playground = this.playground;
 
     if (playground) {
-      let left = this._left;
-      let top = this._top;
-      const prevLeft = this._prevLeft;
-      const prevTop = this._prevTop;
-
-      if (left !== prevLeft || top !== prevTop) {
-        if (this._frameCounterLastMove === playground.frameCounter - 1) {
-          left = left * interp + prevLeft * (1 - interp);
-          top = top * interp + prevTop * (1 - interp);
-        }
-      }
-
       const absLeft = playground._absLeft;
       const absTop = playground._absTop;
 
-      playground._absLeft += left;
-      playground._absTop += top;
+      playground._absLeft += this._drawLeft;
+      playground._absTop += this._drawTop;
 
       const renderer = playground._renderer;
 
@@ -165,6 +161,12 @@ export class SpriteGroup extends BaseSprite {
       playground._absLeft = absLeft;
       playground._absTop = absTop;
     }
+  }
+
+  _remove() {
+    this.clear();
+
+    this.playground?._renderer.removeGroup(this);
   }
 }
 

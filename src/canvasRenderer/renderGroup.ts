@@ -27,34 +27,20 @@ export function initGroup(group: SpriteGroup) {
   });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function removeGroup(group: SpriteGroup) {
+  // no-op
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
-  const playground = group.playground!;
-
-  const trunc = Math.trunc;
-  const groupLeft = group._left;
-  const groupTop = group._top;
-  const prevLeft = group._prevLeft;
-  const prevTop = group._prevTop;
-  let left = trunc(groupLeft);
-  let top = trunc(groupTop);
-
-  if (groupLeft !== prevLeft || groupTop !== prevTop) {
-    if (group._frameCounterLastMove === playground.frameCounter - 1) {
-      const round = Math.round;
-
-      left = round(left * interp + trunc(prevLeft) * (1 - interp));
-      top = round(top * interp + trunc(prevTop) * (1 - interp));
-    } else {
-      group._prevLeft = groupLeft;
-      group._prevTop = groupTop;
-    }
-  }
-
   const opacity = group._opacity;
   const scaleh = group._scaleh;
   const scalev = group._scalev;
 
   if (group._layers.length && opacity && scaleh && scalev && !group.hidden) {
+    const playground = group.playground!;
+
     const playgroundData = playgroundMap.get(playground)!;
     const ctx = playgroundData.ctx;
 
@@ -93,6 +79,10 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
 
       groupData.blendModeChanged = true;
     }
+
+    const trunc = Math.trunc;
+    const left = group._drawLeft;
+    const top = group._drawTop;
 
     if (angle || scaleh !== 1 || scalev !== 1) {
       let transformOriginx = group.transformOriginx;
@@ -135,8 +125,8 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
       // Prepare a rect path for the clipping region
       ctx.beginPath();
 
-      const width = trunc(group._width);
-      const height = trunc(group._height);
+      const width = group._drawWidth;
+      const height = group._drawHeight;
       const border_radius = trunc(group.borderRadius);
 
       if (border_radius > 0) {

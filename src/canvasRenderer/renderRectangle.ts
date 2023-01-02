@@ -27,30 +27,20 @@ export function initRectangle(rectangle: Rectangle) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function removeRectangle(rectangle: Rectangle) {
+  // no-op
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function drawRectangle(rectangle: Rectangle, interp: number) {
   const playground = rectangle.playground!;
 
   const trunc = Math.trunc;
-  const rectangleLeft = rectangle._left;
-  const rectangleTop = rectangle._top;
-  const prevLeft = rectangle._prevLeft;
-  const prevTop = rectangle._prevTop;
-  let left = trunc(rectangleLeft);
-  let top = trunc(rectangleTop);
-  const width = trunc(rectangle._width);
-  const height = trunc(rectangle._height);
-
-  if (left !== prevLeft || top !== prevTop) {
-    if (rectangle._frameCounterLastMove === playground.frameCounter - 1) {
-      const round = Math.round;
-
-      left = round(left * interp + trunc(prevLeft) * (1 - interp));
-      top = round(top * interp + trunc(prevTop) * (1 - interp));
-    } else {
-      rectangle._prevLeft = rectangleLeft;
-      rectangle._prevTop = rectangleTop;
-    }
-  }
+  const left = rectangle._drawLeft;
+  const top = rectangle._drawTop;
+  const width = rectangle._drawWidth;
+  const height = rectangle._drawHeight;
 
   const insidePlayground = playground._insidePlayground(
     left,

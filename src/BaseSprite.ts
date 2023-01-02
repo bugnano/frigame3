@@ -63,6 +63,10 @@ export class BaseSprite extends Rect {
   _prevLeft = 0;
   _prevTop = 0;
   _frameCounterLastMove = 0;
+  _drawLeft = 0;
+  _drawTop = 0;
+  _drawWidth = 0;
+  _drawHeight = 0;
 
   get playground() {
     return this._playground.deref();
@@ -509,8 +513,38 @@ export class BaseSprite extends Rect {
     // no-op
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _draw(interp: number) {
+    const playground = this.playground;
+
+    if (playground) {
+      const trunc = Math.trunc;
+      const myLeft = this._left;
+      const myTop = this._top;
+      const prevLeft = this._prevLeft;
+      const prevTop = this._prevTop;
+      let left = trunc(myLeft);
+      let top = trunc(myTop);
+
+      if (left !== prevLeft || top !== prevTop) {
+        if (this._frameCounterLastMove === playground.frameCounter - 1) {
+          const round = Math.round;
+
+          left = round(left * interp + trunc(prevLeft) * (1 - interp));
+          top = round(top * interp + trunc(prevTop) * (1 - interp));
+        } else {
+          this._prevLeft = myLeft;
+          this._prevTop = myTop;
+        }
+      }
+
+      this._drawLeft = left;
+      this._drawTop = top;
+      this._drawWidth = trunc(this._width);
+      this._drawHeight = trunc(this._height);
+    }
+  }
+
+  _remove() {
     // no-op
   }
 }
