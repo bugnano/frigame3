@@ -1,6 +1,6 @@
-import { Playground } from "./Playground.js";
+import { Playground } from "../../Playground.js";
 import { swing } from "./easing.js";
-import { framesFromMs } from "./utils.js";
+import { framesFromMs } from "../../utils.js";
 
 export type Speed = "slow" | "fast";
 
