@@ -1,3 +1,5 @@
+let started = false;
+
 export const keyTracker: Record<string, boolean> = {};
 
 function onKeydown(e: KeyboardEvent) {
@@ -9,11 +11,21 @@ function onKeyup(e: KeyboardEvent) {
 }
 
 export function startKeyTracker() {
-  document.addEventListener("keydown", onKeydown);
-  document.addEventListener("keyup", onKeyup);
+  if (!started) {
+    document.addEventListener("keydown", onKeydown);
+    document.addEventListener("keyup", onKeyup);
+
+    started = true;
+  }
 }
 
 export function stopKeyTracker() {
-  document.removeEventListener("keydown", onKeydown);
-  document.removeEventListener("keyup", onKeyup);
+  if (started) {
+    document.removeEventListener("keydown", onKeydown);
+    document.removeEventListener("keyup", onKeyup);
+
+    started = false;
+  }
 }
+
+startKeyTracker();
