@@ -72,6 +72,22 @@ export class SpriteGroup extends BaseSprite {
     return this;
   }
 
+  addChild(child: BaseSprite) {
+    this._layers.push(child);
+
+    this._checkUpdate();
+
+    return this;
+  }
+
+  insertChild(child: BaseSprite) {
+    this._layers.unshift(child);
+
+    this._checkUpdate();
+
+    return this;
+  }
+
   removeChild(
     child: BaseSprite | null,
     options?: { suppressWarning?: boolean }
@@ -175,9 +191,8 @@ export function addGroup(
   options?: Partial<BaseSpriteOptions & SpriteGroupOptions>
 ) {
   const group = new SpriteGroup(parent.playground!, parent, options);
-  parent._layers.push(group);
 
-  parent._checkUpdate();
+  parent.addChild(group);
 
   return group;
 }
@@ -187,9 +202,8 @@ export function insertGroup(
   options?: Partial<BaseSpriteOptions & SpriteGroupOptions>
 ) {
   const group = new SpriteGroup(parent.playground!, parent, options);
-  parent._layers.unshift(group);
 
-  parent._checkUpdate();
+  parent.insertChild(group);
 
   return group;
 }

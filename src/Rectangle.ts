@@ -108,9 +108,8 @@ export function addRectangle(
   options?: Partial<BaseSpriteOptions & RectangleOptions>
 ) {
   const rectangle = new Rectangle(parent.playground!, parent, options);
-  parent._layers.push(rectangle);
 
-  parent._checkUpdate();
+  parent.addChild(rectangle);
 
   return rectangle;
 }
@@ -120,9 +119,8 @@ export function insertRectangle(
   options?: Partial<BaseSpriteOptions & RectangleOptions>
 ) {
   const rectangle = new Rectangle(parent.playground!, parent, options);
-  parent._layers.unshift(rectangle);
 
-  parent._checkUpdate();
+  parent.insertChild(rectangle);
 
   return rectangle;
 }

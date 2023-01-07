@@ -111,9 +111,8 @@ export function addTilemap(
   options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
 ) {
   const tilemap = new Tilemap(parent.playground!, parent, options);
-  parent._layers.push(tilemap);
 
-  parent._checkUpdate();
+  parent.addChild(tilemap);
 
   return tilemap;
 }
@@ -123,9 +122,8 @@ export function insertTilemap(
   options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
 ) {
   const tilemap = new Tilemap(parent.playground!, parent, options);
-  parent._layers.unshift(tilemap);
 
-  parent._checkUpdate();
+  parent.insertChild(tilemap);
 
   return tilemap;
 }

@@ -453,9 +453,8 @@ export function addSprite(
   options?: Partial<BaseSpriteOptions & SpriteOptions>
 ) {
   const sprite = new Sprite(parent.playground!, parent, options);
-  parent._layers.push(sprite);
 
-  parent._checkUpdate();
+  parent.addChild(sprite);
 
   return sprite;
 }
@@ -465,9 +464,8 @@ export function insertSprite(
   options?: Partial<BaseSpriteOptions & SpriteOptions>
 ) {
   const sprite = new Sprite(parent.playground!, parent, options);
-  parent._layers.unshift(sprite);
 
-  parent._checkUpdate();
+  parent.insertChild(sprite);
 
   return sprite;
 }

@@ -104,6 +104,10 @@ export class Animation implements Resource {
     return this.frameHeight / 2;
   }
 
+  get radius() {
+    return Math.max(this.frameWidth, this.frameHeight) / 2;
+  }
+
   constructor(
     options: Partial<SpriteSheet & AnimationOptions & FrameOptions> | string
   ) {
