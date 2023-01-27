@@ -14,7 +14,10 @@ export interface TilemapOptions {
   tileWidth: number; // Pixel
   tileHeight: number; // Pixel
   data: number[]; // (sizex * sizey) members, indices of animationList
-  animationList: Record<number, SpriteOptions | RectangleOptions>;
+  animationList: Record<
+    number,
+    Partial<SpriteOptions> | Partial<RectangleOptions>
+  >;
 }
 
 export class Tilemap extends SpriteGroup {

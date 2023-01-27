@@ -7,10 +7,10 @@ import type { ColorObj, ColorArr } from "./Gradient.js";
 import { pick } from "./utils.js";
 
 export interface RectangleOptions {
-  background: Gradient | Partial<ColorObj | ColorArr> | null;
+  background: Gradient | Partial<ColorObj> | Partial<ColorArr> | null;
   borderRadius: number;
   borderWidth: number;
-  borderColor: Gradient | Partial<ColorObj | ColorArr> | null;
+  borderColor: Gradient | Partial<ColorObj> | Partial<ColorArr> | null;
 }
 
 export class Rectangle extends BaseSprite {
@@ -23,7 +23,9 @@ export class Rectangle extends BaseSprite {
     return this._background;
   }
 
-  set background(value: Gradient | Partial<ColorObj | ColorArr> | null) {
+  set background(
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+  ) {
     if (value === null || value instanceof Gradient) {
       this._background = value;
     } else {
@@ -35,7 +37,9 @@ export class Rectangle extends BaseSprite {
     return this._borderColor;
   }
 
-  set borderColor(value: Gradient | Partial<ColorObj | ColorArr> | null) {
+  set borderColor(
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+  ) {
     if (value === null || value instanceof Gradient) {
       this._borderColor = value;
     } else {

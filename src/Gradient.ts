@@ -71,8 +71,8 @@ export class Gradient {
   type: GradientType;
 
   constructor(
-    startColor?: Partial<ColorObj | ColorArr>,
-    endColor?: Partial<ColorObj | ColorArr>,
+    startColor?: Partial<ColorObj> | Partial<ColorArr>,
+    endColor?: Partial<ColorObj> | Partial<ColorArr>,
     type: GradientType = "vertical"
   ) {
     const [r, g, b, a] = (() => {
