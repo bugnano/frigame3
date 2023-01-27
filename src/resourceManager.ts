@@ -31,10 +31,6 @@ function preload() {
   if (completed === len_preload_list) {
     complete = true;
 
-    if (loadCallback) {
-      resourceManager.loadCallback = null;
-    }
-
     if (idPreload !== null) {
       clearInterval(idPreload);
       idPreload = null;
