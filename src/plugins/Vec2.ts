@@ -7,6 +7,10 @@ export class Vec2 {
     this.y = y;
   }
 
+  static fromMagAngle(mag: number, angle: number) {
+    return new Vec2(Math.cos(angle) * mag, Math.sin(angle) * mag);
+  }
+
   static randomUnit() {
     const angle = Math.random() * Math.PI * 2;
 
@@ -20,22 +24,49 @@ export class Vec2 {
     return new Vec2(Math.cos(angle) * mag, Math.sin(angle) * mag);
   }
 
-  static copy(a: Vec2) {
+  static sum(a: Vec2, b: Vec2) {
+    return new Vec2(a.x + b.x, a.y + b.y);
+  }
+
+  static difference(a: Vec2, b: Vec2) {
+    return new Vec2(a.x - b.x, a.y - b.y);
+  }
+
+  static rotateAroundPoint(a: Vec2, axisPoint: Vec2, angle: number) {
+    return Vec2.clone(a).subtract(axisPoint).rotate(angle).add(axisPoint);
+  }
+
+  static lerp(a: Vec2, b: Vec2, t: number) {
+    const ax = a.x;
+    const ay = a.y;
+
+    const x = ax + t * (b.x - ax);
+    const y = ay + t * (b.y - ay);
+
+    return new Vec2(x, y);
+  }
+
+  static rescaled(a: Vec2, sx: number, sy: number = sx) {
+    return new Vec2(a.x * sx, a.y * sy);
+  }
+
+  static clone(a: Vec2) {
     return new Vec2(a.x, a.y);
   }
 
-  clone(a: Vec2) {
+  assign(a: Vec2) {
     this.x = a.x;
     this.y = a.y;
 
     return this;
   }
 
-  magnitude() {
-    const x = this.x;
-    const y = this.y;
+  toString() {
+    return `Vec2(${this.x}, ${this.y})`;
+  }
 
-    return Math.sqrt(x * x + y * y);
+  magnitude() {
+    return Math.hypot(this.x, this.y);
   }
 
   squaredMagnitude() {
@@ -49,13 +80,9 @@ export class Vec2 {
     return Math.atan2(this.y, this.x);
   }
 
-  static fromMagAngle(mag: number, angle: number) {
-    return new Vec2(Math.cos(angle) * mag, Math.sin(angle) * mag);
-  }
-
-  scale(value: number) {
-    this.x *= value;
-    this.y *= value;
+  scale(sx: number, sy: number = sx) {
+    this.x *= sx;
+    this.y *= sy;
 
     return this;
   }
@@ -68,16 +95,13 @@ export class Vec2 {
   }
 
   normalize() {
-    const x = this.x;
-    const y = this.y;
-    let mag = x * x + y * y;
-
+    let mag = Math.hypot(this.x, this.y);
     if (mag !== 0) {
-      mag = 1 / Math.sqrt(mag);
+      mag = 1 / mag;
     }
 
-    this.x = x * mag;
-    this.y = y * mag;
+    this.x *= mag;
+    this.y *= mag;
 
     return this;
   }
@@ -108,19 +132,12 @@ export class Vec2 {
     return this;
   }
 
-  rotateAroundPoint(a: Vec2, axisPoint: Vec2, angle: number) {
-    return this.clone(a).subtract(axisPoint).rotate(angle).add(axisPoint);
-  }
-
   equals(a: Vec2) {
     return this.x === a.x && this.y === a.y;
   }
 
   distance(a: Vec2) {
-    const dx = this.x - a.x;
-    const dy = this.y - a.y;
-
-    return Math.sqrt(dx * dx + dy * dy);
+    return Math.hypot(this.x - a.x, this.y - a.y);
   }
 
   squaredDistance(a: Vec2) {
@@ -130,29 +147,53 @@ export class Vec2 {
     return dx * dx + dy * dy;
   }
 
-  static sum(a: Vec2, b: Vec2) {
-    return new Vec2(a.x + b.x, a.y + b.y);
+  ceil() {
+    this.x = Math.ceil(this.x);
+    this.y = Math.ceil(this.y);
+
+    return this;
   }
 
-  static difference(a: Vec2, b: Vec2) {
-    return new Vec2(a.x - b.x, a.y - b.y);
+  floor() {
+    this.x = Math.floor(this.x);
+    this.y = Math.floor(this.y);
+
+    return this;
+  }
+
+  round() {
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+
+    return this;
+  }
+
+  trunc() {
+    this.x = Math.trunc(this.x);
+    this.y = Math.trunc(this.y);
+
+    return this;
   }
 
   dot(a: Vec2) {
     return this.x * a.x + this.y * a.y;
   }
 
-  cross(a: Vec2) {
+  determinant(a: Vec2) {
     return this.x * a.y - this.y * a.x;
   }
 
-  static lerp(a: Vec2, b: Vec2, t: number) {
-    const ax = a.x;
-    const ay = a.y;
+  rotateAroundPoint(axisPoint: Vec2, angle: number) {
+    return this.subtract(axisPoint).rotate(angle).add(axisPoint);
+  }
 
-    const x = ax + t * (b.x - ax);
-    const y = ay + t * (b.y - ay);
+  lerp(a: Vec2, t: number) {
+    const x = this.x;
+    const y = this.y;
 
-    return new Vec2(x, y);
+    this.x = x + t * (a.x - x);
+    this.y = y + t * (a.y - y);
+
+    return this;
   }
 }
