@@ -452,6 +452,38 @@ export class BaseSprite extends Rect {
     return this;
   }
 
+  wrapLeft(increment: number, modulo: number) {
+    this.left += increment;
+
+    while (this._left > 0) {
+      this._left -= modulo;
+      this._prevLeft -= modulo;
+    }
+
+    while (this._left <= -modulo) {
+      this._left += modulo;
+      this._prevLeft += modulo;
+    }
+
+    return this;
+  }
+
+  wrapTop(increment: number, modulo: number) {
+    this.top += increment;
+
+    while (this._top > 0) {
+      this._top -= modulo;
+      this._prevTop -= modulo;
+    }
+
+    while (this._top <= -modulo) {
+      this._top += modulo;
+      this._prevTop += modulo;
+    }
+
+    return this;
+  }
+
   // Implementation details
 
   _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number) {
