@@ -455,14 +455,29 @@ export class BaseSprite extends Rect {
   wrapLeft(increment: number, modulo: number) {
     this.left += increment;
 
-    while (this._left > 0) {
-      this._left -= modulo;
-      this._prevLeft -= modulo;
-    }
+    if (modulo > 0) {
+      while (this._left > 0) {
+        this._left -= modulo;
+        this._prevLeft -= modulo;
+      }
 
-    while (this._left <= -modulo) {
-      this._left += modulo;
-      this._prevLeft += modulo;
+      while (this._left <= -modulo) {
+        this._left += modulo;
+        this._prevLeft += modulo;
+      }
+    } else if (modulo < 0) {
+      while (this._left > 0) {
+        this._left += modulo;
+        this._prevLeft += modulo;
+      }
+
+      while (this._left <= modulo) {
+        this._left -= modulo;
+        this._prevLeft -= modulo;
+      }
+    } else {
+      this._left = 0;
+      this._prevLeft = 0;
     }
 
     return this;
@@ -471,14 +486,29 @@ export class BaseSprite extends Rect {
   wrapTop(increment: number, modulo: number) {
     this.top += increment;
 
-    while (this._top > 0) {
-      this._top -= modulo;
-      this._prevTop -= modulo;
-    }
+    if (modulo > 0) {
+      while (this._top > 0) {
+        this._top -= modulo;
+        this._prevTop -= modulo;
+      }
 
-    while (this._top <= -modulo) {
-      this._top += modulo;
-      this._prevTop += modulo;
+      while (this._top <= -modulo) {
+        this._top += modulo;
+        this._prevTop += modulo;
+      }
+    } else if (modulo < 0) {
+      while (this._top > 0) {
+        this._top += modulo;
+        this._prevTop += modulo;
+      }
+
+      while (this._top <= modulo) {
+        this._top -= modulo;
+        this._prevTop -= modulo;
+      }
+    } else {
+      this._top = 0;
+      this._prevTop = 0;
     }
 
     return this;
