@@ -54,7 +54,14 @@ export class Vec2 {
     return new Vec2(a.x, a.y);
   }
 
-  assign(a: Vec2) {
+  fromMagAngle(mag: number, angle: number) {
+    this.x = Math.cos(angle) * mag;
+    this.y = Math.sin(angle) * mag;
+
+    return this;
+  }
+
+  clone(a: Vec2) {
     this.x = a.x;
     this.y = a.y;
 
