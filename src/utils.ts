@@ -35,6 +35,10 @@ export function clamp(n: number, minVal: number, maxVal: number) {
   return Math.min(Math.max(n, minVal), maxVal);
 }
 
+export function mod(n: number, m: number) {
+  return ((n % m) + m) % m;
+}
+
 export function framesFromMs(ms: number) {
   return Math.max(Math.round(ms / REFRESH_RATE), 1) || 1;
 }
