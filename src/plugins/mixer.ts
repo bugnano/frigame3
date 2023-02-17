@@ -249,6 +249,32 @@ export class SingleChannel extends Channel {
 
   // Public functions
 
+  get playbackRate() {
+    return this._playbackRate;
+  }
+
+  set playbackRate(value: number) {
+    const oldPlaybackRate = this._playbackRate;
+    const playbackRate = clamp(value, 0.25, 4) || 1;
+
+    if (playbackRate !== oldPlaybackRate) {
+      this._playbackRate = playbackRate;
+
+      if (this._audio) {
+        this._audio.playbackRate = playbackRate;
+      } else {
+        const currentTime = this._pauseTime || audioCtx.currentTime;
+        const offset = (currentTime - this._startTime) * oldPlaybackRate;
+
+        this._startTime = currentTime - offset / playbackRate;
+
+        if (this._source instanceof AudioBufferSourceNode) {
+          this._source.playbackRate.value = playbackRate;
+        }
+      }
+    }
+  }
+
   play(sound: Sound, options?: Partial<SingleChannelPlayOptions>) {
     // Make sure the audio is stopped before changing its options
     this.stop();
@@ -341,6 +367,7 @@ export class SingleChannel extends Channel {
       this._audio.currentTime = 0;
     }
 
+    this._playbackRate = 1;
     this._pauseTime = 0;
     this._old_loop = false;
     this._old_onended = null;
@@ -400,12 +427,16 @@ export class SingleChannel extends Channel {
       this._old_loop = false;
       this._old_onended = null;
 
+      const playbackRate = this._playbackRate;
+
+      source.playbackRate.value = playbackRate;
+
       const offset =
-        ((this._pauseTime - this._startTime) * this._playbackRate) %
+        ((this._pauseTime - this._startTime) * playbackRate) %
         audioBuffer.duration;
 
       this._pauseTime = 0;
-      this._startTime = audioCtx.currentTime - offset;
+      this._startTime = audioCtx.currentTime - offset / playbackRate;
       source.start(0, offset);
     }
 
