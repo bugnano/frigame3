@@ -107,6 +107,10 @@ export class Tilemap extends SpriteGroup {
       }
     }
   }
+
+  getAt(row: number, col: number) {
+    return this._layers[row * this.sizex + col];
+  }
 }
 
 export function addTilemap(
