@@ -1,5 +1,5 @@
-import { Sprite } from "../Sprite.js";
 import { playgroundMap } from "./renderPlayground.js";
+import type { Sprite } from "../Sprite.js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function initSprite(sprite: Sprite) {
@@ -37,7 +37,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
     opacity &&
     scaleh &&
     scalev &&
-    !sprite.hidden
+    !sprite._hidden
   ) {
     const playgroundData = playgroundMap.get(playground)!;
     const ctx = playgroundData.ctx;
@@ -55,7 +55,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
 
     let old_blend_mode: GlobalCompositeOperation = "source-over";
     let blend_mode_changed = false;
-    const blendMode = sprite.blendMode;
+    const blendMode = sprite._blendMode;
     if (blendMode !== "normal") {
       old_blend_mode = ctx.globalCompositeOperation;
 
@@ -68,7 +68,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
       blend_mode_changed = true;
     }
 
-    const angle = sprite.angle;
+    const angle = sprite._angle;
     const sprite_sheet = animation.frameset[sprite._currentSpriteSheet];
     const currentFrame = sprite._currentFrame;
 
@@ -77,7 +77,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
 
       ctx.save();
 
-      let transformOriginx = sprite.transformOriginx;
+      let transformOriginx = sprite._transformOriginx;
 
       if (typeof transformOriginx === "string") {
         transformOriginx = sprite[transformOriginx];
@@ -85,7 +85,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
 
       transformOriginx = trunc(transformOriginx);
 
-      let transformOriginy = sprite.transformOriginy;
+      let transformOriginy = sprite._transformOriginy;
 
       if (typeof transformOriginy === "string") {
         transformOriginy = sprite[transformOriginy];

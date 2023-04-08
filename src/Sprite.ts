@@ -1,7 +1,7 @@
 import { BaseSprite } from "./BaseSprite.js";
-import { SpriteGroup } from "./SpriteGroup.js";
-import { Animation } from "./Animation.js";
-import { Playground } from "./Playground.js";
+import type { SpriteGroup } from "./SpriteGroup.js";
+import type { Animation } from "./Animation.js";
+import type { Playground } from "./Playground.js";
 import type { AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick, framesFromMs } from "./utils.js";
@@ -20,8 +20,8 @@ export class Sprite extends BaseSprite {
   _paused = false;
   _rate = 1;
   _reportedRate = 0;
-  once = false;
-  pingpong = false;
+  _once = false;
+  _pingpong = false;
   _backwards = false;
 
   // Implementation details
@@ -46,8 +46,8 @@ export class Sprite extends BaseSprite {
       if (value) {
         this._rate = value._rate;
         this._reportedRate = value._reportedRate;
-        this.once = value.once;
-        this.pingpong = value.pingpong;
+        this._once = value.once;
+        this._pingpong = value.pingpong;
         this._backwards = value.backwards;
 
         // Force new width and height based on the animation frame size
@@ -56,8 +56,8 @@ export class Sprite extends BaseSprite {
       } else {
         this._rate = 1;
         this._reportedRate = 0;
-        this.once = false;
-        this.pingpong = false;
+        this._once = false;
+        this._pingpong = false;
         this._backwards = false;
 
         super.width = 0;
@@ -117,6 +117,22 @@ export class Sprite extends BaseSprite {
     this._reportedRate = value;
   }
 
+  get once() {
+    return this._once;
+  }
+
+  set once(value: boolean) {
+    this._once = value;
+  }
+
+  get pingpong() {
+    return this._pingpong;
+  }
+
+  set pingpong(value: boolean) {
+    this._pingpong = value;
+  }
+
   get backwards() {
     return this._backwards;
   }
@@ -130,7 +146,7 @@ export class Sprite extends BaseSprite {
 
   constructor(
     playground: Playground,
-    parent?: SpriteGroup,
+    parent: SpriteGroup,
     options?: Partial<BaseSpriteOptions & SpriteOptions>
   ) {
     super(playground, parent, options);
@@ -235,7 +251,7 @@ export class Sprite extends BaseSprite {
           currentFrame += this._frameIncrement;
           if (this._backwards) {
             // Backwards animations
-            if (this.pingpong) {
+            if (this._pingpong) {
               // In pingpong animations the end is when the frame returns to the last frame
               if (currentFrame >= this._numberOfFrame) {
                 if (currentSpriteSheet < this._lastSpriteSheet) {
@@ -246,7 +262,7 @@ export class Sprite extends BaseSprite {
                   this._currentFrame = 0;
                 } else {
                   this._frameIncrement = -1;
-                  if (this.once) {
+                  if (this._once) {
                     currentFrame -= 1;
                     this._idleCounter = 1;
                     this._endAnimation = true;
@@ -309,7 +325,7 @@ export class Sprite extends BaseSprite {
                   this._currentFrame = this._numberOfFrame - 1;
                 } else {
                   // Last frame reached
-                  if (this.once) {
+                  if (this._once) {
                     currentFrame = 0;
                     this._idleCounter = 1;
                     this._endAnimation = true;
@@ -333,7 +349,7 @@ export class Sprite extends BaseSprite {
             }
           } else {
             // Forwards animations
-            if (this.pingpong) {
+            if (this._pingpong) {
               // In pingpong animations the end is when the frame goes below 0
               if (currentFrame < 0) {
                 if (currentSpriteSheet > 0) {
@@ -344,7 +360,7 @@ export class Sprite extends BaseSprite {
                   this._currentFrame = this._numberOfFrame - 1;
                 } else {
                   this._frameIncrement = 1;
-                  if (this.once) {
+                  if (this._once) {
                     currentFrame = 0;
                     this._idleCounter = 1;
                     this._endAnimation = true;
@@ -406,7 +422,7 @@ export class Sprite extends BaseSprite {
                   this._currentFrame = 0;
                 } else {
                   // Last frame reached
-                  if (this.once) {
+                  if (this._once) {
                     currentFrame -= 1;
                     this._idleCounter = 1;
                     this._endAnimation = true;

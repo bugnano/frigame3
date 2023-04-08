@@ -5,13 +5,15 @@ import type {
   AnimationOptions,
   FrameOptions,
 } from "../../Animation.js";
-import type { RectSizeY } from "../../Rect.js";
+import type { RectSizeX, RectSizeY } from "../../Rect.js";
 
 export interface SortedAnimationOptions extends AnimationOptions {
+  originx: keyof RectSizeX | number;
   originy: keyof RectSizeY | number;
 }
 
 export class SortedAnimation extends Animation {
+  originx: keyof RectSizeX | number = "halfWidth";
   originy: keyof RectSizeY | number = "height";
 
   constructor(
@@ -22,6 +24,9 @@ export class SortedAnimation extends Animation {
     super(options);
 
     if (options && typeof options !== "string") {
+      if (options.originx !== undefined) {
+        this.originx = options.originx;
+      }
       if (options.originy !== undefined) {
         this.originy = options.originy;
       }
@@ -30,6 +35,12 @@ export class SortedAnimation extends Animation {
 
   onLoad() {
     super.onLoad();
+
+    const originx = this.originx;
+
+    if (typeof originx === "string") {
+      this.originx = this[originx];
+    }
 
     const originy = this.originy;
 

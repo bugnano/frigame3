@@ -1,6 +1,6 @@
-import { SpriteGroup } from "../SpriteGroup.js";
 import { playgroundMap } from "./renderPlayground.js";
 import { roundRect } from "./renderRectangle.js";
+import type { SpriteGroup } from "../SpriteGroup.js";
 
 export const spriteGroupMap = new WeakMap<
   SpriteGroup,
@@ -38,7 +38,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
   const scaleh = group._scaleh;
   const scalev = group._scalev;
 
-  if (group._layers.length && opacity && scaleh && scalev && !group.hidden) {
+  if (group._layers.length && opacity && scaleh && scalev && !group._hidden) {
     const playground = group.playground!;
 
     const playgroundData = playgroundMap.get(playground)!;
@@ -46,8 +46,8 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
 
     const groupData = spriteGroupMap.get(group)!;
 
-    const angle = group.angle;
-    const crop = group.crop;
+    const angle = group._angle;
+    const crop = group._crop;
 
     groupData.contextSaved = false;
     if (angle || scaleh !== 1 || scalev !== 1 || crop) {
@@ -67,7 +67,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
     }
 
     groupData.blendModeChanged = false;
-    const blendMode = group.blendMode;
+    const blendMode = group._blendMode;
     if (blendMode !== "normal") {
       groupData.oldBlendMode = ctx.globalCompositeOperation;
 
@@ -85,7 +85,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
     const top = group._drawTop;
 
     if (angle || scaleh !== 1 || scalev !== 1) {
-      let transformOriginx = group.transformOriginx;
+      let transformOriginx = group._transformOriginx;
 
       if (typeof transformOriginx === "string") {
         transformOriginx = group[transformOriginx];
@@ -93,7 +93,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
 
       transformOriginx = trunc(transformOriginx);
 
-      let transformOriginy = group.transformOriginy;
+      let transformOriginy = group._transformOriginy;
 
       if (typeof transformOriginy === "string") {
         transformOriginy = group[transformOriginy];
@@ -121,13 +121,13 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
       }
     }
 
-    if (group.crop) {
+    if (crop) {
       // Prepare a rect path for the clipping region
       ctx.beginPath();
 
       const width = group._drawWidth;
       const height = group._drawHeight;
-      const border_radius = trunc(group.borderRadius);
+      const border_radius = trunc(group._borderRadius);
 
       if (border_radius > 0) {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -154,7 +154,7 @@ export function drawGroupAfterChildren(group: SpriteGroup, interp: number) {
     group._opacity &&
     group._scaleh &&
     group._scalev &&
-    !group.hidden
+    !group._hidden
   ) {
     const playground = group.playground!;
     const playgroundData = playgroundMap.get(playground)!;

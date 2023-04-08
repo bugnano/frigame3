@@ -1,4 +1,4 @@
-import { Playground } from "../Playground.js";
+import type { Playground } from "../Playground.js";
 
 export class GamepadTracker extends EventTarget {
   controllers = new Map<number, Gamepad>();

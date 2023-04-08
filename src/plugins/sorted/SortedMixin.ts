@@ -1,13 +1,21 @@
 import { SortedGroup } from "./SortedGroup.js";
-import type { RectSizeY } from "../../Rect.js";
 import type { BaseSprite } from "../../BaseSprite.js";
-
-type GConstructor<T extends object> = new (...args: any[]) => T;
+import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import type { GConstructor } from "../../utils.js";
 
 export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
   return class SortedMixin extends Base {
+    _originx: keyof RectSizeX | number = "halfWidth";
     _originy: keyof RectSizeY | number = "height";
     _sort_y = 0;
+
+    get originx() {
+      return this._originx;
+    }
+
+    set originx(value: keyof RectSizeX | number) {
+      this._originx = value;
+    }
 
     get originy() {
       return this._originy;

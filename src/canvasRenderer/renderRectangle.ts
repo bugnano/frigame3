@@ -1,5 +1,5 @@
-import { Rectangle } from "../Rectangle.js";
 import { playgroundMap } from "./renderPlayground.js";
+import type { Rectangle } from "../Rectangle.js";
 import type { GradientType } from "../Gradient.js";
 
 export interface GradientObj {
@@ -49,7 +49,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
     height
   );
   const background = rectangle._background;
-  const border_width = trunc(rectangle.borderWidth);
+  const border_width = trunc(rectangle._borderWidth);
   const border_color = rectangle._borderColor;
   const opacity = rectangle._opacity;
   const scaleh = rectangle._scaleh;
@@ -61,7 +61,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
     opacity &&
     scaleh &&
     scalev &&
-    !rectangle.hidden
+    !rectangle._hidden
   ) {
     const playgroundData = playgroundMap.get(playground)!;
     const ctx = playgroundData.ctx;
@@ -79,7 +79,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
 
     let old_blend_mode: GlobalCompositeOperation = "source-over";
     let blend_mode_changed = false;
-    const blendMode = rectangle.blendMode;
+    const blendMode = rectangle._blendMode;
     if (blendMode !== "normal") {
       old_blend_mode = ctx.globalCompositeOperation;
 
@@ -92,14 +92,14 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
       blend_mode_changed = true;
     }
 
-    const angle = rectangle.angle;
-    const border_radius = trunc(rectangle.borderRadius);
+    const angle = rectangle._angle;
+    const border_radius = trunc(rectangle._borderRadius);
     const border_half_width = border_width / 2;
 
     if (angle || scaleh !== 1 || scalev !== 1) {
       ctx.save();
 
-      let transformOriginx = rectangle.transformOriginx;
+      let transformOriginx = rectangle._transformOriginx;
 
       if (typeof transformOriginx === "string") {
         transformOriginx = rectangle[transformOriginx];
@@ -107,7 +107,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
 
       transformOriginx = trunc(transformOriginx);
 
-      let transformOriginy = rectangle.transformOriginy;
+      let transformOriginy = rectangle._transformOriginy;
 
       if (typeof transformOriginy === "string") {
         transformOriginy = rectangle[transformOriginy];

@@ -1,46 +1,46 @@
-import { SpriteGroup } from "../SpriteGroup.js";
-import { addSprite } from "../Sprite.js";
-import { addRectangle } from "../Rectangle.js";
-import type { Playground } from "../Playground.js";
-import type { BaseSpriteOptions } from "../BaseSprite.js";
-import type { SpriteGroupOptions } from "../SpriteGroup.js";
-import type { SpriteOptions } from "../Sprite.js";
-import type { RectangleOptions } from "../Rectangle.js";
+import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
+import { addISOSprite } from "./ISOSprite.js";
+import { addISORectangle } from "./ISORectangle.js";
+import type { Playground } from "../../Playground.js";
+import type { SpriteGroup } from "../../SpriteGroup.js";
+import type { ISORectOptions } from "./ISORect.js";
+import type { BaseSpriteOptions } from "../../BaseSprite.js";
+import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
+import type { ISOSpriteOptions } from "./ISOSprite.js";
+import type { ISORectangleOptions } from "./ISORectangle.js";
 
 // animationList MUST have at least `animation` or `background`
-export interface TilemapOptions {
+export interface ISOTilemapOptions {
   sizex: number; // Num tiles
   sizey: number; // Num tiles
-  tileWidth: number; // Pixel
-  tileHeight: number; // Pixel
+  tileSize: number; // Pixel
   data: number[]; // (sizex * sizey) members, indices of animationList
   animationList: Record<
     number,
-    Partial<SpriteOptions> | Partial<RectangleOptions>
+    Partial<ISOSpriteOptions> | Partial<ISORectangleOptions>
   >;
 }
 
-export class Tilemap extends SpriteGroup {
+export class ISOTilemap extends ISOSpriteGroup {
   sizex = 0;
   sizey = 0;
-  tileWidth = 0;
-  tileHeight = 0;
+  tileSize = 0;
 
   _locations: Uint32Array;
 
   constructor(
     playground: Playground,
     parent: SpriteGroup,
-    options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
+    options: ISOTilemapOptions &
+      Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
   ) {
     super(playground, parent, options);
 
-    const { sizex, sizey, tileWidth, tileHeight } = options;
+    const { sizex, sizey, tileSize } = options;
 
     this.sizex = sizex;
     this.sizey = sizey;
-    this.tileWidth = tileWidth;
-    this.tileHeight = tileHeight;
+    this.tileSize = tileSize;
 
     const locations = new Uint32Array(sizex * sizey).fill(0xffffffff);
     this._locations = locations;
@@ -51,7 +51,7 @@ export class Tilemap extends SpriteGroup {
       options.halfWidth === undefined &&
       options.radius === undefined
     ) {
-      this.width = sizex * tileWidth;
+      this.width = sizex * tileSize;
     }
 
     if (
@@ -59,7 +59,7 @@ export class Tilemap extends SpriteGroup {
       options.halfHeight === undefined &&
       options.radius === undefined
     ) {
-      this.height = sizey * tileHeight;
+      this.height = sizey * tileSize;
     }
 
     const animationList = options.animationList;
@@ -80,10 +80,10 @@ export class Tilemap extends SpriteGroup {
         const sprite_options = Object.assign({}, animation_options, {
           left,
           top,
-          width: tileWidth,
-          height: tileHeight,
+          width: tileSize,
+          height: tileSize,
         });
-        addSprite(this, sprite_options);
+        addISOSprite(this, sprite_options);
         locations[i_location] = layers.length - 1;
       } else if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -94,23 +94,23 @@ export class Tilemap extends SpriteGroup {
         const rectangle_options = Object.assign({}, animation_options, {
           left,
           top,
-          width: tileWidth,
-          height: tileHeight,
+          width: tileSize,
+          height: tileSize,
         });
-        addRectangle(this, rectangle_options);
+        addISORectangle(this, rectangle_options);
         locations[i_location] = layers.length - 1;
       } else {
         // TODO: Invalid
       }
 
       i_location += 1;
-      left += tileWidth;
+      left += tileSize;
       col += 1;
       if (col >= sizex) {
         col = 0;
         left = 0;
         row += 1;
-        top += tileHeight;
+        top += tileSize;
         if (row >= sizey) {
           break;
         }
@@ -123,24 +123,30 @@ export class Tilemap extends SpriteGroup {
   }
 }
 
-export function addTilemap(
+export function addISOTilemap(
   parent: SpriteGroup,
-  options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
+  options: ISOTilemapOptions &
+    Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
 ) {
-  const tilemap = new Tilemap(parent.playground!, parent, options);
+  const tilemap = new ISOTilemap(parent.playground!, parent, options);
 
   parent.addChild(tilemap);
+
+  tilemap._screen_obj.drawLast();
 
   return tilemap;
 }
 
-export function insertTilemap(
+export function insertISOTilemap(
   parent: SpriteGroup,
-  options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
+  options: ISOTilemapOptions &
+    Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
 ) {
-  const tilemap = new Tilemap(parent.playground!, parent, options);
+  const tilemap = new ISOTilemap(parent.playground!, parent, options);
 
   parent.insertChild(tilemap);
+
+  tilemap._screen_obj.drawFirst();
 
   return tilemap;
 }

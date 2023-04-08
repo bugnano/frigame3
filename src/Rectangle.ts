@@ -1,7 +1,7 @@
 import { BaseSprite } from "./BaseSprite.js";
-import { SpriteGroup } from "./SpriteGroup.js";
 import { Gradient } from "./Gradient.js";
-import { Playground } from "./Playground.js";
+import type { Playground } from "./Playground.js";
+import type { SpriteGroup } from "./SpriteGroup.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import type { ColorObj, ColorArr } from "./Gradient.js";
 import { pick } from "./utils.js";
@@ -15,8 +15,8 @@ export interface RectangleOptions {
 
 export class Rectangle extends BaseSprite {
   _background: Gradient | null = null;
-  borderRadius = 0;
-  borderWidth = 1;
+  _borderRadius = 0;
+  _borderWidth = 1;
   _borderColor: Gradient | null = null;
 
   get background() {
@@ -31,6 +31,22 @@ export class Rectangle extends BaseSprite {
     } else {
       this._background = new Gradient(value);
     }
+  }
+
+  get borderRadius() {
+    return this._borderRadius;
+  }
+
+  set borderRadius(value: number) {
+    this._borderRadius = value;
+  }
+
+  get borderWidth() {
+    return this._borderWidth;
+  }
+
+  set borderWidth(value: number) {
+    this._borderWidth = value;
   }
 
   get borderColor() {
@@ -49,7 +65,7 @@ export class Rectangle extends BaseSprite {
 
   constructor(
     playground: Playground,
-    parent?: SpriteGroup,
+    parent: SpriteGroup,
     options?: Partial<BaseSpriteOptions & RectangleOptions>
   ) {
     super(playground, parent, options);
@@ -65,28 +81,24 @@ export class Rectangle extends BaseSprite {
         ])
       );
 
-      if (parent) {
-        if (
-          options.width === undefined &&
-          options.halfWidth === undefined &&
-          options.radius === undefined
-        ) {
-          this.width = parent.width;
-        }
-
-        if (
-          options.height === undefined &&
-          options.halfHeight === undefined &&
-          options.radius === undefined
-        ) {
-          this.height = parent.height;
-        }
-      }
-    } else {
-      if (parent) {
+      if (
+        options.width === undefined &&
+        options.halfWidth === undefined &&
+        options.radius === undefined
+      ) {
         this.width = parent.width;
+      }
+
+      if (
+        options.height === undefined &&
+        options.halfHeight === undefined &&
+        options.radius === undefined
+      ) {
         this.height = parent.height;
       }
+    } else {
+      this.width = parent.width;
+      this.height = parent.height;
     }
 
     this.teleport();

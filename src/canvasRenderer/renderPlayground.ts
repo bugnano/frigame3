@@ -1,4 +1,4 @@
-import { Playground } from "../Playground.js";
+import type { Playground } from "../Playground.js";
 import type { RendererElement } from "../Renderer.js";
 import { cssClass } from "../defines.js";
 

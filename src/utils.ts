@@ -1,5 +1,7 @@
 import { REFRESH_RATE } from "./defines.js";
 
+export type GConstructor<T extends object> = new (...args: any[]) => T;
+
 export function noop() {
   // no-op
 }

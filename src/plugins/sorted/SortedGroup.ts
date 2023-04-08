@@ -1,11 +1,12 @@
 import { SpriteGroup } from "../../SpriteGroup.js";
-import { Playground } from "../../Playground.js";
 import { Sorted } from "./SortedMixin.js";
+import type { Playground } from "../../Playground.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
-import type { RectSizeY } from "../../Rect.js";
+import type { RectSizeX, RectSizeY } from "../../Rect.js";
 
 export interface SortedGroupOptions extends SpriteGroupOptions {
+  originx: keyof RectSizeX | number;
   originy: keyof RectSizeY | number;
 }
 
@@ -16,12 +17,15 @@ export class SortedGroup extends SortedBaseGroup {
 
   constructor(
     playground: Playground,
-    parent?: SpriteGroup,
+    parent: SpriteGroup,
     options?: Partial<BaseSpriteOptions & SortedGroupOptions>
   ) {
     super(playground, parent, options);
 
     if (options) {
+      if (options.originx !== undefined) {
+        this.originx = options.originx;
+      }
       if (options.originy !== undefined) {
         this.originy = options.originy;
       }

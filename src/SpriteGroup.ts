@@ -1,5 +1,5 @@
 import { BaseSprite } from "./BaseSprite.js";
-import { Playground } from "./Playground.js";
+import type { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick } from "./utils.js";
 
@@ -9,8 +9,24 @@ export interface SpriteGroupOptions {
 }
 
 export class SpriteGroup extends BaseSprite {
-  crop = false;
-  borderRadius = 0;
+  _crop = false;
+  _borderRadius = 0;
+
+  get crop() {
+    return this._crop;
+  }
+
+  set crop(value: boolean) {
+    this._crop = value;
+  }
+
+  get borderRadius() {
+    return this._borderRadius;
+  }
+
+  set borderRadius(value: number) {
+    this._borderRadius = value;
+  }
 
   // Implementation details
   _layers: BaseSprite[] = [];

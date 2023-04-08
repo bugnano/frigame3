@@ -1,12 +1,13 @@
 import { Rectangle } from "../../Rectangle.js";
-import { Playground } from "../../Playground.js";
 import { Sorted } from "./SortedMixin.js";
-import { SortedGroup } from "./SortedGroup.js";
+import type { SortedGroup } from "./SortedGroup.js";
+import type { Playground } from "../../Playground.js";
 import type { RectangleOptions } from "../../Rectangle.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
-import type { RectSizeY } from "../../Rect.js";
+import type { RectSizeX, RectSizeY } from "../../Rect.js";
 
 export interface SortedRectangleOptions extends RectangleOptions {
+  originx: keyof RectSizeX | number;
   originy: keyof RectSizeY | number;
 }
 
@@ -15,20 +16,21 @@ const SortedBaseRectangle = Sorted(Rectangle);
 export class SortedRectangle extends SortedBaseRectangle {
   constructor(
     playground: Playground,
-    parent?: SortedGroup,
+    parent: SortedGroup,
     options?: Partial<BaseSpriteOptions & SortedRectangleOptions>
   ) {
     super(playground, parent, options);
 
     if (options) {
+      if (options.originx !== undefined) {
+        this.originx = options.originx;
+      }
       if (options.originy !== undefined) {
         this.originy = options.originy;
       }
     }
 
-    if (parent instanceof SortedGroup) {
-      parent._needsSorting = true;
-    }
+    parent._needsSorting = true;
 
     this._sort_y = this._calcSortY();
   }

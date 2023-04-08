@@ -6,8 +6,8 @@ import type {
   RectSizeY,
   RectOptions,
 } from "./Rect.js";
-import { Playground } from "./Playground.js";
-import { SpriteGroup } from "./SpriteGroup.js";
+import type { Playground } from "./Playground.js";
+import type { SpriteGroup } from "./SpriteGroup.js";
 import { pick, clamp } from "./utils.js";
 
 // source-over, lighter, multiply, screen
@@ -40,10 +40,10 @@ export class BaseSprite extends Rect {
   _playground: WeakRef<Playground>;
   _parent?: WeakRef<SpriteGroup>;
 
-  transformOriginx: keyof RectSizeX | number = "halfWidth";
-  transformOriginy: keyof RectSizeY | number = "halfHeight";
+  _transformOriginx: keyof RectSizeX | number = "halfWidth";
+  _transformOriginy: keyof RectSizeY | number = "halfHeight";
 
-  angle = 0;
+  _angle = 0;
 
   _scalex = 1;
   _scaley = 1;
@@ -51,12 +51,12 @@ export class BaseSprite extends Rect {
   _flipv = 1;
 
   _opacity = 1;
-  hidden = false;
+  _hidden = false;
 
   _scaleh = 1;
   _scalev = 1;
 
-  blendMode: BlendMode = "normal";
+  _blendMode: BlendMode = "normal";
 
   // Implementation details
   _needsUpdate = false;
@@ -77,14 +77,38 @@ export class BaseSprite extends Rect {
   }
 
   get transformOrigin() {
-    return this.transformOriginx as
+    return this._transformOriginx as
       | (keyof RectSizeX & keyof RectSizeY)
       | number;
   }
 
   set transformOrigin(value: (keyof RectSizeX & keyof RectSizeY) | number) {
-    this.transformOriginx = value;
-    this.transformOriginy = value;
+    this._transformOriginx = value;
+    this._transformOriginy = value;
+  }
+
+  get transformOriginx() {
+    return this._transformOriginx;
+  }
+
+  set transformOriginx(value: keyof RectSizeX | number) {
+    this._transformOriginx = value;
+  }
+
+  get transformOriginy() {
+    return this._transformOriginy;
+  }
+
+  set transformOriginy(value: keyof RectSizeY | number) {
+    this._transformOriginy = value;
+  }
+
+  get angle() {
+    return this._angle;
+  }
+
+  set angle(value: number) {
+    this._angle = value;
   }
 
   get scalex() {
@@ -171,6 +195,22 @@ export class BaseSprite extends Rect {
 
   set opacity(value: number) {
     this._opacity = clamp(value, 0, 1) || 0;
+  }
+
+  get hidden() {
+    return this._hidden;
+  }
+
+  set hidden(value: boolean) {
+    this._hidden = value;
+  }
+
+  get blendMode() {
+    return this._blendMode;
+  }
+
+  set blendMode(value: BlendMode) {
+    this._blendMode = value;
   }
 
   get left() {
