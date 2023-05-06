@@ -1,0 +1,21 @@
+{
+  "name": "frigame3_test",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "prettier --write . && tsc ; esbuild --bundle --outfile=animation/bundle.js animation/index.ts ; esbuild --bundle --outfile=transformation1/bundle.js transformation1/index.ts ; esbuild --bundle --outfile=transformation2/bundle.js transformation2/index.ts ; esbuild --bundle --outfile=layers/bundle.js layers/index.ts ; esbuild --bundle --outfile=mixer/bundle.js mixer/index.ts ; esbuild --bundle --outfile=sorted/bundle.js sorted/index.ts ; esbuild --bundle --outfile=isometric1/bundle.js isometric1/index.ts ; esbuild --bundle --outfile=isometric2/bundle.js isometric2/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franco Bugnano",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "frigame3": "../"
+  },
+  "devDependencies": {
+    "esbuild": "^0.16.7",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
+  }
+}

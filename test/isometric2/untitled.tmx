@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="8" height="8" tilewidth="128" tileheight="64">
+ <tileset firstgid="1" name="tile" tilewidth="128" tileheight="64">
+  <image source="../Work/GitHub/frigame_isometric/tests/layers/tile.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="3" name="block" tilewidth="128" tileheight="128">
+  <image source="../Work/GitHub/frigame_isometric/tests/layers/tile.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="4" name="ice_block" tilewidth="128" tileheight="128">
+  <image source="../Work/GitHub/frigame_isometric/tests/layers/ice.png" width="128" height="150"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="8" height="8">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer name="Livello di Celle 2" width="8" height="8">
+  <data encoding="csv">
+4,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,4,0,0,
+0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

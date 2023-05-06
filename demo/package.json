@@ -1,0 +1,21 @@
+{
+  "name": "frigame3_demo",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "prettier --write . && tsc ; esbuild --bundle --outfile=snake/bundle.js snake/index.ts ; esbuild --bundle --outfile=tetris/bundle.js tetris/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Franco Bugnano",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "frigame3": "../"
+  },
+  "devDependencies": {
+    "esbuild": "^0.16.7",
+    "prettier": "^2.8.1",
+    "typescript": "^4.9.4"
+  }
+}
