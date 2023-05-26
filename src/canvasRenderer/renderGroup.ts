@@ -1,5 +1,4 @@
 import { playgroundMap } from "./renderPlayground.js";
-import { roundRect } from "./renderRectangle.js";
 import type { SpriteGroup } from "../SpriteGroup.js";
 
 export const spriteGroupMap = new WeakMap<
@@ -130,12 +129,7 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
       const border_radius = trunc(group._borderRadius);
 
       if (border_radius > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (ctx.roundRect) {
-          ctx.roundRect(0, 0, width, height, border_radius);
-        } else {
-          roundRect(ctx, 0, 0, width, height, border_radius);
-        }
+        ctx.roundRect(0, 0, width, height, border_radius);
       } else {
         ctx.rect(0, 0, width, height);
       }
