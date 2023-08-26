@@ -1,11 +1,11 @@
 import { BaseSprite } from "./BaseSprite.js";
-import type { Playground } from "./Playground.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick } from "./utils.js";
 
 export interface SpriteGroupOptions {
   crop: boolean;
   borderRadius: number;
+  children: BaseSprite[];
 }
 
 export class SpriteGroup extends BaseSprite {
@@ -29,48 +29,24 @@ export class SpriteGroup extends BaseSprite {
   }
 
   // Implementation details
+
   _layers: BaseSprite[] = [];
   _updateList: BaseSprite[] = [];
 
-  constructor(
-    playground: Playground,
-    parent?: SpriteGroup,
-    options?: Partial<BaseSpriteOptions & SpriteGroupOptions>
-  ) {
-    super(playground, parent, options);
+  constructor(options?: Partial<BaseSpriteOptions & SpriteGroupOptions>) {
+    super(options);
 
     if (options) {
       Object.assign(this, pick(options, ["crop", "borderRadius"]));
 
-      if (parent) {
-        if (
-          options.width === undefined &&
-          options.halfWidth === undefined &&
-          options.radius === undefined
-        ) {
-          this.width = parent.width;
+      if (options.children) {
+        for (const child of options.children) {
+          this.addChild(child);
         }
-
-        if (
-          options.height === undefined &&
-          options.halfHeight === undefined &&
-          options.radius === undefined
-        ) {
-          this.height = parent.height;
-        }
-      }
-    } else {
-      if (parent) {
-        this.width = parent.width;
-        this.height = parent.height;
       }
     }
 
-    this._checkUpdate();
-
     this.teleport();
-
-    playground._renderer.initGroup(this);
   }
 
   // Public functions
@@ -88,20 +64,50 @@ export class SpriteGroup extends BaseSprite {
     return this;
   }
 
-  addChild(child: BaseSprite) {
-    this._layers.push(child);
+  addChild<T extends BaseSprite>(
+    child: T,
+    options?: { suppressWarning?: boolean }
+  ) {
+    if (!child.parent) {
+      this._layers.push(child);
 
-    this._checkUpdate();
+      this._reparentChild(child);
 
-    return this;
+      this._checkUpdate();
+    } else {
+      if (
+        typeof console !== "undefined" &&
+        (!options || options.suppressWarning === false)
+      ) {
+        console.warn("child already has a parent");
+        console.trace();
+      }
+    }
+
+    return child;
   }
 
-  insertChild(child: BaseSprite) {
-    this._layers.unshift(child);
+  insertChild<T extends BaseSprite>(
+    child: T,
+    options?: { suppressWarning?: boolean }
+  ) {
+    if (!child.parent) {
+      this._layers.unshift(child);
 
-    this._checkUpdate();
+      this._reparentChild(child);
 
-    return this;
+      this._checkUpdate();
+    } else {
+      if (
+        typeof console !== "undefined" &&
+        (!options || options.suppressWarning === false)
+      ) {
+        console.warn("child already has a parent");
+        console.trace();
+      }
+    }
+
+    return child;
   }
 
   removeChild(
@@ -150,6 +156,31 @@ export class SpriteGroup extends BaseSprite {
 
   // Implementation details
 
+  _reparentChild(child: BaseSprite) {
+    child._parent = new WeakRef(this);
+    child._needsUpdate = false;
+    child._checkUpdate();
+
+    this._addPlaygroundToChild(child);
+  }
+
+  _addPlaygroundToChild(child: BaseSprite) {
+    const playground = this.playground;
+
+    if (playground) {
+      child._playground = new WeakRef(playground);
+      child._frameCounterLastMove = playground.frameCounter;
+      child._initRenderer();
+      child._onReparent();
+
+      if ("_layers" in child) {
+        for (const layer of child._layers as BaseSprite[]) {
+          this._addPlaygroundToChild(layer);
+        }
+      }
+    }
+  }
+
   _checkUpdate() {
     const oldNeedsUpdate = this._needsUpdate;
 
@@ -160,6 +191,10 @@ export class SpriteGroup extends BaseSprite {
     }
 
     this._updateNeedsUpdate(oldNeedsUpdate);
+  }
+
+  _initRenderer() {
+    this.playground?._renderer.initGroup(this);
   }
 
   _update() {
@@ -200,26 +235,4 @@ export class SpriteGroup extends BaseSprite {
 
     this.playground?._renderer.removeGroup(this);
   }
-}
-
-export function addGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SpriteGroupOptions>
-) {
-  const group = new SpriteGroup(parent.playground!, parent, options);
-
-  parent.addChild(group);
-
-  return group;
-}
-
-export function insertGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SpriteGroupOptions>
-) {
-  const group = new SpriteGroup(parent.playground!, parent, options);
-
-  parent.insertChild(group);
-
-  return group;
 }

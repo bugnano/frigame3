@@ -1,11 +1,9 @@
-import { BaseSprite } from "../../BaseSprite.js";
+import { Sprite } from "../../Sprite.js";
 import { ISO } from "./ISOMixin.js";
-import { addSortedSprite } from "../sorted/SortedSprite.js";
+import { SortedSprite } from "../sorted/SortedSprite.js";
 import { pick } from "../../utils.js";
 import type { SortedAnimation } from "../sorted/SortedAnimation.js";
-import type { SortedSprite } from "../sorted/SortedSprite.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import type { Playground } from "../../Playground.js";
 import type { ISORectOptions } from "./ISORect.js";
 import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
@@ -17,94 +15,126 @@ export interface ISOSpriteOptions extends SpriteOptions {
   referencey: keyof RectSizeY | number;
 }
 
-const ISOBaseSprite = ISO(BaseSprite);
+const ISOBaseSprite = ISO(Sprite);
 
 export class ISOSprite extends ISOBaseSprite {
-  _screen_obj: SortedSprite;
+  _screen_obj: SortedSprite | null = null;
 
   // Proxy getters & setters
+
   get animation() {
-    return this._screen_obj.animation;
+    return super.animation as SortedAnimation | null;
   }
 
   set animation(value: SortedAnimation | null) {
-    const screen_obj = this._screen_obj;
+    if (value !== super.animation) {
+      const width = super.width;
+      const height = super.height;
 
-    if (value !== screen_obj.animation) {
-      screen_obj.animation = value;
+      super.animation = value;
+
+      super.width = width;
+      super.height = height;
 
       if (value) {
-        this.originx = screen_obj.originx;
-        this.originy = screen_obj.originy;
+        this.originx = value.originx;
+        this.originy = value.originy;
+      }
+
+      if (this._screen_obj) {
+        this._screen_obj.animation = value;
       }
     }
   }
 
   get animationIndex() {
-    return this._screen_obj.animationIndex;
+    return super.animationIndex;
   }
 
   set animationIndex(value: number) {
-    this._screen_obj.animationIndex = value;
+    super.animationIndex = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.animationIndex = value;
+    }
   }
 
   get callback() {
-    return this._screen_obj.callback;
+    return super.callback;
   }
 
   set callback(value: (() => void) | null) {
-    this._screen_obj.callback = value;
+    super.callback = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.callback = value;
+    }
   }
 
   get paused() {
-    return this._screen_obj.paused;
+    return super.paused;
   }
 
   set paused(value: boolean) {
-    this._screen_obj.paused = value;
+    super.paused = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.paused = value;
+    }
   }
 
   get rate() {
-    return this._screen_obj.rate;
+    return super.rate;
   }
 
   set rate(value: number) {
-    this._screen_obj.rate = value;
+    super.rate = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.rate = value;
+    }
   }
 
   get once() {
-    return this._screen_obj.once;
+    return super.once;
   }
 
   set once(value: boolean) {
-    this._screen_obj.once = value;
+    super.once = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.once = value;
+    }
   }
 
   get pingpong() {
-    return this._screen_obj.pingpong;
+    return super.pingpong;
   }
 
   set pingpong(value: boolean) {
-    this._screen_obj.pingpong = value;
+    super.pingpong = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.pingpong = value;
+    }
   }
 
   get backwards() {
-    return this._screen_obj.backwards;
+    return super.backwards;
   }
 
   set backwards(value: boolean) {
-    this._screen_obj.backwards = value;
+    super.backwards = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.backwards = value;
+    }
   }
 
   constructor(
-    playground: Playground,
-    parent: ISOSpriteGroup,
     options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions>
   ) {
-    super(playground, parent);
-
-    // The screen sprite must be created in the screen layer
-    this._screen_obj = addSortedSprite(parent._screen_obj);
+    super();
 
     if (options) {
       Object.assign(
@@ -158,30 +188,39 @@ export class ISOSprite extends ISOBaseSprite {
   // The _resize function has been deliberately omitted,
   // as the screen object automatically gets the size of the animation
   // and the size of the ISOSprite is independent of it
-}
 
-export function addISOSprite(
-  parent: ISOSpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions>
-) {
-  const sprite = new ISOSprite(parent.playground!, parent, options);
+  _onReparent() {
+    // The screen sprite must be created in the screen layer
+    const parent = this.parent as ISOSpriteGroup;
+    const parent_screen_obj = parent._screen_obj!;
 
-  parent.addChild(sprite);
+    // TODO: Is the newly created screen object in the correct drawing order?
+    this._screen_obj = parent_screen_obj.addChild(
+      new SortedSprite({
+        transformOriginx: this.transformOriginx,
+        transformOriginy: this.transformOriginy,
+        angle: this.angle,
+        scalex: this.scalex,
+        scaley: this.scaley,
+        fliph: this.fliph,
+        flipv: this.flipv,
+        opacity: this.opacity,
+        hidden: this.hidden,
+        blendMode: this.blendMode,
+        animation: this.animation,
+        animationIndex: this.animationIndex,
+        callback: this.callback,
+        paused: this.paused,
+        rate: this.rate,
+        once: this.once,
+        pingpong: this.pingpong,
+        backwards: this.backwards,
+        originx: this.originx,
+        originy: this.originy,
+      })
+    );
 
-  sprite._screen_obj.drawLast();
-
-  return sprite;
-}
-
-export function insertISOSprite(
-  parent: ISOSpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions>
-) {
-  const sprite = new ISOSprite(parent.playground!, parent, options);
-
-  parent.insertChild(sprite);
-
-  sprite._screen_obj.drawFirst();
-
-  return sprite;
+    this._move("elevation", this.elevation);
+    this.teleport();
+  }
 }

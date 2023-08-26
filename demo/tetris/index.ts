@@ -1,11 +1,10 @@
-import { resourceManager } from "frigame3/lib/resourceManager.js";
 import { Gradient } from "frigame3/lib/Gradient.js";
 import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Rectangle, addRectangle } from "frigame3/lib/Rectangle.js";
+import { Rectangle } from "frigame3/lib/Rectangle.js";
 import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
 import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
-import { addTilemap } from "frigame3/lib/plugins/Tilemap.js";
+import { Tilemap } from "frigame3/lib/plugins/Tilemap.js";
 
 const GAME_SPEED = 24;
 const TYPEMATIC_SPEED = 12;
@@ -303,45 +302,53 @@ function fitsPiece(
 
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
-  const box = addRectangle(sg, {
-    centerx: sg.width / 2,
-    centery: sg.centery,
-    width: 10 * BLOCK_SIZE,
-    height: 20 * BLOCK_SIZE,
-    borderWidth: BLOCK_SIZE,
-    borderColor: [128, 128, 128],
-  });
+  const box = sg.addChild(
+    new Rectangle({
+      centerx: sg.width / 2,
+      centery: sg.centery,
+      width: 10 * BLOCK_SIZE,
+      height: 20 * BLOCK_SIZE,
+      borderWidth: BLOCK_SIZE,
+      borderColor: [128, 128, 128],
+    })
+  );
 
-  const content = addTilemap(sg, {
-    centerx: sg.width / 2,
-    centery: sg.centery,
-    sizex: 10,
-    sizey: 20,
-    tileWidth: BLOCK_SIZE,
-    tileHeight: BLOCK_SIZE,
-    data: Array(10 * 20).fill(1),
-    animationList: { 1: { background: COLOURS[" "] } },
-  });
+  const content = sg.addChild(
+    new Tilemap({
+      centerx: sg.width / 2,
+      centery: sg.centery,
+      sizex: 10,
+      sizey: 20,
+      tileWidth: BLOCK_SIZE,
+      tileHeight: BLOCK_SIZE,
+      data: Array(10 * 20).fill(1),
+      animationList: { 1: { background: COLOURS[" "] } },
+    })
+  );
 
-  const preview_box = addRectangle(sg, {
-    centerx: (sg.width * 3) / 4,
-    centery: sg.height / 3,
-    width: 6 * BLOCK_SIZE,
-    height: 6 * BLOCK_SIZE,
-    borderWidth: BLOCK_SIZE,
-    borderColor: [128, 128, 128],
-  });
+  const preview_box = sg.addChild(
+    new Rectangle({
+      centerx: (sg.width * 3) / 4,
+      centery: sg.height / 3,
+      width: 6 * BLOCK_SIZE,
+      height: 6 * BLOCK_SIZE,
+      borderWidth: BLOCK_SIZE,
+      borderColor: [128, 128, 128],
+    })
+  );
 
-  const preview = addTilemap(sg, {
-    centerx: (sg.width * 3) / 4,
-    centery: sg.height / 3,
-    sizex: 6,
-    sizey: 6,
-    tileWidth: BLOCK_SIZE,
-    tileHeight: BLOCK_SIZE,
-    data: Array(6 * 6).fill(1),
-    animationList: { 1: { background: COLOURS[" "] } },
-  });
+  const preview = sg.addChild(
+    new Tilemap({
+      centerx: (sg.width * 3) / 4,
+      centery: sg.height / 3,
+      sizex: 6,
+      sizey: 6,
+      tileWidth: BLOCK_SIZE,
+      tileHeight: BLOCK_SIZE,
+      data: Array(6 * 6).fill(1),
+      animationList: { 1: { background: COLOURS[" "] } },
+    })
+  );
 
   const preview_pieces: Piece[][] = [
     Array(6).fill(" "),

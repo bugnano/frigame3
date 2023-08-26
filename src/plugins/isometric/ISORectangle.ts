@@ -1,10 +1,8 @@
-import { BaseSprite } from "../../BaseSprite.js";
+import { Rectangle } from "../../Rectangle.js";
 import { ISO } from "./ISOMixin.js";
-import { addSortedRectangle } from "../sorted/SortedRectangle.js";
+import { SortedRectangle } from "../sorted/SortedRectangle.js";
 import { pick } from "../../utils.js";
-import type { SortedRectangle } from "../sorted/SortedRectangle.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import type { Playground } from "../../Playground.js";
 import type { ISORectOptions } from "./ISORect.js";
 import type { RectangleOptions } from "../../Rectangle.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
@@ -17,58 +15,69 @@ export interface ISORectangleOptions extends RectangleOptions {
   referencey: keyof RectSizeY | number;
 }
 
-const ISOBaseRectangle = ISO(BaseSprite);
+const ISOBaseRectangle = ISO(Rectangle);
 
 export class ISORectangle extends ISOBaseRectangle {
-  _screen_obj: SortedRectangle;
+  _screen_obj: SortedRectangle | null = null;
 
   // Proxy getters & setters
 
   get background() {
-    return this._screen_obj.background;
+    return super.background;
   }
 
   set background(
     value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
   ) {
-    this._screen_obj.background = value;
+    super.background = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.background = value;
+    }
   }
 
   get borderRadius() {
-    return this._screen_obj.borderRadius;
+    return super.borderRadius;
   }
 
   set borderRadius(value: number) {
-    this._screen_obj.borderRadius = value;
+    super.borderRadius = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.borderRadius = value;
+    }
   }
 
   get borderWidth() {
-    return this._screen_obj.borderWidth;
+    return super.borderWidth;
   }
 
   set borderWidth(value: number) {
-    this._screen_obj.borderWidth = value;
+    super.borderWidth = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.borderWidth = value;
+    }
   }
 
   get borderColor() {
-    return this._screen_obj.borderColor;
+    return super.borderColor;
   }
 
   set borderColor(
     value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
   ) {
-    this._screen_obj.borderColor = value;
+    super.borderColor = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.borderColor = value;
+    }
   }
 
   constructor(
-    playground: Playground,
-    parent: ISOSpriteGroup,
     options?: Partial<BaseSpriteOptions & ISORectOptions & ISORectangleOptions>
   ) {
-    super(playground, parent);
-
-    // The screen rectangle must be created in the screen layer
-    this._screen_obj = addSortedRectangle(parent._screen_obj);
+    super();
 
     if (options) {
       Object.assign(
@@ -127,30 +136,37 @@ export class ISORectangle extends ISOBaseRectangle {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     this._screen_obj?._resize(prop, value);
   }
-}
 
-export function addISORectangle(
-  parent: ISOSpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISORectangleOptions>
-) {
-  const rectangle = new ISORectangle(parent.playground!, parent, options);
+  _onReparent() {
+    // The screen rectangle must be created in the screen layer
+    const parent = this.parent as ISOSpriteGroup;
+    const parent_screen_obj = parent._screen_obj!;
 
-  parent.addChild(rectangle);
+    // TODO: Is the newly created screen object in the correct drawing order?
+    this._screen_obj = parent_screen_obj.addChild(
+      new SortedRectangle({
+        width: this.width,
+        height: this.height,
+        transformOriginx: this.transformOriginx,
+        transformOriginy: this.transformOriginy,
+        angle: this.angle,
+        scalex: this.scalex,
+        scaley: this.scaley,
+        fliph: this.fliph,
+        flipv: this.flipv,
+        opacity: this.opacity,
+        hidden: this.hidden,
+        blendMode: this.blendMode,
+        background: this.background,
+        borderRadius: this.borderRadius,
+        borderWidth: this.borderWidth,
+        borderColor: this.borderColor,
+        originx: this.originx,
+        originy: this.originy,
+      })
+    );
 
-  rectangle._screen_obj.drawLast();
-
-  return rectangle;
-}
-
-export function insertISORectangle(
-  parent: ISOSpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISORectangleOptions>
-) {
-  const rectangle = new ISORectangle(parent.playground!, parent, options);
-
-  parent.insertChild(rectangle);
-
-  rectangle._screen_obj.drawFirst();
-
-  return rectangle;
+    this._move("elevation", this.elevation);
+    this.teleport();
+  }
 }

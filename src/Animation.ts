@@ -1,4 +1,3 @@
-import { resourceManager } from "./resourceManager.js";
 import type { Resource } from "./resourceManager.js";
 import { framesFromMs } from "./utils.js";
 
@@ -266,14 +265,4 @@ export class Animation implements Resource {
       }
     }
   }
-}
-
-export function addAnimation(
-  options: Partial<SpriteSheet & AnimationOptions & FrameOptions> | string
-) {
-  const animation = new Animation(options);
-
-  resourceManager.addResource(animation);
-
-  return animation;
 }

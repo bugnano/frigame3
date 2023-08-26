@@ -33,7 +33,7 @@ const speeds = {
 
 export class Tweener extends EventTarget {
   _nextId = 1; // Start from 1 to guarantee that tweenId is always truthy
-  _tween_queue = new Map<number, TweenObj<any>>();
+  _tween_queue = new Map<number, TweenObj<Record<string, number>>>();
   _tweening = false;
   _playground: WeakRef<Playground>;
   _callbackId: number | null = null;
@@ -182,7 +182,10 @@ export class Tweener extends EventTarget {
     const tweenId = this._nextId;
     this._nextId += 1;
 
-    this._tween_queue.set(tweenId, tween_obj);
+    this._tween_queue.set(
+      tweenId,
+      tween_obj as unknown as TweenObj<Record<string, number>>
+    );
     this._tweening = true;
 
     return tweenId;

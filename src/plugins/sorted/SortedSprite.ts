@@ -2,7 +2,6 @@ import { Sprite } from "../../Sprite.js";
 import { Sorted } from "./SortedMixin.js";
 import { SortedGroup } from "./SortedGroup.js";
 import type { SortedAnimation } from "./SortedAnimation.js";
-import type { Playground } from "../../Playground.js";
 import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
@@ -38,12 +37,8 @@ export class SortedSprite extends SortedBaseSprite {
     }
   }
 
-  constructor(
-    playground: Playground,
-    parent: SortedGroup,
-    options?: Partial<BaseSpriteOptions & SortedSpriteOptions>
-  ) {
-    super(playground, parent, options);
+  constructor(options?: Partial<BaseSpriteOptions & SortedSpriteOptions>) {
+    super(options);
 
     if (options) {
       if (options.originx !== undefined) {
@@ -54,30 +49,6 @@ export class SortedSprite extends SortedBaseSprite {
       }
     }
 
-    parent._needsSorting = true;
-
     this._sort_y = this._calcSortY();
   }
-}
-
-export function addSortedSprite(
-  parent: SortedGroup,
-  options?: Partial<BaseSpriteOptions & SortedSpriteOptions>
-) {
-  const sprite = new SortedSprite(parent.playground!, parent, options);
-
-  parent.addChild(sprite);
-
-  return sprite;
-}
-
-export function insertSortedSprite(
-  parent: SortedGroup,
-  options?: Partial<BaseSpriteOptions & SortedSpriteOptions>
-) {
-  const sprite = new SortedSprite(parent.playground!, parent, options);
-
-  parent.insertChild(sprite);
-
-  return sprite;
 }

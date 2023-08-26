@@ -37,7 +37,7 @@ export interface TransformOptions {
 export type BaseSpriteOptions = RectOptions & TransformOptions;
 
 export class BaseSprite extends Rect {
-  _playground: WeakRef<Playground>;
+  _playground?: WeakRef<Playground>;
   _parent?: WeakRef<SpriteGroup>;
 
   _transformOriginx: keyof RectSizeX | number = "halfWidth";
@@ -59,6 +59,7 @@ export class BaseSprite extends Rect {
   _blendMode: BlendMode = "normal";
 
   // Implementation details
+
   _needsUpdate = false;
   _prevLeft = 0;
   _prevTop = 0;
@@ -69,7 +70,7 @@ export class BaseSprite extends Rect {
   _drawHeight = 0;
 
   get playground() {
-    return this._playground.deref();
+    return this._playground?.deref();
   }
 
   get parent() {
@@ -301,18 +302,8 @@ export class BaseSprite extends Rect {
     this._resize("radius", value);
   }
 
-  constructor(
-    playground: Playground,
-    parent?: SpriteGroup,
-    options?: Partial<BaseSpriteOptions>
-  ) {
+  constructor(options?: Partial<BaseSpriteOptions>) {
     super();
-
-    this._playground = new WeakRef(playground);
-
-    if (parent) {
-      this._parent = new WeakRef(parent);
-    }
 
     if (options) {
       Object.assign(
@@ -357,12 +348,14 @@ export class BaseSprite extends Rect {
     if (parent) {
       const parent_layers = parent._layers;
 
-      // Step 1: Remove myself from the parent layers
       const index = parent_layers.indexOf(this);
-      parent_layers.splice(index, 1);
+      if (index >= 0) {
+        // Step 1: Remove myself from the parent layers
+        parent_layers.splice(index, 1);
 
-      // Step 2: Insert myself
-      parent_layers.unshift(this);
+        // Step 2: Insert myself
+        parent_layers.unshift(this);
+      }
     }
 
     return this;
@@ -374,12 +367,14 @@ export class BaseSprite extends Rect {
     if (parent) {
       const parent_layers = parent._layers;
 
-      // Step 1: Remove myself from the parent layers
       const index = parent_layers.indexOf(this);
-      parent_layers.splice(index, 1);
+      if (index >= 0) {
+        // Step 1: Remove myself from the parent layers
+        parent_layers.splice(index, 1);
 
-      // Step 2: Insert myself
-      parent_layers.push(this);
+        // Step 2: Insert myself
+        parent_layers.push(this);
+      }
     }
 
     return this;
@@ -401,16 +396,18 @@ export class BaseSprite extends Rect {
     if (parent) {
       const parent_layers = parent._layers;
 
-      // Step 1: Remove myself from the parent layers
       const i = parent_layers.indexOf(this);
-      parent_layers.splice(i, 1);
+      if (i >= 0) {
+        // Step 1: Remove myself from the parent layers
+        parent_layers.splice(i, 1);
 
-      // Step 2: Insert myself
-      parent_layers.splice(
-        clamp(Math.round(index) || 0, 0, parent_layers.length),
-        0,
-        this
-      );
+        // Step 2: Insert myself
+        parent_layers.splice(
+          clamp(Math.round(index) || 0, 0, parent_layers.length),
+          0,
+          this
+        );
+      }
     }
 
     return this;
@@ -424,12 +421,14 @@ export class BaseSprite extends Rect {
       const sprite_index = parent_layers.indexOf(sprite);
 
       if (sprite_index >= 0) {
-        // Step 1: Remove myself from the parent layers
         const index = parent_layers.indexOf(this);
-        parent_layers.splice(index, 1);
+        if (index >= 0) {
+          // Step 1: Remove myself from the parent layers
+          parent_layers.splice(index, 1);
 
-        // Step 2: Insert myself
-        parent_layers.splice(sprite_index, 0, this);
+          // Step 2: Insert myself
+          parent_layers.splice(sprite_index, 0, this);
+        }
       } else if (typeof console !== "undefined") {
         console.error("Sprite not found in the same sprite group");
         console.trace();
@@ -447,12 +446,14 @@ export class BaseSprite extends Rect {
       const sprite_index = parent_layers.indexOf(sprite);
 
       if (sprite_index >= 0) {
-        // Step 1: Remove myself from the parent layers
         const index = parent_layers.indexOf(this);
-        parent_layers.splice(index, 1);
+        if (index >= 0) {
+          // Step 1: Remove myself from the parent layers
+          parent_layers.splice(index, 1);
 
-        // Step 2: Insert myself
-        parent_layers.splice(sprite_index + 1, 0, this);
+          // Step 2: Insert myself
+          parent_layers.splice(sprite_index + 1, 0, this);
+        }
       } else if (typeof console !== "undefined") {
         console.error("Sprite not found in the same sprite group");
         console.trace();
@@ -483,9 +484,10 @@ export class BaseSprite extends Rect {
   teleport() {
     const playground = this.playground;
 
+    this._prevLeft = this._left;
+    this._prevTop = this._top;
+
     if (playground) {
-      this._prevLeft = this._left;
-      this._prevTop = this._top;
       this._frameCounterLastMove = playground.frameCounter;
     }
 
@@ -600,15 +602,28 @@ export class BaseSprite extends Rect {
     const parent = this.parent;
 
     if (parent) {
-      if (this._needsUpdate && !oldNeedsUpdate) {
-        parent._updateList.push(this);
-      } else if (!this._needsUpdate && oldNeedsUpdate) {
-        const parent_update_list = parent._updateList;
+      const parent_update_list = parent._updateList;
 
+      if (this._needsUpdate && !oldNeedsUpdate) {
         const index = parent_update_list.indexOf(this);
-        parent_update_list.splice(index, 1);
+        if (index < 0) {
+          parent_update_list.push(this);
+        }
+      } else if (!this._needsUpdate && oldNeedsUpdate) {
+        const index = parent_update_list.indexOf(this);
+        if (index >= 0) {
+          parent_update_list.splice(index, 1);
+        }
       }
     }
+  }
+
+  _onReparent() {
+    // no-op
+  }
+
+  _initRenderer() {
+    // no-op
   }
 
   _update() {

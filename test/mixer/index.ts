@@ -1,11 +1,10 @@
-import { resourceManager } from "frigame3/lib/resourceManager.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
 import {
-  addSound,
   canPlay,
+  Sound,
   MultiChannel,
   SingleChannel,
 } from "frigame3/lib/plugins/mixer.js";
-import type { Sound } from "frigame3/lib/plugins/mixer.js";
 import { Playground } from "frigame3/lib/Playground.js";
 import { dummyRenderer } from "frigame3/lib/dummyRenderer.js";
 import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
@@ -14,17 +13,17 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
   const sfx = new MultiChannel();
   const music = new SingleChannel();
 
-  const stereomp3 = addSound("news_intro.mp3");
-  const monomp3 = addSound("prova.mp3");
-  const news = addSound(["news_intro.ogg", "news_intro.mp3"]);
-  const prova = addSound(["prova.ogg", "prova.mp3"]);
-  const dieci = addSound("dieci.opus");
+  const stereomp3 = rm.addResource(new Sound("news_intro.mp3"));
+  const monomp3 = rm.addResource(new Sound("prova.mp3"));
+  const news = rm.addResource(new Sound(["news_intro.ogg", "news_intro.mp3"]));
+  const prova = rm.addResource(new Sound(["prova.ogg", "prova.mp3"]));
+  const dieci = rm.addResource(new Sound("dieci.opus"));
 
   let s_news: Sound | null = null;
   let s_prova: Sound | null = null;
 
   document.getElementById("start")?.addEventListener("click", async () => {
-    await resourceManager.preload();
+    await rm.preload();
 
     const playground = new Playground(dummyRenderer);
     const fx = new Tweener(playground);
@@ -32,9 +31,11 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
     document.getElementById("loadmono")?.addEventListener("click", async () => {
       music.stop();
       s_news = null;
-      s_prova = addSound(["prova.ogg", "prova.mp3"], { streaming: true });
+      s_prova = rm.addResource(
+        new Sound(["prova.ogg", "prova.mp3"], { streaming: true })
+      );
 
-      await resourceManager.preload();
+      await rm.preload();
 
       console.log("Loaded mono");
       console.log("audio: " + s_prova?._audio);
@@ -47,12 +48,14 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
       .getElementById("loadstereo")
       ?.addEventListener("click", async () => {
         music.stop();
-        s_news = addSound(["news_intro.ogg", "news_intro.mp3"], {
-          streaming: true,
-        });
+        s_news = rm.addResource(
+          new Sound(["news_intro.ogg", "news_intro.mp3"], {
+            streaming: true,
+          })
+        );
         s_prova = null;
 
-        await resourceManager.preload();
+        await rm.preload();
 
         console.log("Loaded stereo");
         console.log("audio: " + s_news?._audio);

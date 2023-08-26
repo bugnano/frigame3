@@ -28,6 +28,7 @@ export type RectOptions = RectPosX & RectPosY & RectSizeX & RectSizeY;
 
 export class Rect {
   // Implementation details
+
   _left = 0;
   _top = 0;
   _width = 0;
@@ -176,6 +177,7 @@ export class Rect {
   }
 
   // Collision detection
+
   collideRect(otherRect: Rect) {
     return !(
       this.bottom <= otherRect.top ||

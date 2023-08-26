@@ -1,8 +1,6 @@
 import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import { addISOSprite } from "./ISOSprite.js";
-import { addISORectangle } from "./ISORectangle.js";
-import type { Playground } from "../../Playground.js";
-import type { SpriteGroup } from "../../SpriteGroup.js";
+import { ISOSprite } from "./ISOSprite.js";
+import { ISORectangle } from "./ISORectangle.js";
 import type { ISORectOptions } from "./ISORect.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
@@ -29,12 +27,10 @@ export class ISOTilemap extends ISOSpriteGroup {
   _locations: Uint32Array;
 
   constructor(
-    playground: Playground,
-    parent: SpriteGroup,
     options: ISOTilemapOptions &
       Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
   ) {
-    super(playground, parent, options);
+    super(options);
 
     const { sizex, sizey, tileSize } = options;
 
@@ -83,7 +79,7 @@ export class ISOTilemap extends ISOSpriteGroup {
           width: tileSize,
           height: tileSize,
         });
-        addISOSprite(this, sprite_options);
+        this.addChild(new ISOSprite(sprite_options));
         locations[i_location] = layers.length - 1;
       } else if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -97,7 +93,7 @@ export class ISOTilemap extends ISOSpriteGroup {
           width: tileSize,
           height: tileSize,
         });
-        addISORectangle(this, rectangle_options);
+        this.addChild(new ISORectangle(rectangle_options));
         locations[i_location] = layers.length - 1;
       } else {
         // TODO: Invalid
@@ -121,32 +117,4 @@ export class ISOTilemap extends ISOSpriteGroup {
   getAt(row: number, col: number) {
     return this._layers[this._locations[row * this.sizex + col]];
   }
-}
-
-export function addISOTilemap(
-  parent: SpriteGroup,
-  options: ISOTilemapOptions &
-    Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
-) {
-  const tilemap = new ISOTilemap(parent.playground!, parent, options);
-
-  parent.addChild(tilemap);
-
-  tilemap._screen_obj.drawLast();
-
-  return tilemap;
-}
-
-export function insertISOTilemap(
-  parent: SpriteGroup,
-  options: ISOTilemapOptions &
-    Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
-) {
-  const tilemap = new ISOTilemap(parent.playground!, parent, options);
-
-  parent.insertChild(tilemap);
-
-  tilemap._screen_obj.drawFirst();
-
-  return tilemap;
 }

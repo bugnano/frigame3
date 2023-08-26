@@ -1,38 +1,47 @@
-import { resourceManager } from "frigame3/lib/resourceManager.js";
-import { addSortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
 import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { addGroup } from "frigame3/lib/SpriteGroup.js";
-import { addISOSprite } from "frigame3/lib/plugins/isometric/ISOSprite.js";
-import { addISOGroup } from "frigame3/lib/plugins/isometric/ISOSpriteGroup.js";
-import { addISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
+import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
+import { ISOSprite } from "frigame3/lib/plugins/isometric/ISOSprite.js";
+import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
 import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
 
 (async () => {
-  const floor = addSortedAnimation({
-    imageURL: "tile.png",
-    originx: 64,
-    originy: 32,
-  });
-  const ice_floor = addSortedAnimation({
-    imageURL: "ice.png",
-    originx: 64,
-    originy: 54,
-  });
-  const block = addSortedAnimation({
-    imageURL: "tile.png",
-    originx: 64,
-    originy: 96,
-  });
-  const ice = addSortedAnimation({
-    imageURL: "ice.png",
-    originx: 64,
-    originy: 118,
-  });
-  const knight = addSortedAnimation({
-    imageURL: "knight_se.png",
-    numberOfFrame: 8,
-  });
+  const floor = rm.addResource(
+    new SortedAnimation({
+      imageURL: "tile.png",
+      originx: 64,
+      originy: 32,
+    })
+  );
+  const ice_floor = rm.addResource(
+    new SortedAnimation({
+      imageURL: "ice.png",
+      originx: 64,
+      originy: 54,
+    })
+  );
+  const block = rm.addResource(
+    new SortedAnimation({
+      imageURL: "tile.png",
+      originx: 64,
+      originy: 96,
+    })
+  );
+  const ice = rm.addResource(
+    new SortedAnimation({
+      imageURL: "ice.png",
+      originx: 64,
+      originy: 118,
+    })
+  );
+  const knight = rm.addResource(
+    new SortedAnimation({
+      imageURL: "knight_se.png",
+      numberOfFrame: 8,
+    })
+  );
 
   const animationList = {
     1: { animation: floor },
@@ -75,21 +84,23 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
     animationList,
   };
 
-  await resourceManager.preload();
+  await rm.preload();
 
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
 
-  const my_group = addGroup(sg, { left: 512, top: 64 });
-  const floor_tilemap = addISOTilemap(my_group, floorTiles);
-  const object_tilemap = addISOTilemap(my_group, objectTiles);
-  const iso_knight = addISOSprite(object_tilemap, {
-    centerx: 256,
-    centery: 256,
-    radius: 32,
-    animation: knight,
-    rate: 100,
-  });
+  const my_group = sg.addChild(new SpriteGroup({ left: 512, top: 64 }));
+  const floor_tilemap = my_group.addChild(new ISOTilemap(floorTiles));
+  const object_tilemap = my_group.addChild(new ISOTilemap(objectTiles));
+  const iso_knight = object_tilemap.addChild(
+    new ISOSprite({
+      centerx: 256,
+      centery: 256,
+      radius: 32,
+      animation: knight,
+      rate: 100,
+    })
+  );
 
   document.getElementById("playground")!.addEventListener("mousedown", (e) => {
     const box = document.getElementById("playground")!.getBoundingClientRect();

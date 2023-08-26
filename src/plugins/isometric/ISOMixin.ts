@@ -14,7 +14,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     _originy: keyof RectSizeY | number = "height";
     _referencex: keyof RectSizeX | number = "halfWidth";
     _referencey: keyof RectSizeY | number = "halfHeight";
-    _screen_obj?: SortedGroup | SortedSprite | SortedRectangle;
+    _screen_obj: SortedGroup | SortedSprite | SortedRectangle | null = null;
 
     get elevation() {
       return this._elevation;
@@ -29,16 +29,20 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     }
 
     set originx(value: keyof RectSizeX | number) {
-      const screen_obj = this._screen_obj!;
+      this._originx = value;
 
-      let originx = value;
+      const screen_obj = this._screen_obj;
 
-      if (typeof originx === "string") {
-        originx = screen_obj[originx];
+      if (screen_obj) {
+        let originx = value;
+
+        if (typeof originx === "string") {
+          originx = screen_obj[originx];
+        }
+
+        screen_obj.originx = originx;
       }
 
-      this._originx = value;
-      screen_obj.originx = originx;
       this._move(null, 0);
     }
 
@@ -47,16 +51,20 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     }
 
     set originy(value: keyof RectSizeY | number) {
-      const screen_obj = this._screen_obj!;
+      this._originy = value;
 
-      let originy = value;
+      const screen_obj = this._screen_obj;
 
-      if (typeof originy === "string") {
-        originy = screen_obj[originy];
+      if (screen_obj) {
+        let originy = value;
+
+        if (typeof originy === "string") {
+          originy = screen_obj[originy];
+        }
+
+        screen_obj.originy = originy + this._elevation;
       }
 
-      this._originy = value;
-      screen_obj.originy = originy + this._elevation;
       this._move(null, 0);
     }
 
@@ -90,183 +98,247 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy getters & setters
 
-    get hidden() {
-      return this._screen_obj!.hidden;
-    }
-
-    set hidden(value: boolean) {
-      this._screen_obj!.hidden = value;
-    }
-
     get transformOrigin() {
-      return this._screen_obj!.transformOrigin;
+      return super.transformOrigin;
     }
 
     set transformOrigin(value: (keyof RectSizeX & keyof RectSizeY) | number) {
-      this._screen_obj!.transformOrigin = value;
+      super.transformOrigin = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.transformOrigin = value;
+      }
     }
 
     get transformOriginx() {
-      return this._screen_obj!.transformOriginx;
+      return super.transformOriginx;
     }
 
     set transformOriginx(value: keyof RectSizeX | number) {
-      this._screen_obj!.transformOriginx = value;
+      super.transformOriginx = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.transformOriginx = value;
+      }
     }
 
     get transformOriginy() {
-      return this._screen_obj!.transformOriginy;
+      return super.transformOriginy;
     }
 
     set transformOriginy(value: keyof RectSizeY | number) {
-      this._screen_obj!.transformOriginy = value;
+      super.transformOriginy = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.transformOriginy = value;
+      }
     }
 
     get angle() {
-      return this._screen_obj!.angle;
+      return super.angle;
     }
 
     set angle(value: number) {
-      this._screen_obj!.angle = value;
+      super.angle = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.angle = value;
+      }
     }
 
     get scalex() {
-      return this._screen_obj!.scalex;
+      return super.scalex;
     }
 
     set scalex(value: number) {
-      this._screen_obj!.scalex = value;
+      super.scalex = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.scalex = value;
+      }
     }
 
     get scaley() {
-      return this._screen_obj!.scaley;
+      return super.scaley;
     }
 
     set scaley(value: number) {
-      this._screen_obj!.scaley = value;
+      super.scaley = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.scaley = value;
+      }
     }
 
     get scale() {
-      return this._screen_obj!.scale;
+      return super.scale;
     }
 
     set scale(value: number) {
-      this._screen_obj!.scale = value;
+      super.scale = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.scale = value;
+      }
     }
 
     get fliph() {
-      return this._screen_obj!.fliph;
+      return super.fliph;
     }
 
     set fliph(value: boolean) {
-      this._screen_obj!.fliph = value;
+      super.fliph = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.fliph = value;
+      }
     }
 
     get flipv() {
-      return this._screen_obj!.flipv;
+      return super.flipv;
     }
 
     set flipv(value: boolean) {
-      this._screen_obj!.flipv = value;
+      super.flipv = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.flipv = value;
+      }
     }
 
     get flip() {
-      return this._screen_obj!.flip;
+      return super.flip;
     }
 
     set flip(value: boolean) {
-      this._screen_obj!.flip = value;
+      super.flip = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.flip = value;
+      }
     }
 
     get opacity() {
-      return this._screen_obj!.opacity;
+      return super.opacity;
     }
 
     set opacity(value: number) {
-      this._screen_obj!.opacity = value;
+      super.opacity = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.opacity = value;
+      }
+    }
+
+    get hidden() {
+      return super.hidden;
+    }
+
+    set hidden(value: boolean) {
+      super.hidden = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.hidden = value;
+      }
     }
 
     get blendMode() {
-      return this._screen_obj!.blendMode;
+      return super.blendMode;
     }
 
     set blendMode(value: BlendMode) {
-      this._screen_obj!.blendMode = value;
+      super.blendMode = value;
+
+      if (this._screen_obj) {
+        this._screen_obj.blendMode = value;
+      }
     }
 
     // Public functions
 
     getScreenRect() {
-      const screen_obj = this._screen_obj!;
+      const screen_obj = this._screen_obj;
 
-      let originx = this._originx;
+      if (screen_obj) {
+        let originx = this._originx;
 
-      if (typeof originx === "string") {
-        originx = screen_obj[originx];
+        if (typeof originx === "string") {
+          originx = screen_obj[originx];
+        }
+
+        let originy = this._originy;
+
+        if (typeof originy === "string") {
+          originy = screen_obj[originy];
+        }
+
+        const screen_rect = new ISORect(screen_obj);
+
+        screen_rect.originx = originx;
+        screen_rect.originy = originy;
+        screen_rect.elevation = this._elevation;
+
+        return screen_rect;
       }
 
-      let originy = this._originy;
-
-      if (typeof originy === "string") {
-        originy = screen_obj[originy];
-      }
-
-      const screen_rect = new ISORect(screen_obj);
-
-      screen_rect.originx = originx;
-      screen_rect.originy = originy;
-      screen_rect.elevation = this._elevation;
-
-      return screen_rect;
+      return null;
     }
 
     getScreenAbsRect() {
-      const screen_obj = this._screen_obj!;
+      const screen_obj = this._screen_obj;
 
-      let originx = this._originx;
+      if (screen_obj) {
+        let originx = this._originx;
 
-      if (typeof originx === "string") {
-        originx = screen_obj[originx];
+        if (typeof originx === "string") {
+          originx = screen_obj[originx];
+        }
+
+        let originy = this._originy;
+
+        if (typeof originy === "string") {
+          originy = screen_obj[originy];
+        }
+
+        const screen_rect = new ISORect(screen_obj.getAbsRect());
+
+        screen_rect.originx = originx;
+        screen_rect.originy = originy;
+        screen_rect.elevation = this._elevation;
+
+        return screen_rect;
       }
 
-      let originy = this._originy;
-
-      if (typeof originy === "string") {
-        originy = screen_obj[originy];
-      }
-
-      const screen_rect = new ISORect(screen_obj.getAbsRect());
-
-      screen_rect.originx = originx;
-      screen_rect.originy = originy;
-      screen_rect.elevation = this._elevation;
-
-      return screen_rect;
+      return null;
     }
 
     // Proxy functions
 
     drawFirst() {
       super.drawFirst();
-      this._screen_obj!.drawFirst();
+      this._screen_obj?.drawFirst();
 
       return this;
     }
 
     drawLast() {
       super.drawLast();
-      this._screen_obj!.drawLast();
+      this._screen_obj?.drawLast();
 
       return this;
     }
 
     getDrawIndex() {
-      return this._screen_obj!.getDrawIndex();
+      if (this._screen_obj) {
+        return this._screen_obj.getDrawIndex();
+      } else {
+        return super.getDrawIndex();
+      }
     }
 
     drawTo(index: number) {
       super.drawTo(index);
-      this._screen_obj!.drawTo(index);
+      this._screen_obj?.drawTo(index);
 
       return this;
     }
@@ -275,7 +347,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       super.drawBefore(sprite);
 
       if ("_screen_obj" in sprite) {
-        this._screen_obj!.drawBefore((sprite as ISOMixin)._screen_obj!);
+        const s = sprite as ISOMixin;
+
+        if (s._screen_obj) {
+          this._screen_obj?.drawBefore(s._screen_obj);
+        }
       }
 
       return this;
@@ -285,7 +361,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       super.drawAfter(sprite);
 
       if ("_screen_obj" in sprite) {
-        this._screen_obj!.drawAfter((sprite as ISOMixin)._screen_obj!);
+        const s = sprite as ISOMixin;
+
+        if (s._screen_obj) {
+          this._screen_obj?.drawAfter(s._screen_obj);
+        }
       }
 
       return this;
@@ -357,15 +437,21 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
+    _initRenderer() {
+      // no-op
+    }
+
+    _update() {
+      // no-op
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _draw(interp: number) {
       // The drawing is performed only on the screen objects
     }
 
     _remove() {
-      super._remove();
-
-      this._screen_obj!.parent?.removeChild(this._screen_obj!, {
+      this._screen_obj?.parent?.removeChild(this._screen_obj, {
         suppressWarning: true,
       });
     }

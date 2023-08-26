@@ -1,8 +1,7 @@
-import { resourceManager } from "frigame3/lib/resourceManager.js";
 import { Gradient } from "frigame3/lib/Gradient.js";
 import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Rectangle, insertRectangle } from "frigame3/lib/Rectangle.js";
+import { Rectangle } from "frigame3/lib/Rectangle.js";
 import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
 import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 
@@ -30,13 +29,15 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
   const max_x = Math.trunc(playground.width / rect_size);
   const max_y = Math.trunc(playground.height / rect_size);
   const snake: Rectangle[] = [];
-  let apple = insertRectangle(sg, {
-    left: (1 + Math.trunc(Math.random() * (max_x - 2))) * rect_size,
-    top: (1 + Math.trunc(Math.random() * (max_y - 2))) * rect_size,
-    width: rect_size,
-    height: rect_size,
-    background: red,
-  });
+  let apple = sg.addChild(
+    new Rectangle({
+      left: (1 + Math.trunc(Math.random() * (max_x - 2))) * rect_size,
+      top: (1 + Math.trunc(Math.random() * (max_y - 2))) * rect_size,
+      width: rect_size,
+      height: rect_size,
+      background: red,
+    })
+  );
   let x = Math.trunc(max_x / 2);
   let y = Math.trunc(max_y / 2);
   let snake_length = 3;
@@ -76,13 +77,15 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 
     let r: Rectangle;
     if (snake.length < snake_length) {
-      r = insertRectangle(sg, {
-        left: x * rect_size,
-        top: y * rect_size,
-        width: rect_size,
-        height: rect_size,
-        background: green,
-      });
+      r = sg.insertChild(
+        new Rectangle({
+          left: x * rect_size,
+          top: y * rect_size,
+          width: rect_size,
+          height: rect_size,
+          background: green,
+        })
+      );
     } else {
       r = snake.shift()!;
       r.left = x * rect_size;

@@ -13,6 +13,7 @@ export class Playground extends EventTarget {
   scenegraph: SpriteGroup;
 
   // Implementation details
+
   _renderer: Renderer;
   _nextId = 1; // Start from 1 to guarantee that callbackId is always truthy
   _callbacks = new Map<
@@ -55,12 +56,15 @@ export class Playground extends EventTarget {
     this._width = width;
     this._height = height;
 
-    this.scenegraph = new SpriteGroup(this, undefined, { width, height });
+    this.scenegraph = new SpriteGroup({ width, height });
+    this.scenegraph._playground = new WeakRef(this);
+    this.scenegraph._initRenderer();
 
     this.startGame();
   }
 
   // Public functions
+
   registerCallback(callback: () => void, rate?: number) {
     const callbackId = this._nextId;
     this._nextId += 1;

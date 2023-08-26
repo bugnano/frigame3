@@ -1,19 +1,20 @@
-import { resourceManager } from "frigame3/lib/resourceManager.js";
-import { addAnimation } from "frigame3/lib/Animation.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+import { Animation } from "frigame3/lib/Animation.js";
 import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { addSprite } from "frigame3/lib/Sprite.js";
-import type { Sprite } from "frigame3/lib/Sprite.js";
+import { Sprite } from "frigame3/lib/Sprite.js";
 
 (async () => {
-  const animation = addAnimation({
-    imageURL: "sh.png",
-    type: "horizontal",
-    numberOfFrame: 4,
-    rate: 300,
-  });
+  const animation = rm.addResource(
+    new Animation({
+      imageURL: "sh.png",
+      type: "horizontal",
+      numberOfFrame: 4,
+      rate: 300,
+    })
+  );
 
-  await resourceManager.preload();
+  await rm.preload();
 
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
@@ -21,26 +22,34 @@ import type { Sprite } from "frigame3/lib/Sprite.js";
   let angle = 45;
   let angle_rad = (angle * Math.PI) / 180;
 
-  const aRotateScale = addSprite(sg, {
-    animation: animation,
-    left: 16,
-    top: 16,
-  });
-  const scaleARotate = addSprite(sg, {
-    animation: animation,
-    left: 80,
-    top: 16,
-  });
-  const rotateAScale = addSprite(sg, {
-    animation: animation,
-    left: 180,
-    top: 16,
-  });
-  const aScaleRotate = addSprite(sg, {
-    animation: animation,
-    left: 240,
-    top: 16,
-  });
+  const aRotateScale = sg.addChild(
+    new Sprite({
+      animation: animation,
+      left: 16,
+      top: 16,
+    })
+  );
+  const scaleARotate = sg.addChild(
+    new Sprite({
+      animation: animation,
+      left: 80,
+      top: 16,
+    })
+  );
+  const rotateAScale = sg.addChild(
+    new Sprite({
+      animation: animation,
+      left: 180,
+      top: 16,
+    })
+  );
+  const aScaleRotate = sg.addChild(
+    new Sprite({
+      animation: animation,
+      left: 240,
+      top: 16,
+    })
+  );
 
   playground.registerCallback(() => {
     aRotateScale.angle = angle_rad;

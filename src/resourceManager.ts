@@ -4,6 +4,7 @@ export interface Resource {
 }
 
 // Implementation details
+
 let idPreload: number | null = null;
 const preloadList: Resource[] = [];
 let resolveCallback: ((value?: undefined) => void) | null = null;
@@ -56,7 +57,7 @@ function preload() {
 
 export interface ResourceManager {
   loadCallback: ((percent: number) => void) | null;
-  addResource(resource: Resource): void;
+  addResource<T extends Resource>(resource: T): T;
   removeResource(
     resource: Resource | null,
     options?: { suppressWarning?: boolean }
@@ -68,8 +69,10 @@ export interface ResourceManager {
 export const resourceManager: ResourceManager = {
   loadCallback: null,
 
-  addResource(resource: Resource) {
+  addResource<T extends Resource>(resource: T) {
     preloadList.push(resource);
+
+    return resource;
   },
 
   removeResource(

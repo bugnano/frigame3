@@ -1,7 +1,6 @@
 import { SpriteGroup } from "../SpriteGroup.js";
-import { addSprite } from "../Sprite.js";
-import { addRectangle } from "../Rectangle.js";
-import type { Playground } from "../Playground.js";
+import { Sprite } from "../Sprite.js";
+import { Rectangle } from "../Rectangle.js";
 import type { BaseSpriteOptions } from "../BaseSprite.js";
 import type { SpriteGroupOptions } from "../SpriteGroup.js";
 import type { SpriteOptions } from "../Sprite.js";
@@ -29,11 +28,9 @@ export class Tilemap extends SpriteGroup {
   _locations: Uint32Array;
 
   constructor(
-    playground: Playground,
-    parent: SpriteGroup,
     options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
   ) {
-    super(playground, parent, options);
+    super(options);
 
     const { sizex, sizey, tileWidth, tileHeight } = options;
 
@@ -83,7 +80,7 @@ export class Tilemap extends SpriteGroup {
           width: tileWidth,
           height: tileHeight,
         });
-        addSprite(this, sprite_options);
+        this.addChild(new Sprite(sprite_options));
         locations[i_location] = layers.length - 1;
       } else if (
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -97,7 +94,7 @@ export class Tilemap extends SpriteGroup {
           width: tileWidth,
           height: tileHeight,
         });
-        addRectangle(this, rectangle_options);
+        this.addChild(new Rectangle(rectangle_options));
         locations[i_location] = layers.length - 1;
       } else {
         // TODO: Invalid
@@ -121,26 +118,4 @@ export class Tilemap extends SpriteGroup {
   getAt(row: number, col: number) {
     return this._layers[this._locations[row * this.sizex + col]];
   }
-}
-
-export function addTilemap(
-  parent: SpriteGroup,
-  options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
-) {
-  const tilemap = new Tilemap(parent.playground!, parent, options);
-
-  parent.addChild(tilemap);
-
-  return tilemap;
-}
-
-export function insertTilemap(
-  parent: SpriteGroup,
-  options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
-) {
-  const tilemap = new Tilemap(parent.playground!, parent, options);
-
-  parent.insertChild(tilemap);
-
-  return tilemap;
 }

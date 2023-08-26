@@ -1,6 +1,6 @@
+import { BaseSprite } from "../../BaseSprite.js";
 import { SpriteGroup } from "../../SpriteGroup.js";
 import { Sorted } from "./SortedMixin.js";
-import type { Playground } from "../../Playground.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
@@ -15,12 +15,8 @@ const SortedBaseGroup = Sorted(SpriteGroup);
 export class SortedGroup extends SortedBaseGroup {
   _needsSorting = false;
 
-  constructor(
-    playground: Playground,
-    parent: SpriteGroup,
-    options?: Partial<BaseSpriteOptions & SortedGroupOptions>
-  ) {
-    super(playground, parent, options);
+  constructor(options?: Partial<BaseSpriteOptions & SortedGroupOptions>) {
+    super(options);
 
     if (options) {
       if (options.originx !== undefined) {
@@ -31,11 +27,29 @@ export class SortedGroup extends SortedBaseGroup {
       }
     }
 
-    if (parent instanceof SortedGroup) {
-      parent._needsSorting = true;
-    }
-
     this._sort_y = this._calcSortY();
+  }
+
+  addChild<T extends BaseSprite>(
+    child: T,
+    options?: { suppressWarning?: boolean }
+  ) {
+    super.addChild(child, options);
+
+    this._needsSorting = true;
+
+    return child;
+  }
+
+  insertChild<T extends BaseSprite>(
+    child: T,
+    options?: { suppressWarning?: boolean }
+  ) {
+    super.insertChild(child, options);
+
+    this._needsSorting = true;
+
+    return child;
   }
 
   _sortLayers() {
@@ -78,26 +92,4 @@ export class SortedGroup extends SortedBaseGroup {
 
     super._draw(interp);
   }
-}
-
-export function addSortedGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SortedGroupOptions>
-) {
-  const group = new SortedGroup(parent.playground!, parent, options);
-
-  parent.addChild(group);
-
-  return group;
-}
-
-export function insertSortedGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SortedGroupOptions>
-) {
-  const group = new SortedGroup(parent.playground!, parent, options);
-
-  parent.insertChild(group);
-
-  return group;
 }

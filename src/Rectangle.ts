@@ -1,7 +1,5 @@
 import { BaseSprite } from "./BaseSprite.js";
 import { Gradient } from "./Gradient.js";
-import type { Playground } from "./Playground.js";
-import type { SpriteGroup } from "./SpriteGroup.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import type { ColorObj, ColorArr } from "./Gradient.js";
 import { pick } from "./utils.js";
@@ -63,12 +61,8 @@ export class Rectangle extends BaseSprite {
     }
   }
 
-  constructor(
-    playground: Playground,
-    parent: SpriteGroup,
-    options?: Partial<BaseSpriteOptions & RectangleOptions>
-  ) {
-    super(playground, parent, options);
+  constructor(options?: Partial<BaseSpriteOptions & RectangleOptions>) {
+    super(options);
 
     if (options) {
       Object.assign(
@@ -80,33 +74,16 @@ export class Rectangle extends BaseSprite {
           "borderColor",
         ])
       );
-
-      if (
-        options.width === undefined &&
-        options.halfWidth === undefined &&
-        options.radius === undefined
-      ) {
-        this.width = parent.width;
-      }
-
-      if (
-        options.height === undefined &&
-        options.halfHeight === undefined &&
-        options.radius === undefined
-      ) {
-        this.height = parent.height;
-      }
-    } else {
-      this.width = parent.width;
-      this.height = parent.height;
     }
 
     this.teleport();
-
-    playground._renderer.initRectangle(this);
   }
 
   // Implementation details
+
+  _initRenderer() {
+    this.playground?._renderer.initRectangle(this);
+  }
 
   _draw(interp: number) {
     super._draw(interp);
@@ -117,26 +94,4 @@ export class Rectangle extends BaseSprite {
   _remove() {
     this.playground?._renderer.removeRectangle(this);
   }
-}
-
-export function addRectangle(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & RectangleOptions>
-) {
-  const rectangle = new Rectangle(parent.playground!, parent, options);
-
-  parent.addChild(rectangle);
-
-  return rectangle;
-}
-
-export function insertRectangle(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & RectangleOptions>
-) {
-  const rectangle = new Rectangle(parent.playground!, parent, options);
-
-  parent.insertChild(rectangle);
-
-  return rectangle;
 }

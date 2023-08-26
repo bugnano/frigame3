@@ -1,4 +1,3 @@
-import { resourceManager } from "../resourceManager.js";
 import type { Resource } from "../resourceManager.js";
 import { clamp, pick, noop } from "../utils.js";
 
@@ -161,17 +160,6 @@ export class Sound implements Resource {
       });
     }
   }
-}
-
-export function addSound(
-  soundURLs: string | string[] | Partial<Record<keyof typeof canPlay, string>>,
-  options?: { streaming: boolean }
-) {
-  const sound = new Sound(soundURLs, options);
-
-  resourceManager.addResource(sound);
-
-  return sound;
 }
 
 class Channel {

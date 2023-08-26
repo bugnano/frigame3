@@ -1,5 +1,4 @@
 import { Animation } from "../../Animation.js";
-import { resourceManager } from "../../resourceManager.js";
 import type {
   SpriteSheet,
   AnimationOptions,
@@ -48,14 +47,4 @@ export class SortedAnimation extends Animation {
       this.originy = this[originy];
     }
   }
-}
-
-export function addSortedAnimation(
-  options: Partial<SpriteSheet & SortedAnimationOptions & FrameOptions> | string
-) {
-  const animation = new SortedAnimation(options);
-
-  resourceManager.addResource(animation);
-
-  return animation;
 }

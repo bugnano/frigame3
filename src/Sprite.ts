@@ -1,7 +1,5 @@
 import { BaseSprite } from "./BaseSprite.js";
-import type { SpriteGroup } from "./SpriteGroup.js";
 import type { Animation } from "./Animation.js";
-import type { Playground } from "./Playground.js";
 import type { AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { pick, framesFromMs } from "./utils.js";
@@ -25,6 +23,7 @@ export class Sprite extends BaseSprite {
   _backwards = false;
 
   // Implementation details
+
   _idleCounter = 0;
   _lastSpriteSheet = 0;
   _currentSpriteSheet = 0;
@@ -144,12 +143,8 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  constructor(
-    playground: Playground,
-    parent: SpriteGroup,
-    options?: Partial<BaseSpriteOptions & SpriteOptions>
-  ) {
-    super(playground, parent, options);
+  constructor(options?: Partial<BaseSpriteOptions & SpriteOptions>) {
+    super(options);
 
     if (options) {
       Object.assign(
@@ -170,8 +165,6 @@ export class Sprite extends BaseSprite {
     this.restartAnimation();
 
     this.teleport();
-
-    playground._renderer.initSprite(this);
   }
 
   // Public functions
@@ -234,6 +227,10 @@ export class Sprite extends BaseSprite {
     }
 
     this._updateNeedsUpdate(oldNeedsUpdate);
+  }
+
+  _initRenderer() {
+    this.playground?._renderer.initSprite(this);
   }
 
   _update() {
@@ -462,26 +459,4 @@ export class Sprite extends BaseSprite {
   _remove() {
     this.playground?._renderer.removeSprite(this);
   }
-}
-
-export function addSprite(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SpriteOptions>
-) {
-  const sprite = new Sprite(parent.playground!, parent, options);
-
-  parent.addChild(sprite);
-
-  return sprite;
-}
-
-export function insertSprite(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & SpriteOptions>
-) {
-  const sprite = new Sprite(parent.playground!, parent, options);
-
-  parent.insertChild(sprite);
-
-  return sprite;
 }

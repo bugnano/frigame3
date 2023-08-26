@@ -1,9 +1,7 @@
 import { SpriteGroup } from "../../SpriteGroup.js";
 import { ISO } from "./ISOMixin.js";
-import { addSortedGroup } from "../sorted/SortedGroup.js";
+import { SortedGroup } from "../sorted/SortedGroup.js";
 import { pick } from "../../utils.js";
-import type { SortedGroup } from "../sorted/SortedGroup.js";
-import type { Playground } from "../../Playground.js";
 import type { ISORectOptions } from "./ISORect.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
@@ -22,37 +20,38 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   _originy: keyof RectSizeY | number = 0;
   _referencex: keyof RectSizeX | number = 0;
   _referencey: keyof RectSizeY | number = 0;
-  _screen_obj: SortedGroup;
+  _screen_obj: SortedGroup | null = null;
 
   // Proxy getters & setters
+
   get crop() {
-    return this._screen_obj.crop;
+    return super.crop;
   }
 
   set crop(value: boolean) {
-    this._screen_obj.crop = value;
+    super.crop = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.crop = value;
+    }
   }
 
   get borderRadius() {
-    return this._screen_obj.borderRadius;
+    return super.borderRadius;
   }
 
   set borderRadius(value: number) {
-    this._screen_obj.borderRadius = value;
+    super.borderRadius = value;
+
+    if (this._screen_obj) {
+      this._screen_obj.borderRadius = value;
+    }
   }
 
   constructor(
-    playground: Playground,
-    parent: SpriteGroup,
     options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
   ) {
-    super(playground, parent);
-
-    // The screen sprite group must be created in the screen layer
-    const parent_screen_obj =
-      "_screen_obj" in parent ? (parent._screen_obj as ISOSpriteGroup) : parent;
-
-    this._screen_obj = addSortedGroup(parent_screen_obj);
+    super();
 
     if (options) {
       Object.assign(
@@ -91,6 +90,12 @@ export class ISOSpriteGroup extends ISOBaseGroup {
           "elevation",
         ])
       );
+
+      if (options.children) {
+        for (const child of options.children) {
+          this.addChild(child);
+        }
+      }
     }
 
     this._move(null, 0);
@@ -109,30 +114,42 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     this._screen_obj?._resize(prop, value);
   }
-}
 
-export function addISOGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
-) {
-  const group = new ISOSpriteGroup(parent.playground!, parent, options);
+  _onReparent() {
+    // The screen sprite group must be created in the screen layer
+    const parent = this.parent!;
+    const parent_screen_obj =
+      "_screen_obj" in parent ? (parent._screen_obj as SortedGroup) : parent;
 
-  parent.addChild(group);
+    // TODO: Is the newly created screen object in the correct drawing order?
+    this._screen_obj = parent_screen_obj.addChild(
+      new SortedGroup({
+        width: this.width,
+        height: this.height,
+        transformOriginx: this.transformOriginx,
+        transformOriginy: this.transformOriginy,
+        angle: this.angle,
+        scalex: this.scalex,
+        scaley: this.scaley,
+        fliph: this.fliph,
+        flipv: this.flipv,
+        opacity: this.opacity,
+        hidden: this.hidden,
+        blendMode: this.blendMode,
+        crop: this.crop,
+        borderRadius: this.borderRadius,
+        originx: this.originx,
+        originy: this.originy,
+      })
+    );
 
-  group._screen_obj.drawLast();
+    this._move("elevation", this.elevation);
+    this.teleport();
+  }
 
-  return group;
-}
+  _remove() {
+    super._remove();
 
-export function insertISOGroup(
-  parent: SpriteGroup,
-  options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
-) {
-  const group = new ISOSpriteGroup(parent.playground!, parent, options);
-
-  parent.insertChild(group);
-
-  group._screen_obj.drawFirst();
-
-  return group;
+    this.clear();
+  }
 }
