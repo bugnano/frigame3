@@ -2,6 +2,7 @@ import { BaseSprite } from "./BaseSprite.js";
 import type { Animation } from "./Animation.js";
 import type { AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
+import type { SpriteRef } from "./utils.js";
 import { pick, framesFromMs } from "./utils.js";
 
 export interface SpriteOptions extends AnimationOptions {
@@ -143,7 +144,11 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  constructor(options?: Partial<BaseSpriteOptions & SpriteOptions>) {
+  constructor(
+    options?: Partial<BaseSpriteOptions & SpriteOptions> & {
+      ref?: SpriteRef<Sprite>;
+    }
+  ) {
     super(options);
 
     if (options) {
@@ -160,6 +165,10 @@ export class Sprite extends BaseSprite {
           "backwards",
         ])
       );
+
+      if (options.ref) {
+        options.ref.current = this;
+      }
     }
 
     this.restartAnimation();

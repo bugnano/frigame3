@@ -1,5 +1,6 @@
 import { BaseSprite } from "./BaseSprite.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
+import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
 export interface SpriteGroupOptions {
@@ -33,7 +34,11 @@ export class SpriteGroup extends BaseSprite {
   _layers: BaseSprite[] = [];
   _updateList: BaseSprite[] = [];
 
-  constructor(options?: Partial<BaseSpriteOptions & SpriteGroupOptions>) {
+  constructor(
+    options?: Partial<BaseSpriteOptions & SpriteGroupOptions> & {
+      ref?: SpriteRef<SpriteGroup>;
+    }
+  ) {
     super(options);
 
     if (options) {
@@ -43,6 +48,10 @@ export class SpriteGroup extends BaseSprite {
         for (const child of options.children) {
           this.addChild(child);
         }
+      }
+
+      if (options.ref) {
+        options.ref.current = this;
       }
     }
 

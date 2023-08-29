@@ -6,6 +6,7 @@ import type { ISORectOptions } from "./ISORect.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import type { SpriteRef } from "../../utils.js";
 
 export interface ISOGroupOptions extends SpriteGroupOptions {
   reference: (keyof RectSizeX & keyof RectSizeY) | number;
@@ -49,7 +50,9 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions>
+    options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions> & {
+      ref?: SpriteRef<ISOSpriteGroup>;
+    }
   ) {
     super();
 
@@ -95,6 +98,10 @@ export class ISOSpriteGroup extends ISOBaseGroup {
         for (const child of options.children) {
           this.addChild(child);
         }
+      }
+
+      if (options.ref) {
+        options.ref.current = this;
       }
     }
 

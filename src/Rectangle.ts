@@ -2,6 +2,7 @@ import { BaseSprite } from "./BaseSprite.js";
 import { Gradient } from "./Gradient.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import type { ColorObj, ColorArr } from "./Gradient.js";
+import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
 export interface RectangleOptions {
@@ -61,7 +62,11 @@ export class Rectangle extends BaseSprite {
     }
   }
 
-  constructor(options?: Partial<BaseSpriteOptions & RectangleOptions>) {
+  constructor(
+    options?: Partial<
+      BaseSpriteOptions & RectangleOptions & { ref?: SpriteRef<Rectangle> }
+    >
+  ) {
     super(options);
 
     if (options) {
@@ -74,6 +79,10 @@ export class Rectangle extends BaseSprite {
           "borderColor",
         ])
       );
+
+      if (options.ref) {
+        options.ref.current = this;
+      }
     }
 
     this.teleport();

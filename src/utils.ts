@@ -48,3 +48,11 @@ export function framesFromMs(ms: number) {
 export function msFromFrames(frames: number) {
   return frames * REFRESH_RATE || 0;
 }
+
+export interface SpriteRef<T> {
+  current?: T;
+}
+
+export function spriteRef<T>(): SpriteRef<T> {
+  return {};
+}

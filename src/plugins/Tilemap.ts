@@ -5,6 +5,7 @@ import type { BaseSpriteOptions } from "../BaseSprite.js";
 import type { SpriteGroupOptions } from "../SpriteGroup.js";
 import type { SpriteOptions } from "../Sprite.js";
 import type { RectangleOptions } from "../Rectangle.js";
+import type { SpriteRef } from "../utils.js";
 
 // animationList MUST have at least `animation` or `background`
 export interface TilemapOptions {
@@ -28,7 +29,10 @@ export class Tilemap extends SpriteGroup {
   _locations: Uint32Array;
 
   constructor(
-    options: TilemapOptions & Partial<BaseSpriteOptions & SpriteGroupOptions>
+    options: TilemapOptions &
+      Partial<BaseSpriteOptions & SpriteGroupOptions> & {
+        ref?: SpriteRef<Tilemap>;
+      }
   ) {
     super(options);
 

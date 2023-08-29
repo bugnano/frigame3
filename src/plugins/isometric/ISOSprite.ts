@@ -8,6 +8,7 @@ import type { ISORectOptions } from "./ISORect.js";
 import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import type { SpriteRef } from "../../utils.js";
 
 export interface ISOSpriteOptions extends SpriteOptions {
   reference: (keyof RectSizeX & keyof RectSizeY) | number;
@@ -132,7 +133,9 @@ export class ISOSprite extends ISOBaseSprite {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions>
+    options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions> & {
+      ref?: SpriteRef<ISOSprite>;
+    }
   ) {
     super();
 
@@ -179,6 +182,10 @@ export class ISOSprite extends ISOBaseSprite {
           "elevation",
         ])
       );
+
+      if (options.ref) {
+        options.ref.current = this;
+      }
     }
 
     this._move(null, 0);

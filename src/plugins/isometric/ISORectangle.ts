@@ -8,6 +8,7 @@ import type { RectangleOptions } from "../../Rectangle.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
 import type { Gradient, ColorObj, ColorArr } from "../../Gradient.js";
+import type { SpriteRef } from "../../utils.js";
 
 export interface ISORectangleOptions extends RectangleOptions {
   reference: (keyof RectSizeX & keyof RectSizeY) | number;
@@ -75,7 +76,9 @@ export class ISORectangle extends ISOBaseRectangle {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISORectOptions & ISORectangleOptions>
+    options?: Partial<
+      BaseSpriteOptions & ISORectOptions & ISORectangleOptions
+    > & { ref?: SpriteRef<ISORectangle> }
   ) {
     super();
 
@@ -118,6 +121,10 @@ export class ISORectangle extends ISOBaseRectangle {
           "elevation",
         ])
       );
+
+      if (options.ref) {
+        options.ref.current = this;
+      }
     }
 
     this._move(null, 0);

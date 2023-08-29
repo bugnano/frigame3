@@ -5,6 +5,7 @@ import type { SortedAnimation } from "./SortedAnimation.js";
 import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import type { SpriteRef } from "../../utils.js";
 
 export interface SortedSpriteOptions extends SpriteOptions {
   originx: keyof RectSizeX | number;
@@ -37,7 +38,11 @@ export class SortedSprite extends SortedBaseSprite {
     }
   }
 
-  constructor(options?: Partial<BaseSpriteOptions & SortedSpriteOptions>) {
+  constructor(
+    options?: Partial<BaseSpriteOptions & SortedSpriteOptions> & {
+      ref?: SpriteRef<SortedSprite>;
+    }
+  ) {
     super(options);
 
     if (options) {
