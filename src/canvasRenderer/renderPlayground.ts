@@ -2,11 +2,13 @@ import type { Playground } from "../Playground.js";
 import type { RendererElement } from "../Renderer.js";
 import { cssClass } from "../defines.js";
 
-const canvasRegistry = new FinalizationRegistry((canvas: HTMLCanvasElement) => {
-  if (canvas.parentNode) {
-    canvas.parentNode.removeChild(canvas);
-  }
-});
+const canvasRegistry = new FinalizationRegistry(
+  (canvas: HTMLCanvasElement): void => {
+    if (canvas.parentNode) {
+      canvas.parentNode.removeChild(canvas);
+    }
+  },
+);
 
 export const playgroundMap = new WeakMap<
   Playground,
@@ -18,9 +20,9 @@ export const playgroundMap = new WeakMap<
 
 export function initPlayground(
   playground: Playground,
-  dom?: string | RendererElement
+  dom?: string | RendererElement,
 ): [number, number] {
-  const parentDOM = (() => {
+  const parentDOM = ((): HTMLElement => {
     if (typeof dom === "string") {
       // Allow the ID to start with the '#' symbol
       if (dom.startsWith("#")) {
@@ -36,14 +38,18 @@ export function initPlayground(
     }
   })();
 
-  const [ctx, width, height] = (() => {
+  const [ctx, width, height] = ((): [
+    CanvasRenderingContext2D,
+    number,
+    number,
+  ] => {
     if (parentDOM instanceof HTMLCanvasElement) {
       const ctx = parentDOM.getContext("2d");
 
       const width = parentDOM.width || 300;
       const height = parentDOM.height || 150;
 
-      return [ctx, width, height];
+      return [ctx!, width, height];
     } else {
       const width = parentDOM.offsetWidth || 300;
       const height = parentDOM.offsetHeight || 150;
@@ -65,12 +71,12 @@ export function initPlayground(
 
       const ctx = canvas.getContext("2d");
 
-      return [ctx, width, height];
+      return [ctx!, width, height];
     }
   })();
 
   playgroundMap.set(playground, {
-    ctx: ctx!,
+    ctx,
     globalAlpha: 1,
   });
 
@@ -79,8 +85,8 @@ export function initPlayground(
 
 export function drawPlaygroundBeforeChildren(
   playground: Playground,
-  interp: number // eslint-disable-line @typescript-eslint/no-unused-vars
-) {
+  interp: number, // eslint-disable-line @typescript-eslint/no-unused-vars
+): void {
   const playgroundData = playgroundMap.get(playground)!;
 
   playgroundData.ctx.clearRect(0, 0, playground._width, playground._height);
@@ -89,7 +95,7 @@ export function drawPlaygroundBeforeChildren(
 
 export function drawPlaygroundAfterChildren(
   playground: Playground, // eslint-disable-line @typescript-eslint/no-unused-vars
-  interp: number // eslint-disable-line @typescript-eslint/no-unused-vars
-) {
+  interp: number, // eslint-disable-line @typescript-eslint/no-unused-vars
+): void {
   // no-op
 }

@@ -1,11 +1,11 @@
-export function screenFromGrid(x: number, y: number) {
+export function screenFromGrid(x: number, y: number): [number, number] {
   const screen_x = x - y;
   const screen_y = (x + y) / 2;
 
   return [screen_x, screen_y];
 }
 
-export function gridFromScreen(x: number, y: number) {
+export function gridFromScreen(x: number, y: number): [number, number] {
   const grid_x = y + x / 2;
   const grid_y = y - x / 2;
 

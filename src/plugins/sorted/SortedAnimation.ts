@@ -18,7 +18,7 @@ export class SortedAnimation extends Animation {
   constructor(
     options:
       | Partial<SpriteSheet & SortedAnimationOptions & FrameOptions>
-      | string
+      | string,
   ) {
     super(options);
 
@@ -32,7 +32,7 @@ export class SortedAnimation extends Animation {
     }
   }
 
-  onLoad() {
+  onLoad(): void {
     super.onLoad();
 
     const originx = this.originx;

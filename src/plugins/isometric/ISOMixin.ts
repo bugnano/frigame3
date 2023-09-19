@@ -16,7 +16,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     _referencey: keyof RectSizeY | number = "halfHeight";
     _screen_obj: SortedGroup | SortedSprite | SortedRectangle | null = null;
 
-    get elevation() {
+    get elevation(): number {
       return this._elevation;
     }
 
@@ -24,7 +24,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move("elevation", value);
     }
 
-    get originx() {
+    get originx(): keyof RectSizeX | number {
       return this._originx;
     }
 
@@ -46,7 +46,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move(null, 0);
     }
 
-    get originy() {
+    get originy(): keyof RectSizeY | number {
       return this._originy;
     }
 
@@ -68,7 +68,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move(null, 0);
     }
 
-    get reference() {
+    get reference(): (keyof RectSizeX & keyof RectSizeY) | number {
       return this._referencex as (keyof RectSizeX & keyof RectSizeY) | number;
     }
 
@@ -78,7 +78,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move(null, 0);
     }
 
-    get referencex() {
+    get referencex(): keyof RectSizeX | number {
       return this._referencex;
     }
 
@@ -87,7 +87,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move(null, 0);
     }
 
-    get referencey() {
+    get referencey(): keyof RectSizeY | number {
       return this._referencey;
     }
 
@@ -98,7 +98,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy getters & setters
 
-    get transformOrigin() {
+    get transformOrigin(): (keyof RectSizeX & keyof RectSizeY) | number {
       return super.transformOrigin;
     }
 
@@ -110,7 +110,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get transformOriginx() {
+    get transformOriginx(): keyof RectSizeX | number {
       return super.transformOriginx;
     }
 
@@ -122,7 +122,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get transformOriginy() {
+    get transformOriginy(): keyof RectSizeY | number {
       return super.transformOriginy;
     }
 
@@ -134,7 +134,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get angle() {
+    get angle(): number {
       return super.angle;
     }
 
@@ -146,7 +146,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scalex() {
+    get scalex(): number {
       return super.scalex;
     }
 
@@ -158,7 +158,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scaley() {
+    get scaley(): number {
       return super.scaley;
     }
 
@@ -170,7 +170,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scale() {
+    get scale(): number {
       return super.scale;
     }
 
@@ -182,7 +182,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get fliph() {
+    get fliph(): boolean {
       return super.fliph;
     }
 
@@ -194,7 +194,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get flipv() {
+    get flipv(): boolean {
       return super.flipv;
     }
 
@@ -206,7 +206,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get flip() {
+    get flip(): boolean {
       return super.flip;
     }
 
@@ -218,7 +218,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get opacity() {
+    get opacity(): number {
       return super.opacity;
     }
 
@@ -230,7 +230,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get hidden() {
+    get hidden(): boolean {
       return super.hidden;
     }
 
@@ -242,7 +242,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get blendMode() {
+    get blendMode(): BlendMode {
       return super.blendMode;
     }
 
@@ -256,7 +256,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Public functions
 
-    getScreenRect() {
+    getScreenRect(): ISORect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj) {
@@ -284,7 +284,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return null;
     }
 
-    getScreenAbsRect() {
+    getScreenAbsRect(): ISORect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj) {
@@ -314,21 +314,21 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy functions
 
-    drawFirst() {
+    drawFirst(): this {
       super.drawFirst();
       this._screen_obj?.drawFirst();
 
       return this;
     }
 
-    drawLast() {
+    drawLast(): this {
       super.drawLast();
       this._screen_obj?.drawLast();
 
       return this;
     }
 
-    getDrawIndex() {
+    getDrawIndex(): number {
       if (this._screen_obj) {
         return this._screen_obj.getDrawIndex();
       } else {
@@ -336,14 +336,14 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    drawTo(index: number) {
+    drawTo(index: number): this {
       super.drawTo(index);
       this._screen_obj?.drawTo(index);
 
       return this;
     }
 
-    drawBefore(sprite: BaseSprite) {
+    drawBefore(sprite: BaseSprite): this {
       super.drawBefore(sprite);
 
       if ("_screen_obj" in sprite) {
@@ -357,7 +357,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    drawAfter(sprite: BaseSprite) {
+    drawAfter(sprite: BaseSprite): this {
       super.drawAfter(sprite);
 
       if ("_screen_obj" in sprite) {
@@ -371,7 +371,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    teleport() {
+    teleport(): this {
       super.teleport();
       this._screen_obj?.teleport();
 
@@ -382,8 +382,8 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     _move(
       prop: keyof RectPosX | keyof RectPosY | "elevation" | null,
-      value: number
-    ) {
+      value: number,
+    ): void {
       const screen_obj = this._screen_obj;
 
       let originx = this._originx;
@@ -425,7 +425,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       // Step 1: Calculate the screen object position
       const [screen_x, screen_y] = screenFromGrid(
         this._left + referencex,
-        this._top + referencey
+        this._top + referencey,
       );
 
       // Step 2: Move the screen object
@@ -433,24 +433,22 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
         screen_obj.left = screen_x - originx;
         screen_obj.top = screen_y - originy - this._elevation;
       }
-
-      return this;
     }
 
-    _initRenderer() {
+    _initRenderer(): void {
       // no-op
     }
 
-    _update() {
+    _update(): void {
       // no-op
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _draw(interp: number) {
+    _draw(interp: number): void {
       // The drawing is performed only on the screen objects
     }
 
-    _remove() {
+    _remove(): void {
       this._screen_obj?.parent?.removeChild(this._screen_obj, {
         suppressWarning: true,
       });

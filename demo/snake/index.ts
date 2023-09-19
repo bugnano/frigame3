@@ -20,7 +20,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         g: 128 + Math.random() * 128,
         b: Math.random() * 256,
       },
-      { callback: endTween }
+      { callback: endTween },
     );
   };
   endTween();
@@ -36,7 +36,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
       width: rect_size,
       height: rect_size,
       background: red,
-    })
+    }),
   );
   let x = Math.trunc(max_x / 2);
   let y = Math.trunc(max_y / 2);
@@ -84,7 +84,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
           width: rect_size,
           height: rect_size,
           background: green,
-        })
+        }),
       );
     } else {
       r = snake.shift()!;

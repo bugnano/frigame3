@@ -15,7 +15,7 @@ export interface SortedSpriteOptions extends SpriteOptions {
 const SortedBaseSprite = Sorted(Sprite);
 
 export class SortedSprite extends SortedBaseSprite {
-  get animation() {
+  get animation(): SortedAnimation | null {
     return super.animation as SortedAnimation | null;
   }
 
@@ -41,7 +41,7 @@ export class SortedSprite extends SortedBaseSprite {
   constructor(
     options?: Partial<BaseSpriteOptions & SortedSpriteOptions> & {
       ref?: SpriteRef<SortedSprite>;
-    }
+    },
   ) {
     super(options);
 

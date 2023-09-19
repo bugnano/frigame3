@@ -14,7 +14,7 @@ export const spriteGroupMap = new WeakMap<
   }
 >();
 
-export function initGroup(group: SpriteGroup) {
+export function initGroup(group: SpriteGroup): void {
   spriteGroupMap.set(group, {
     oldAlpha: 1,
     alphaChanged: false,
@@ -27,12 +27,15 @@ export function initGroup(group: SpriteGroup) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function removeGroup(group: SpriteGroup) {
+export function removeGroup(group: SpriteGroup): void {
   // no-op
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
+export function drawGroupBeforeChildren(
+  group: SpriteGroup,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interp: number,
+): void {
   const opacity = group._opacity;
   const scaleh = group._scaleh;
   const scalev = group._scalev;
@@ -141,8 +144,11 @@ export function drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function drawGroupAfterChildren(group: SpriteGroup, interp: number) {
+export function drawGroupAfterChildren(
+  group: SpriteGroup,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interp: number,
+): void {
   if (
     group._layers.length &&
     group._opacity &&

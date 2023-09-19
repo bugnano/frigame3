@@ -19,7 +19,7 @@ export class SortedGroup extends SortedBaseGroup {
   constructor(
     options?: Partial<BaseSpriteOptions & SortedGroupOptions> & {
       ref?: SpriteRef<SortedGroup>;
-    }
+    },
   ) {
     super(options);
 
@@ -37,8 +37,8 @@ export class SortedGroup extends SortedBaseGroup {
 
   addChild<T extends BaseSprite>(
     child: T,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): T {
     super.addChild(child, options);
 
     this._needsSorting = true;
@@ -48,8 +48,8 @@ export class SortedGroup extends SortedBaseGroup {
 
   insertChild<T extends BaseSprite>(
     child: T,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): T {
     super.insertChild(child, options);
 
     this._needsSorting = true;
@@ -57,7 +57,7 @@ export class SortedGroup extends SortedBaseGroup {
     return child;
   }
 
-  _sortLayers() {
+  _sortLayers(): void {
     const layers = this._layers;
     const len_layers = layers.length;
 
@@ -89,7 +89,7 @@ export class SortedGroup extends SortedBaseGroup {
     }
   }
 
-  _draw(interp: number) {
+  _draw(interp: number): void {
     if (this._needsSorting) {
       this._needsSorting = false;
       this._sortLayers();

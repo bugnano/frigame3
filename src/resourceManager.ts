@@ -11,11 +11,11 @@ let resolveCallback: ((value?: undefined) => void) | null = null;
 let rejectCallback: (() => void) | null = null;
 let complete = false;
 
-function preload() {
+function preload(): void {
   const completed = preloadList.reduce(
-    (accumulator, resource) =>
+    (accumulator: number, resource: Resource): number =>
       resource.complete() ? accumulator + 1 : accumulator,
-    0
+    0,
   );
 
   const len_preload_list = preloadList.length;
@@ -60,7 +60,7 @@ export interface ResourceManager {
   addResource<T extends Resource>(resource: T): T;
   removeResource(
     resource: Resource | null,
-    options?: { suppressWarning?: boolean }
+    options?: { suppressWarning?: boolean },
   ): void;
   clear(): void;
   preload(): Promise<void>;
@@ -69,7 +69,7 @@ export interface ResourceManager {
 export const resourceManager: ResourceManager = {
   loadCallback: null,
 
-  addResource<T extends Resource>(resource: T) {
+  addResource<T extends Resource>(resource: T): T {
     preloadList.push(resource);
 
     return resource;
@@ -77,8 +77,8 @@ export const resourceManager: ResourceManager = {
 
   removeResource(
     resource: Resource | null,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): void {
     if (!resource) {
       if (
         typeof console !== "undefined" &&
@@ -104,11 +104,11 @@ export const resourceManager: ResourceManager = {
     }
   },
 
-  clear() {
+  clear(): void {
     preloadList.splice(0, preloadList.length);
   },
 
-  preload() {
+  preload(): Promise<void> {
     const reject_callback = rejectCallback;
 
     resolveCallback = null;
@@ -125,7 +125,7 @@ export const resourceManager: ResourceManager = {
     // an user event handler such as mousedown.
     preload();
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: () => void, reject: () => void): void => {
       if (complete) {
         resolve();
       } else {

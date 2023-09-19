@@ -11,7 +11,7 @@ export interface RendererElement {
 export interface Renderer {
   initPlayground(
     playground: Playground,
-    dom?: string | RendererElement
+    dom?: string | RendererElement,
   ): [number, number];
   drawPlaygroundBeforeChildren(playground: Playground, interp: number): void;
   drawPlaygroundAfterChildren(playground: Playground, interp: number): void;

@@ -14,7 +14,7 @@ export interface GradientObj {
 export const fillMap = new WeakMap<Rectangle, GradientObj>();
 export const strokeMap = new WeakMap<Rectangle, GradientObj>();
 
-export function initRectangle(rectangle: Rectangle) {
+export function initRectangle(rectangle: Rectangle): void {
   for (const map of [fillMap, strokeMap]) {
     map.set(rectangle, {
       width: 0,
@@ -28,12 +28,12 @@ export function initRectangle(rectangle: Rectangle) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function removeRectangle(rectangle: Rectangle) {
+export function removeRectangle(rectangle: Rectangle): void {
   // no-op
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function drawRectangle(rectangle: Rectangle, interp: number) {
+export function drawRectangle(rectangle: Rectangle, interp: number): void {
   const playground = rectangle.playground!;
 
   const trunc = Math.trunc;
@@ -46,7 +46,7 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
     left,
     top,
     width,
-    height
+    height,
   );
   const background = rectangle._background;
   const border_width = trunc(rectangle._borderWidth);
@@ -152,14 +152,14 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
             -border_half_width,
             width + border_width,
             height + border_width,
-            border_radius + border_half_width
+            border_radius + border_half_width,
           );
         } else {
           ctx.rect(
             -border_half_width,
             -border_half_width,
             width + border_width,
-            height + border_width
+            height + border_width,
           );
         }
 
@@ -228,14 +228,14 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
                 -border_half_width,
                 width + border_width,
                 height + border_width,
-                border_radius + border_half_width
+                border_radius + border_half_width,
               );
             } else {
               ctx.rect(
                 -border_half_width,
                 -border_half_width,
                 width + border_width,
-                height + border_width
+                height + border_width,
               );
             }
           } else {
@@ -245,14 +245,14 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
                 top - border_half_width,
                 width + border_width,
                 height + border_width,
-                border_radius + border_half_width
+                border_radius + border_half_width,
               );
             } else {
               ctx.rect(
                 left - border_half_width,
                 top - border_half_width,
                 width + border_width,
-                height + border_width
+                height + border_width,
               );
             }
           }
@@ -277,14 +277,14 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
               -border_half_width,
               width + border_width,
               height + border_width,
-              border_radius + border_half_width
+              border_radius + border_half_width,
             );
           } else {
             ctx.rect(
               -border_half_width,
               -border_half_width,
               width + border_width,
-              height + border_width
+              height + border_width,
             );
           }
 
@@ -311,7 +311,10 @@ export function drawRectangle(rectangle: Rectangle, interp: number) {
   }
 }
 
-function setFillStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
+function setFillStyle(
+  ctx: CanvasRenderingContext2D,
+  rectangle: Rectangle,
+): void {
   const background = rectangle._background;
 
   if (background) {
@@ -360,7 +363,10 @@ function setFillStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
   }
 }
 
-function setStrokeStyle(ctx: CanvasRenderingContext2D, rectangle: Rectangle) {
+function setStrokeStyle(
+  ctx: CanvasRenderingContext2D,
+  rectangle: Rectangle,
+): void {
   const border_color = rectangle._borderColor;
 
   if (border_color) {

@@ -2,7 +2,7 @@ import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 import { ISOSprite } from "./ISOSprite.js";
 import { ISORectangle } from "./ISORectangle.js";
 import type { ISORectOptions } from "./ISORect.js";
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
+import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
 import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
 import type { ISOSpriteOptions } from "./ISOSprite.js";
 import type { ISORectangleOptions } from "./ISORectangle.js";
@@ -31,7 +31,7 @@ export class ISOTilemap extends ISOSpriteGroup {
     options: ISOTilemapOptions &
       Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions> & {
         ref?: SpriteRef<ISOTilemap>;
-      }
+      },
   ) {
     super(options);
 
@@ -117,7 +117,7 @@ export class ISOTilemap extends ISOSpriteGroup {
     }
   }
 
-  getAt(row: number, col: number) {
+  getAt(row: number, col: number): BaseSprite {
     return this._layers[this._locations[row * this.sizex + col]];
   }
 }

@@ -23,12 +23,12 @@ export class ISORectangle extends ISOBaseRectangle {
 
   // Proxy getters & setters
 
-  get background() {
+  get background(): Gradient | null {
     return super.background;
   }
 
   set background(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
   ) {
     super.background = value;
 
@@ -37,7 +37,7 @@ export class ISORectangle extends ISOBaseRectangle {
     }
   }
 
-  get borderRadius() {
+  get borderRadius(): number {
     return super.borderRadius;
   }
 
@@ -49,7 +49,7 @@ export class ISORectangle extends ISOBaseRectangle {
     }
   }
 
-  get borderWidth() {
+  get borderWidth(): number {
     return super.borderWidth;
   }
 
@@ -61,12 +61,12 @@ export class ISORectangle extends ISOBaseRectangle {
     }
   }
 
-  get borderColor() {
+  get borderColor(): Gradient | null {
     return super.borderColor;
   }
 
   set borderColor(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
   ) {
     super.borderColor = value;
 
@@ -78,7 +78,7 @@ export class ISORectangle extends ISOBaseRectangle {
   constructor(
     options?: Partial<
       BaseSpriteOptions & ISORectOptions & ISORectangleOptions
-    > & { ref?: SpriteRef<ISORectangle> }
+    > & { ref?: SpriteRef<ISORectangle> },
   ) {
     super();
 
@@ -119,7 +119,7 @@ export class ISORectangle extends ISOBaseRectangle {
           "referencex",
           "referencey",
           "elevation",
-        ])
+        ]),
       );
 
       if (options.ref) {
@@ -133,7 +133,7 @@ export class ISORectangle extends ISOBaseRectangle {
 
   // Implementation details
 
-  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number) {
+  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number): void {
     // TODO: I'm not sure that proxying the new size is the right approach here,
     // as the screen object is merely a graphical representation of a projection.
     // In theory the size of any ISO should be independent of the size of its
@@ -144,7 +144,7 @@ export class ISORectangle extends ISOBaseRectangle {
     this._screen_obj?._resize(prop, value);
   }
 
-  _onReparent() {
+  _onReparent(): void {
     // The screen rectangle must be created in the screen layer
     const parent = this.parent as ISOSpriteGroup;
     const parent_screen_obj = parent._screen_obj!;
@@ -170,7 +170,7 @@ export class ISORectangle extends ISOBaseRectangle {
         borderColor: this.borderColor,
         originx: this.originx,
         originy: this.originy,
-      })
+      }),
     );
 
     this._move("elevation", this.elevation);

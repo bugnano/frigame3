@@ -48,7 +48,7 @@ export class Tweener extends EventTarget {
     playground.addEventListener("clearCallbacks", this._onClearCallbacks);
   }
 
-  _tweenStep = () => {
+  _tweenStep = (): void => {
     if (this._tweening) {
       // Process all the tweens in the queue
       for (const [tweenId, tween_obj] of this._tween_queue) {
@@ -72,7 +72,7 @@ export class Tweener extends EventTarget {
           this._tween_queue.delete(tweenId);
         } else {
           const step = tween_obj.easing(
-            tween_obj.current_step / tween_obj.num_step
+            tween_obj.current_step / tween_obj.num_step,
           );
 
           // Set the properties to the current value
@@ -90,7 +90,7 @@ export class Tweener extends EventTarget {
     }
   };
 
-  registerCallback(options?: { suppressWarning?: boolean }) {
+  registerCallback(options?: { suppressWarning?: boolean }): this {
     if (this._callbackId === null) {
       const playground = this._playground.deref();
 
@@ -118,7 +118,7 @@ export class Tweener extends EventTarget {
     return this;
   }
 
-  removeCallback(options?: { suppressWarning?: boolean }) {
+  removeCallback(options?: { suppressWarning?: boolean }): this {
     const playground = this._playground.deref();
 
     if (playground) {
@@ -138,7 +138,7 @@ export class Tweener extends EventTarget {
     return this;
   }
 
-  _onClearCallbacks = () => {
+  _onClearCallbacks = (): void => {
     if (this._callbackId !== null) {
       this._callbackId = null;
       this.registerCallback();
@@ -148,8 +148,8 @@ export class Tweener extends EventTarget {
   tween<T extends object>(
     target_obj: T,
     properties: Partial<Record<keyof T, number>>,
-    options?: Partial<TweenOptions>
-  ) {
+    options?: Partial<TweenOptions>,
+  ): number {
     const duration =
       (typeof options?.duration === "string"
         ? speeds[options.duration]
@@ -184,14 +184,17 @@ export class Tweener extends EventTarget {
 
     this._tween_queue.set(
       tweenId,
-      tween_obj as unknown as TweenObj<Record<string, number>>
+      tween_obj as unknown as TweenObj<Record<string, number>>,
     );
     this._tweening = true;
 
     return tweenId;
   }
 
-  removeTween(tweenId: number | null, options?: { suppressWarning?: boolean }) {
+  removeTween(
+    tweenId: number | null,
+    options?: { suppressWarning?: boolean },
+  ): this {
     if (tweenId !== 0 && !tweenId) {
       if (
         typeof console !== "undefined" &&
@@ -217,7 +220,7 @@ export class Tweener extends EventTarget {
     return this;
   }
 
-  clearTweens() {
+  clearTweens(): this {
     this._tween_queue.clear();
 
     this.dispatchEvent(new Event("clearTweens"));

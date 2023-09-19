@@ -11,7 +11,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       type: "horizontal",
       numberOfFrame: 4,
       rate: 300,
-    })
+    }),
   );
 
   await rm.preload();
@@ -27,28 +27,28 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       animation: animation,
       left: 16,
       top: 16,
-    })
+    }),
   );
   const scaleARotate = sg.addChild(
     new Sprite({
       animation: animation,
       left: 80,
       top: 16,
-    })
+    }),
   );
   const rotateAScale = sg.addChild(
     new Sprite({
       animation: animation,
       left: 180,
       top: 16,
-    })
+    }),
   );
   const aScaleRotate = sg.addChild(
     new Sprite({
       animation: animation,
       left: 240,
       top: 16,
-    })
+    }),
   );
 
   playground.registerCallback(() => {

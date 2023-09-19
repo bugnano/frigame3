@@ -17,7 +17,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
       type: "horizontal",
       numberOfFrame: 4,
       rate: 300,
-    })
+    }),
   );
   const gradient = new Gradient({ r: 128 }, { b: 255, a: 0.3 }, "horizontal");
   const red = new Gradient({ r: 128 });
@@ -62,7 +62,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
           ref: sprite2,
         }),
       ],
-    })
+    }),
   );
 
   const group2 = sg.addChild(
@@ -89,7 +89,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
           top: 32,
         }),
       ],
-    })
+    }),
   );
   group2.insertChild(new Sprite({ animation: boy, left: 16, top: 32 }));
 
@@ -98,7 +98,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
       width: 1,
       height: 1,
       children: [new Sprite({ animation: ruler })],
-    })
+    }),
   );
 
   const rect1 = spriteRef<SpriteGroup>();
@@ -131,7 +131,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
           ],
         }),
       ],
-    })
+    }),
   );
 
   sg.addChild(
@@ -154,7 +154,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
           top: 32,
         }),
       ],
-    })
+    }),
   );
 
   sg.addChild(
@@ -167,7 +167,7 @@ import { spriteRef } from "frigame3/lib/utils.js";
       scalex: 3,
       scaley: 2,
       angle: (27 * Math.PI) / 180,
-    })
+    }),
   );
 
   group1.current!.left = 64;

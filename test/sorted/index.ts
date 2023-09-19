@@ -10,7 +10,7 @@ import { SortedSprite } from "frigame3/lib/plugins/sorted/SortedSprite.js";
     new SortedAnimation({
       imageURL: "Brown Block.png",
       originy: 128,
-    })
+    }),
   );
 
   await rm.preload();
@@ -19,7 +19,7 @@ import { SortedSprite } from "frigame3/lib/plugins/sorted/SortedSprite.js";
   const sg = playground.scenegraph;
 
   const grp_sorted = sg.addChild(
-    new SortedGroup({ width: sg.width, height: sg.height })
+    new SortedGroup({ width: sg.width, height: sg.height }),
   );
 
   for (let y = 1024; y > 0; y -= 80) {
@@ -29,7 +29,7 @@ import { SortedSprite } from "frigame3/lib/plugins/sorted/SortedSprite.js";
           left: x,
           top: y,
           animation: floor,
-        })
+        }),
       );
     }
   }

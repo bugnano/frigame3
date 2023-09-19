@@ -25,7 +25,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
 
   // Proxy getters & setters
 
-  get crop() {
+  get crop(): boolean {
     return super.crop;
   }
 
@@ -37,7 +37,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     }
   }
 
-  get borderRadius() {
+  get borderRadius(): number {
     return super.borderRadius;
   }
 
@@ -52,7 +52,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   constructor(
     options?: Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions> & {
       ref?: SpriteRef<ISOSpriteGroup>;
-    }
+    },
   ) {
     super();
 
@@ -91,7 +91,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
           "referencex",
           "referencey",
           "elevation",
-        ])
+        ]),
       );
 
       if (options.children) {
@@ -111,7 +111,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
 
   // Implementation details
 
-  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number) {
+  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number): void {
     // TODO: I'm not sure that proxying the new size is the right approach here,
     // as the screen object is merely a graphical representation of a projection.
     // In theory the size of any ISO should be independent of the size of its
@@ -122,7 +122,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     this._screen_obj?._resize(prop, value);
   }
 
-  _onReparent() {
+  _onReparent(): void {
     // The screen sprite group must be created in the screen layer
     const parent = this.parent!;
     const parent_screen_obj =
@@ -147,14 +147,14 @@ export class ISOSpriteGroup extends ISOBaseGroup {
         borderRadius: this.borderRadius,
         originx: this.originx,
         originy: this.originy,
-      })
+      }),
     );
 
     this._move("elevation", this.elevation);
     this.teleport();
   }
 
-  _remove() {
+  _remove(): void {
     super._remove();
 
     this.clear();

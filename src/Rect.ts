@@ -36,7 +36,7 @@ export class Rect {
   _last_x: keyof RectPosX = "left";
   _last_y: keyof RectPosY = "top";
 
-  get left() {
+  get left(): number {
     return this._left;
   }
 
@@ -45,7 +45,7 @@ export class Rect {
     this._last_x = "left";
   }
 
-  get right() {
+  get right(): number {
     return this._left + this._width;
   }
 
@@ -54,7 +54,7 @@ export class Rect {
     this._last_x = "right";
   }
 
-  get centerx() {
+  get centerx(): number {
     return this._left + this._width / 2;
   }
 
@@ -63,7 +63,7 @@ export class Rect {
     this._last_x = "centerx";
   }
 
-  get top() {
+  get top(): number {
     return this._top;
   }
 
@@ -72,7 +72,7 @@ export class Rect {
     this._last_y = "top";
   }
 
-  get bottom() {
+  get bottom(): number {
     return this._top + this._height;
   }
 
@@ -81,7 +81,7 @@ export class Rect {
     this._last_y = "bottom";
   }
 
-  get centery() {
+  get centery(): number {
     return this._top + this._height / 2;
   }
 
@@ -90,7 +90,7 @@ export class Rect {
     this._last_y = "centery";
   }
 
-  get width() {
+  get width(): number {
     return this._width;
   }
 
@@ -102,7 +102,7 @@ export class Rect {
     this[this._last_x] = old_x;
   }
 
-  get halfWidth() {
+  get halfWidth(): number {
     return this._width / 2;
   }
 
@@ -114,7 +114,7 @@ export class Rect {
     this[this._last_x] = old_x;
   }
 
-  get height() {
+  get height(): number {
     return this._height;
   }
 
@@ -126,7 +126,7 @@ export class Rect {
     this[this._last_y] = old_y;
   }
 
-  get halfHeight() {
+  get halfHeight(): number {
     return this._height / 2;
   }
 
@@ -138,7 +138,7 @@ export class Rect {
     this[this._last_y] = old_y;
   }
 
-  get radius() {
+  get radius(): number {
     return Math.max(this._width, this._height) / 2;
   }
 
@@ -171,14 +171,14 @@ export class Rect {
           "height",
           "halfHeight",
           "radius",
-        ])
+        ]),
       );
     }
   }
 
   // Collision detection
 
-  collideRect(otherRect: Rect) {
+  collideRect(otherRect: Rect): boolean {
     return !(
       this.bottom <= otherRect.top ||
       this.top >= otherRect.bottom ||
@@ -187,11 +187,11 @@ export class Rect {
     );
   }
 
-  collideRectPoint(x: number, y: number) {
+  collideRectPoint(x: number, y: number): boolean {
     return x >= this.left && x < this.right && y >= this.top && y < this.bottom;
   }
 
-  collideRectCircle(otherRect: Rect) {
+  collideRectCircle(otherRect: Rect): boolean {
     const centerx = otherRect.centerx;
     const centery = otherRect.centery;
     const radius = otherRect.radius;
@@ -203,7 +203,7 @@ export class Rect {
     return dx * dx + dy * dy < radius * radius;
   }
 
-  collideCircle(otherRect: Rect) {
+  collideCircle(otherRect: Rect): boolean {
     const dx = otherRect.centerx - this.centerx;
     const dy = otherRect.centery - this.centery;
     const radii = this.radius + otherRect.radius;
@@ -211,7 +211,7 @@ export class Rect {
     return dx * dx + dy * dy < radii * radii;
   }
 
-  collideCirclePoint(x: number, y: number) {
+  collideCirclePoint(x: number, y: number): boolean {
     const dx = x - this.centerx;
     const dy = y - this.centery;
     const radius = this.radius;
@@ -219,7 +219,7 @@ export class Rect {
     return dx * dx + dy * dy < radius * radius;
   }
 
-  collideCircleRect(otherRect: Rect) {
+  collideCircleRect(otherRect: Rect): boolean {
     const centerx = this.centerx;
     const centery = this.centery;
     const radius = this.radius;

@@ -32,7 +32,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
       music.stop();
       s_news = null;
       s_prova = rm.addResource(
-        new Sound(["prova.ogg", "prova.mp3"], { streaming: true })
+        new Sound(["prova.ogg", "prova.mp3"], { streaming: true }),
       );
 
       await rm.preload();
@@ -51,7 +51,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         s_news = rm.addResource(
           new Sound(["news_intro.ogg", "news_intro.mp3"], {
             streaming: true,
-          })
+          }),
         );
         s_prova = null;
 
@@ -146,7 +146,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
       fx.tween(
         music,
@@ -155,7 +155,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
     });
     document.getElementById("pancenter")?.addEventListener("click", () => {
@@ -166,7 +166,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
       fx.tween(
         music,
@@ -175,7 +175,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
     });
     document.getElementById("panright")?.addEventListener("click", () => {
@@ -186,7 +186,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
       fx.tween(
         music,
@@ -195,7 +195,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         },
         {
           duration: 1000,
-        }
+        },
       );
     });
     document.getElementById("stop")?.addEventListener("click", () => {

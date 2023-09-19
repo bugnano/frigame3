@@ -23,7 +23,7 @@ export class ISOSprite extends ISOBaseSprite {
 
   // Proxy getters & setters
 
-  get animation() {
+  get animation(): SortedAnimation | null {
     return super.animation as SortedAnimation | null;
   }
 
@@ -48,7 +48,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get animationIndex() {
+  get animationIndex(): number {
     return super.animationIndex;
   }
 
@@ -60,7 +60,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get callback() {
+  get callback(): (() => void) | null {
     return super.callback;
   }
 
@@ -72,7 +72,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get paused() {
+  get paused(): boolean {
     return super.paused;
   }
 
@@ -84,7 +84,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get rate() {
+  get rate(): number {
     return super.rate;
   }
 
@@ -96,7 +96,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get once() {
+  get once(): boolean {
     return super.once;
   }
 
@@ -108,7 +108,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get pingpong() {
+  get pingpong(): boolean {
     return super.pingpong;
   }
 
@@ -120,7 +120,7 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get backwards() {
+  get backwards(): boolean {
     return super.backwards;
   }
 
@@ -135,7 +135,7 @@ export class ISOSprite extends ISOBaseSprite {
   constructor(
     options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions> & {
       ref?: SpriteRef<ISOSprite>;
-    }
+    },
   ) {
     super();
 
@@ -180,7 +180,7 @@ export class ISOSprite extends ISOBaseSprite {
           "referencex",
           "referencey",
           "elevation",
-        ])
+        ]),
       );
 
       if (options.ref) {
@@ -196,7 +196,7 @@ export class ISOSprite extends ISOBaseSprite {
   // as the screen object automatically gets the size of the animation
   // and the size of the ISOSprite is independent of it
 
-  _onReparent() {
+  _onReparent(): void {
     // The screen sprite must be created in the screen layer
     const parent = this.parent as ISOSpriteGroup;
     const parent_screen_obj = parent._screen_obj!;
@@ -224,7 +224,7 @@ export class ISOSprite extends ISOBaseSprite {
         backwards: this.backwards,
         originx: this.originx,
         originy: this.originy,
-      })
+      }),
     );
 
     this._move("elevation", this.elevation);

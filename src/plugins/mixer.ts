@@ -30,7 +30,7 @@ export const canPlay = {
 const audioCtx = new AudioContext();
 
 // Setup HTML5 Audio
-(() => {
+((): void => {
   const a = new Audio();
 
   if (a.canPlayType('audio/ogg; codecs="opus"') === "probably") {
@@ -76,7 +76,7 @@ export class Sound implements Resource {
       | string
       | string[]
       | Partial<Record<keyof typeof canPlay, string>>,
-    options?: { streaming: boolean }
+    options?: { streaming: boolean },
   ) {
     if (options?.streaming) {
       this.streaming = true;
@@ -105,7 +105,7 @@ export class Sound implements Resource {
     }
   }
 
-  complete() {
+  complete(): boolean {
     let completed = true;
 
     if (!this._initialized) {
@@ -124,9 +124,15 @@ export class Sound implements Resource {
           this._waitAudioBuffer = true;
 
           fetch(sound_url)
-            .then((response) => response.arrayBuffer())
-            .then((arrayBuffer) => audioCtx.decodeAudioData(arrayBuffer))
-            .then((audioBuffer) => {
+            .then(
+              (response: Response): Promise<ArrayBuffer> =>
+                response.arrayBuffer(),
+            )
+            .then(
+              (arrayBuffer: ArrayBuffer): Promise<AudioBuffer> =>
+                audioCtx.decodeAudioData(arrayBuffer),
+            )
+            .then((audioBuffer: AudioBuffer): void => {
               this._audioBuffer = audioBuffer;
               this._waitAudioBuffer = false;
             })
@@ -153,7 +159,7 @@ export class Sound implements Resource {
     return completed;
   }
 
-  onLoad() {
+  onLoad(): void {
     if (this._audio) {
       this._source = new MediaElementAudioSourceNode(audioCtx, {
         mediaElement: this._audio,
@@ -170,7 +176,7 @@ class Channel {
   _panner: StereoPannerNode;
   _gainNode: GainNode;
 
-  get muted() {
+  get muted(): boolean {
     return this._muted;
   }
 
@@ -186,7 +192,7 @@ class Channel {
     }
   }
 
-  get volume() {
+  get volume(): number {
     return this._volume;
   }
 
@@ -200,7 +206,7 @@ class Channel {
     }
   }
 
-  get panning() {
+  get panning(): number {
     return this._panning;
   }
 
@@ -237,7 +243,7 @@ export class SingleChannel extends Channel {
 
   // Public functions
 
-  get playbackRate() {
+  get playbackRate(): number {
     return this._playbackRate;
   }
 
@@ -263,7 +269,7 @@ export class SingleChannel extends Channel {
     }
   }
 
-  play(sound: Sound, options?: Partial<SingleChannelPlayOptions>) {
+  play(sound: Sound, options?: Partial<SingleChannelPlayOptions>): this {
     // Make sure the audio is stopped before changing its options
     this.stop();
 
@@ -288,7 +294,7 @@ export class SingleChannel extends Channel {
         const callback = options.callback;
 
         audio.loop = false;
-        audio.onended = () => {
+        audio.onended = (): void => {
           this._disconnect();
 
           callback();
@@ -323,7 +329,7 @@ export class SingleChannel extends Channel {
         const callback = options.callback;
 
         source.loop = false;
-        source.onended = () => {
+        source.onended = (): void => {
           this._disconnect();
 
           callback();
@@ -349,7 +355,7 @@ export class SingleChannel extends Channel {
     return this;
   }
 
-  stop() {
+  stop(): this {
     if (this._audio) {
       this._audio.pause();
       this._audio.currentTime = 0;
@@ -370,7 +376,7 @@ export class SingleChannel extends Channel {
     return this;
   }
 
-  pause() {
+  pause(): this {
     if (this._audio) {
       this._audio.pause();
     }
@@ -394,7 +400,7 @@ export class SingleChannel extends Channel {
     return this;
   }
 
-  resume() {
+  resume(): this {
     if (this._audio) {
       this._audio.play().catch(noop);
     }
@@ -433,7 +439,7 @@ export class SingleChannel extends Channel {
 
   // Implementation details
 
-  _disconnect = () => {
+  _disconnect = (): void => {
     if (this._audio) {
       this._audio.loop = false;
     }
@@ -452,7 +458,7 @@ export class SingleChannel extends Channel {
 export class MultiChannel extends Channel {
   // Public functions
 
-  play(sound: Sound, options?: Partial<MultiChannelPlayOptions>) {
+  play(sound: Sound, options?: Partial<MultiChannelPlayOptions>): this {
     const playbackRate = clamp(options?.playbackRate ?? 1, 0.25, 4) || 1;
 
     if (sound._audio) {

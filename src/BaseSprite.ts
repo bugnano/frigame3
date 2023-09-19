@@ -69,15 +69,15 @@ export class BaseSprite extends Rect {
   _drawWidth = 0;
   _drawHeight = 0;
 
-  get playground() {
+  get playground(): Playground | undefined {
     return this._playground?.deref();
   }
 
-  get parent() {
+  get parent(): SpriteGroup | undefined {
     return this._parent?.deref();
   }
 
-  get transformOrigin() {
+  get transformOrigin(): (keyof RectSizeX & keyof RectSizeY) | number {
     return this._transformOriginx as
       | (keyof RectSizeX & keyof RectSizeY)
       | number;
@@ -88,7 +88,7 @@ export class BaseSprite extends Rect {
     this._transformOriginy = value;
   }
 
-  get transformOriginx() {
+  get transformOriginx(): keyof RectSizeX | number {
     return this._transformOriginx;
   }
 
@@ -96,7 +96,7 @@ export class BaseSprite extends Rect {
     this._transformOriginx = value;
   }
 
-  get transformOriginy() {
+  get transformOriginy(): keyof RectSizeY | number {
     return this._transformOriginy;
   }
 
@@ -104,7 +104,7 @@ export class BaseSprite extends Rect {
     this._transformOriginy = value;
   }
 
-  get angle() {
+  get angle(): number {
     return this._angle;
   }
 
@@ -112,7 +112,7 @@ export class BaseSprite extends Rect {
     this._angle = value;
   }
 
-  get scalex() {
+  get scalex(): number {
     return this._scalex;
   }
 
@@ -121,7 +121,7 @@ export class BaseSprite extends Rect {
     this._scaleh = value * this._fliph;
   }
 
-  get scaley() {
+  get scaley(): number {
     return this._scaley;
   }
 
@@ -130,7 +130,7 @@ export class BaseSprite extends Rect {
     this._scalev = value * this._flipv;
   }
 
-  get scale() {
+  get scale(): number {
     return this._scalex;
   }
 
@@ -142,7 +142,7 @@ export class BaseSprite extends Rect {
     this._scalev = value * this._flipv;
   }
 
-  get fliph() {
+  get fliph(): boolean {
     return this._fliph < 0;
   }
 
@@ -156,7 +156,7 @@ export class BaseSprite extends Rect {
     }
   }
 
-  get flipv() {
+  get flipv(): boolean {
     return this._flipv < 0;
   }
 
@@ -170,7 +170,7 @@ export class BaseSprite extends Rect {
     }
   }
 
-  get flip() {
+  get flip(): boolean {
     return this._fliph < 0;
   }
 
@@ -190,7 +190,7 @@ export class BaseSprite extends Rect {
     }
   }
 
-  get opacity() {
+  get opacity(): number {
     return this._opacity;
   }
 
@@ -198,7 +198,7 @@ export class BaseSprite extends Rect {
     this._opacity = clamp(value, 0, 1) || 0;
   }
 
-  get hidden() {
+  get hidden(): boolean {
     return this._hidden;
   }
 
@@ -206,7 +206,7 @@ export class BaseSprite extends Rect {
     this._hidden = value;
   }
 
-  get blendMode() {
+  get blendMode(): BlendMode {
     return this._blendMode;
   }
 
@@ -214,7 +214,7 @@ export class BaseSprite extends Rect {
     this._blendMode = value;
   }
 
-  get left() {
+  get left(): number {
     return super.left;
   }
 
@@ -222,7 +222,7 @@ export class BaseSprite extends Rect {
     this._move("left", value);
   }
 
-  get right() {
+  get right(): number {
     return super.right;
   }
 
@@ -230,7 +230,7 @@ export class BaseSprite extends Rect {
     this._move("right", value);
   }
 
-  get centerx() {
+  get centerx(): number {
     return super.centerx;
   }
 
@@ -238,7 +238,7 @@ export class BaseSprite extends Rect {
     this._move("centerx", value);
   }
 
-  get top() {
+  get top(): number {
     return super.top;
   }
 
@@ -246,7 +246,7 @@ export class BaseSprite extends Rect {
     this._move("top", value);
   }
 
-  get bottom() {
+  get bottom(): number {
     return super.bottom;
   }
 
@@ -254,7 +254,7 @@ export class BaseSprite extends Rect {
     this._move("bottom", value);
   }
 
-  get centery() {
+  get centery(): number {
     return super.centery;
   }
 
@@ -262,7 +262,7 @@ export class BaseSprite extends Rect {
     this._move("centery", value);
   }
 
-  get width() {
+  get width(): number {
     return super.width;
   }
 
@@ -270,7 +270,7 @@ export class BaseSprite extends Rect {
     this._resize("width", value);
   }
 
-  get halfWidth() {
+  get halfWidth(): number {
     return super.halfWidth;
   }
 
@@ -278,7 +278,7 @@ export class BaseSprite extends Rect {
     this._resize("halfWidth", value);
   }
 
-  get height() {
+  get height(): number {
     return super.height;
   }
 
@@ -286,7 +286,7 @@ export class BaseSprite extends Rect {
     this._resize("height", value);
   }
 
-  get halfHeight() {
+  get halfHeight(): number {
     return super.halfHeight;
   }
 
@@ -294,7 +294,7 @@ export class BaseSprite extends Rect {
     this._resize("halfHeight", value);
   }
 
-  get radius() {
+  get radius(): number {
     return super.radius;
   }
 
@@ -333,7 +333,7 @@ export class BaseSprite extends Rect {
           "opacity",
           "hidden",
           "blendMode",
-        ])
+        ]),
       );
     }
 
@@ -342,7 +342,7 @@ export class BaseSprite extends Rect {
 
   // Public functions
 
-  drawFirst() {
+  drawFirst(): this {
     const parent = this.parent;
 
     if (parent) {
@@ -361,7 +361,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  drawLast() {
+  drawLast(): this {
     const parent = this.parent;
 
     if (parent) {
@@ -380,7 +380,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  getDrawIndex() {
+  getDrawIndex(): number {
     const parent = this.parent;
 
     if (parent) {
@@ -390,7 +390,7 @@ export class BaseSprite extends Rect {
     return -1;
   }
 
-  drawTo(index: number) {
+  drawTo(index: number): this {
     const parent = this.parent;
 
     if (parent) {
@@ -405,7 +405,7 @@ export class BaseSprite extends Rect {
         parent_layers.splice(
           clamp(Math.round(index) || 0, 0, parent_layers.length),
           0,
-          this
+          this,
         );
       }
     }
@@ -413,7 +413,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  drawBefore(sprite: BaseSprite) {
+  drawBefore(sprite: BaseSprite): this {
     const parent = this.parent;
 
     if (parent) {
@@ -438,7 +438,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  drawAfter(sprite: BaseSprite) {
+  drawAfter(sprite: BaseSprite): this {
     const parent = this.parent;
 
     if (parent) {
@@ -463,7 +463,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  getAbsRect() {
+  getAbsRect(): Rect {
     let left = this.left;
     let top = this.top;
     let parent = this.parent;
@@ -481,7 +481,7 @@ export class BaseSprite extends Rect {
     });
   }
 
-  teleport() {
+  teleport(): this {
     const playground = this.playground;
 
     this._prevLeft = this._left;
@@ -494,7 +494,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  wrapLeft(increment: number, modulo: number) {
+  wrapLeft(increment: number, modulo: number): this {
     this.left += increment;
 
     if (modulo > 0) {
@@ -525,7 +525,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  wrapTop(increment: number, modulo: number) {
+  wrapTop(increment: number, modulo: number): this {
     this.top += increment;
 
     if (modulo > 0) {
@@ -558,7 +558,7 @@ export class BaseSprite extends Rect {
 
   // Implementation details
 
-  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number) {
+  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number): void {
     const left = this._left;
     const top = this._top;
     const prevLeft = this._prevLeft;
@@ -574,7 +574,7 @@ export class BaseSprite extends Rect {
     this._frameCounterLastMove = frameCounterLastMove;
   }
 
-  _move(prop: keyof RectPosX | keyof RectPosY, value: number) {
+  _move(prop: keyof RectPosX | keyof RectPosY, value: number): void {
     const playground = this.playground;
 
     if (playground) {
@@ -590,7 +590,7 @@ export class BaseSprite extends Rect {
     super[prop] = value;
   }
 
-  _checkUpdate() {
+  _checkUpdate(): void {
     const oldNeedsUpdate = this._needsUpdate;
 
     this._needsUpdate = false;
@@ -598,7 +598,7 @@ export class BaseSprite extends Rect {
     this._updateNeedsUpdate(oldNeedsUpdate);
   }
 
-  _updateNeedsUpdate(oldNeedsUpdate: boolean) {
+  _updateNeedsUpdate(oldNeedsUpdate: boolean): void {
     const parent = this.parent;
 
     if (parent) {
@@ -618,19 +618,19 @@ export class BaseSprite extends Rect {
     }
   }
 
-  _onReparent() {
+  _onReparent(): void {
     // no-op
   }
 
-  _initRenderer() {
+  _initRenderer(): void {
     // no-op
   }
 
-  _update() {
+  _update(): void {
     // no-op
   }
 
-  _draw(interp: number) {
+  _draw(interp: number): void {
     const playground = this.playground;
 
     if (playground) {
@@ -661,7 +661,7 @@ export class BaseSprite extends Rect {
     }
   }
 
-  _remove() {
+  _remove(): void {
     // no-op
   }
 }

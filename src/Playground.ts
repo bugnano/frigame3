@@ -30,19 +30,19 @@ export class Playground extends EventTarget {
   _absLeft = 0;
   _absTop = 0;
 
-  get width() {
+  get width(): number {
     return this._width;
   }
 
-  get height() {
+  get height(): number {
     return this._height;
   }
 
-  get halfWidth() {
+  get halfWidth(): number {
     return this._width / 2;
   }
 
-  get halfHeight() {
+  get halfHeight(): number {
     return this._height / 2;
   }
 
@@ -65,7 +65,7 @@ export class Playground extends EventTarget {
 
   // Public functions
 
-  registerCallback(callback: () => void, rate?: number) {
+  registerCallback(callback: () => void, rate?: number): number {
     const callbackId = this._nextId;
     this._nextId += 1;
 
@@ -80,8 +80,8 @@ export class Playground extends EventTarget {
 
   removeCallback(
     callbackId: number | null,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): this {
     if (callbackId !== 0 && !callbackId) {
       if (
         typeof console !== "undefined" &&
@@ -107,7 +107,7 @@ export class Playground extends EventTarget {
     return this;
   }
 
-  clearCallbacks() {
+  clearCallbacks(): this {
     this._callbacks.clear();
 
     this.dispatchEvent(new Event("clearCallbacks"));
@@ -115,7 +115,7 @@ export class Playground extends EventTarget {
     return this;
   }
 
-  startGame() {
+  startGame(): this {
     this.running = true;
 
     if (this._idDraw === null) {
@@ -127,7 +127,7 @@ export class Playground extends EventTarget {
     return this;
   }
 
-  stopGame() {
+  stopGame(): this {
     this.running = false;
 
     // The cancelAnimationFrame is optional, since this._draw will not call
@@ -140,7 +140,7 @@ export class Playground extends EventTarget {
     return this;
   }
 
-  forceRedraw() {
+  forceRedraw(): this {
     if (this._idDraw === null) {
       this._idDraw = requestAnimationFrame(this._draw);
     }
@@ -150,7 +150,7 @@ export class Playground extends EventTarget {
 
   // Implementation details
 
-  _update() {
+  _update(): void {
     this.scenegraph._update();
 
     for (const callback_obj of this._callbacks.values()) {
@@ -164,7 +164,7 @@ export class Playground extends EventTarget {
     }
   }
 
-  _draw = (timestamp: number) => {
+  _draw = (timestamp: number): void => {
     const dt = REFRESH_RATE;
     let accumulator = this._accumulator;
 
@@ -208,7 +208,12 @@ export class Playground extends EventTarget {
     this._renderer.drawPlaygroundAfterChildren(this, interp);
   };
 
-  _insidePlayground(left: number, top: number, width: number, height: number) {
+  _insidePlayground(
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+  ): boolean {
     const sprite_left = this._absLeft + left;
     const sprite_top = this._absTop + top;
 

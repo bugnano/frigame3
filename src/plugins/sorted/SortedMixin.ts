@@ -9,7 +9,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     _originy: keyof RectSizeY | number = "height";
     _sort_y = 0;
 
-    get originx() {
+    get originx(): keyof RectSizeX | number {
       return this._originx;
     }
 
@@ -17,7 +17,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._originx = value;
     }
 
-    get originy() {
+    get originy(): keyof RectSizeY | number {
       return this._originy;
     }
 
@@ -33,7 +33,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get top() {
+    get top(): number {
       return super.top;
     }
 
@@ -49,7 +49,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get bottom() {
+    get bottom(): number {
       return super.bottom;
     }
 
@@ -65,7 +65,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get centery() {
+    get centery(): number {
       return super.centery;
     }
 
@@ -81,7 +81,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get height() {
+    get height(): number {
       return super.height;
     }
 
@@ -97,7 +97,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get halfHeight() {
+    get halfHeight(): number {
       return super.halfHeight;
     }
 
@@ -113,7 +113,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get radius() {
+    get radius(): number {
       return super.radius;
     }
 
@@ -129,7 +129,7 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    _calcSortY() {
+    _calcSortY(): number {
       let originy = this._originy;
 
       if (typeof originy === "string") {

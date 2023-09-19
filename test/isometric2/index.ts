@@ -13,34 +13,34 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
       imageURL: "tile.png",
       originx: 64,
       originy: 32,
-    })
+    }),
   );
   const ice_floor = rm.addResource(
     new SortedAnimation({
       imageURL: "ice.png",
       originx: 64,
       originy: 54,
-    })
+    }),
   );
   const block = rm.addResource(
     new SortedAnimation({
       imageURL: "tile.png",
       originx: 64,
       originy: 96,
-    })
+    }),
   );
   const ice = rm.addResource(
     new SortedAnimation({
       imageURL: "ice.png",
       originx: 64,
       originy: 118,
-    })
+    }),
   );
   const knight = rm.addResource(
     new SortedAnimation({
       imageURL: "knight_se.png",
       numberOfFrame: 8,
-    })
+    }),
   );
 
   const animationList = {
@@ -99,7 +99,7 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
       radius: 32,
       animation: knight,
       rate: 100,
-    })
+    }),
   );
 
   document.getElementById("playground")!.addEventListener("mousedown", (e) => {
@@ -110,7 +110,7 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
 
     const [iso_x, iso_y] = gridFromScreen(
       clicked_x - my_group.left,
-      clicked_y - my_group.top
+      clicked_y - my_group.top,
     );
 
     iso_knight.centerx = iso_x;

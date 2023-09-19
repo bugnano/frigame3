@@ -12,7 +12,7 @@ import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
       imageURL: "beach.png",
       originx: 50,
       originy: 25,
-    })
+    }),
   );
   const grass = rm.addResource(new SortedAnimation("grass.png"));
   const water = rm.addResource(
@@ -20,7 +20,7 @@ import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
       imageURL: "water.png",
       originx: 50,
       originy: 25,
-    })
+    }),
   );
 
   const tileDescription = {
@@ -56,7 +56,7 @@ import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
       referencey: 0,
       originx: 0,
       originy: 0,
-    })
+    }),
   );
   const tilemap = iso_group.addChild(new ISOTilemap(tileDescription));
 

@@ -18,12 +18,12 @@ export class Rectangle extends BaseSprite {
   _borderWidth = 1;
   _borderColor: Gradient | null = null;
 
-  get background() {
+  get background(): Gradient | null {
     return this._background;
   }
 
   set background(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
   ) {
     if (value === null || value instanceof Gradient) {
       this._background = value;
@@ -32,7 +32,7 @@ export class Rectangle extends BaseSprite {
     }
   }
 
-  get borderRadius() {
+  get borderRadius(): number {
     return this._borderRadius;
   }
 
@@ -40,7 +40,7 @@ export class Rectangle extends BaseSprite {
     this._borderRadius = value;
   }
 
-  get borderWidth() {
+  get borderWidth(): number {
     return this._borderWidth;
   }
 
@@ -48,12 +48,12 @@ export class Rectangle extends BaseSprite {
     this._borderWidth = value;
   }
 
-  get borderColor() {
+  get borderColor(): Gradient | null {
     return this._borderColor;
   }
 
   set borderColor(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null
+    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
   ) {
     if (value === null || value instanceof Gradient) {
       this._borderColor = value;
@@ -65,7 +65,7 @@ export class Rectangle extends BaseSprite {
   constructor(
     options?: Partial<
       BaseSpriteOptions & RectangleOptions & { ref?: SpriteRef<Rectangle> }
-    >
+    >,
   ) {
     super(options);
 
@@ -77,7 +77,7 @@ export class Rectangle extends BaseSprite {
           "borderRadius",
           "borderWidth",
           "borderColor",
-        ])
+        ]),
       );
 
       if (options.ref) {
@@ -90,17 +90,17 @@ export class Rectangle extends BaseSprite {
 
   // Implementation details
 
-  _initRenderer() {
+  _initRenderer(): void {
     this.playground?._renderer.initRectangle(this);
   }
 
-  _draw(interp: number) {
+  _draw(interp: number): void {
     super._draw(interp);
 
     this.playground?._renderer.drawRectangle(this, interp);
   }
 
-  _remove() {
+  _remove(): void {
     this.playground?._renderer.removeRectangle(this);
   }
 }

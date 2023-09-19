@@ -11,7 +11,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       type: "horizontal",
       numberOfFrame: 4,
       rate: 300,
-    })
+    }),
   );
 
   await rm.preload();
@@ -20,24 +20,24 @@ import { Sprite } from "frigame3/lib/Sprite.js";
   const sg = playground.scenegraph;
 
   const rotate = sg.addChild(
-    new Sprite({ animation: animation, left: 0, top: 16 })
+    new Sprite({ animation: animation, left: 0, top: 16 }),
   );
   const scale = sg.addChild(
-    new Sprite({ animation: animation, left: 80, top: 16 })
+    new Sprite({ animation: animation, left: 80, top: 16 }),
   );
   const rotateScale = sg.addChild(
     new Sprite({
       animation: animation,
       left: 160,
       top: 16,
-    })
+    }),
   );
   const scaleRotate = sg.addChild(
     new Sprite({
       animation: animation,
       left: 240,
       top: 16,
-    })
+    }),
   );
 
   rotate.angle = Math.PI / 4;

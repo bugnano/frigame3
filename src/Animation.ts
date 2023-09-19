@@ -40,7 +40,7 @@ const images = new Map<
   }
 >();
 
-function getImage(imageURL: string) {
+function getImage(imageURL: string): HTMLImageElement {
   let img: HTMLImageElement;
 
   const image = images.get(imageURL);
@@ -61,7 +61,7 @@ function getImage(imageURL: string) {
   return img;
 }
 
-const imagesRegistry = new FinalizationRegistry((imageURLs: string[]) => {
+const imagesRegistry = new FinalizationRegistry((imageURLs: string[]): void => {
   for (const imageURL of imageURLs) {
     const image = images.get(imageURL);
     if (image) {
@@ -83,32 +83,32 @@ export class Animation implements Resource {
   frameHeight = 0;
   frameset: SpriteSheet[] = [];
 
-  get rate() {
+  get rate(): number {
     return this._reportedRate;
   }
 
-  get width() {
+  get width(): number {
     return this.frameWidth;
   }
 
-  get height() {
+  get height(): number {
     return this.frameHeight;
   }
 
-  get halfWidth() {
+  get halfWidth(): number {
     return this.frameWidth / 2;
   }
 
-  get halfHeight() {
+  get halfHeight(): number {
     return this.frameHeight / 2;
   }
 
-  get radius() {
+  get radius(): number {
     return Math.max(this.frameWidth, this.frameHeight) / 2;
   }
 
   constructor(
-    options: Partial<SpriteSheet & AnimationOptions & FrameOptions> | string
+    options: Partial<SpriteSheet & AnimationOptions & FrameOptions> | string,
   ) {
     if (typeof options === "string") {
       this.frameset.push({
@@ -209,11 +209,13 @@ export class Animation implements Resource {
 
     imagesRegistry.register(
       this,
-      this.frameset.map((sprite_sheet) => sprite_sheet.imageURL)
+      this.frameset.map(
+        (sprite_sheet: SpriteSheet): string => sprite_sheet.imageURL,
+      ),
     );
   }
 
-  complete() {
+  complete(): boolean {
     for (const sprite_sheet of this.frameset) {
       const img = sprite_sheet._img;
 
@@ -226,7 +228,7 @@ export class Animation implements Resource {
     return true;
   }
 
-  onLoad() {
+  onLoad(): void {
     if (this.frameset.length) {
       // The first sprite sheet is used to calculate the frame dimensions
       const sprite_sheet = this.frameset[0];
@@ -238,12 +240,12 @@ export class Animation implements Resource {
 
         // On vertical animations the frameHeight parameter is optional
         this.frameHeight ||= Math.trunc(
-          (img.height - sprite_sheet.offsety) / sprite_sheet.numberOfFrame
+          (img.height - sprite_sheet.offsety) / sprite_sheet.numberOfFrame,
         );
       } else {
         // On horizontal animations the frameWidth parameter is optional
         this.frameWidth ||= Math.trunc(
-          (img.width - sprite_sheet.offsetx) / sprite_sheet.numberOfFrame
+          (img.width - sprite_sheet.offsetx) / sprite_sheet.numberOfFrame,
         );
 
         // On multi horizontal animations the frameHeight parameter is required

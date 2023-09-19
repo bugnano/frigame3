@@ -16,7 +16,7 @@ export class GamepadTracker extends EventTarget {
     playground.addEventListener("clearCallbacks", this._onClearCallbacks);
   }
 
-  _scanGamepads = () => {
+  _scanGamepads = (): void => {
     const controllers = this.controllers;
     const gamepads = navigator.getGamepads();
 
@@ -29,7 +29,9 @@ export class GamepadTracker extends EventTarget {
 
     // Step 2: Remove disconnected controllers
     const indexes = new Set(
-      gamepads.filter((gamepad) => gamepad).map((gamepad) => gamepad!.index)
+      gamepads
+        .filter((gamepad: Gamepad | null): boolean => gamepad !== null)
+        .map((gamepad: Gamepad | null): number => gamepad!.index),
     );
     for (const index of controllers.keys()) {
       if (!indexes.has(index)) {
@@ -38,7 +40,7 @@ export class GamepadTracker extends EventTarget {
     }
   };
 
-  registerCallback(options?: { suppressWarning?: boolean }) {
+  registerCallback(options?: { suppressWarning?: boolean }): this {
     if (this._callbackId === null) {
       const playground = this._playground.deref();
 
@@ -66,7 +68,7 @@ export class GamepadTracker extends EventTarget {
     return this;
   }
 
-  removeCallback(options?: { suppressWarning?: boolean }) {
+  removeCallback(options?: { suppressWarning?: boolean }): this {
     const playground = this._playground.deref();
 
     if (playground) {
@@ -86,7 +88,7 @@ export class GamepadTracker extends EventTarget {
     return this;
   }
 
-  _onClearCallbacks = () => {
+  _onClearCallbacks = (): void => {
     if (this._callbackId !== null) {
       this._callbackId = null;
       this.registerCallback();

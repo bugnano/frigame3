@@ -11,7 +11,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       type: "vertical",
       numberOfFrame: 4,
       rate: 300,
-    })
+    }),
   );
 
   const simpleHorizontalAnimation = rm.addResource(
@@ -20,7 +20,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       type: "horizontal",
       numberOfFrame: 4,
       rate: 300,
-    })
+    }),
   );
 
   const multiVerticalAnimation = rm.addResource(
@@ -30,7 +30,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 4,
       rate: 300,
       frameWidth: 32,
-    })
+    }),
   );
 
   const multiHorizontalAnimation = rm.addResource(
@@ -40,7 +40,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 4,
       rate: 300,
       frameHeight: 32,
-    })
+    }),
   );
 
   const simpleOffsetVerticalAnimation = rm.addResource(
@@ -51,7 +51,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       rate: 300,
       offsetx: 100,
       offsety: 100,
-    })
+    }),
   );
 
   const simpleOffsetHorizontalAnimation = rm.addResource(
@@ -62,7 +62,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       rate: 300,
       offsetx: 100,
       offsety: 100,
-    })
+    }),
   );
 
   const multiOffsetVerticalAnimation = rm.addResource(
@@ -74,7 +74,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       offsetx: 100,
       offsety: 100,
       frameWidth: 32,
-    })
+    }),
   );
 
   const multiOffsetHorizontalAnimation = rm.addResource(
@@ -86,7 +86,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       offsetx: 100,
       offsety: 100,
       frameHeight: 32,
-    })
+    }),
   );
 
   const pingpongAnimation = rm.addResource(
@@ -98,7 +98,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 9,
       //rate: 60
       rate: 600,
-    })
+    }),
   );
 
   const multiPingpongAnimation = rm.addResource(
@@ -109,7 +109,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 9,
       rate: 60,
       frameHeight: 64,
-    })
+    }),
   );
 
   const pingpongBackwardsAnimation = rm.addResource(
@@ -122,7 +122,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 9,
       //rate: 60
       rate: 600,
-    })
+    }),
   );
 
   const multiPingpongBackwardsAnimation = rm.addResource(
@@ -134,7 +134,7 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       numberOfFrame: 9,
       rate: 60,
       frameHeight: 64,
-    })
+    }),
   );
 
   await rm.preload();
@@ -146,77 +146,77 @@ import { Sprite } from "frigame3/lib/Sprite.js";
     new Sprite({
       animation: simpleVerticalAnimation,
       left: 0,
-    })
+    }),
   );
   const simpleHorizontal = sg.addChild(
     new Sprite({
       animation: simpleHorizontalAnimation,
       backwards: true,
       left: 34,
-    })
+    }),
   );
   const multiVertical = sg.addChild(
     new Sprite({
       animation: multiVerticalAnimation,
       left: 75,
-    })
+    }),
   );
   const multiHorizontal = sg.addChild(
     new Sprite({
       animation: multiHorizontalAnimation,
       left: 109,
-    })
+    }),
   );
   const simpleOffsetVertical = sg.addChild(
     new Sprite({
       animation: simpleOffsetVerticalAnimation,
       left: 150,
-    })
+    }),
   );
   const simpleOffsetHorizontal = sg.addChild(
     new Sprite({
       animation: simpleOffsetHorizontalAnimation,
       left: 184,
-    })
+    }),
   );
   const multiOffsetVertical = sg.addChild(
     new Sprite({
       animation: multiOffsetVerticalAnimation,
       animationIndex: 1,
       left: 225,
-    })
+    }),
   );
   const multiOffsetHorizontal = sg.addChild(
     new Sprite({
       animation: multiOffsetHorizontalAnimation,
       animationIndex: 1,
       left: 259,
-    })
+    }),
   );
   const pingpong = sg.addChild(
     new Sprite({
       animation: pingpongAnimation,
       left: 286,
-    })
+    }),
   );
   const multiPingpong = sg.addChild(
     new Sprite({
       animation: multiPingpongAnimation,
       left: 350,
-    })
+    }),
   );
   const backPingpong = sg.addChild(
     new Sprite({
       animation: pingpongBackwardsAnimation,
       left: 414,
-    })
+    }),
   );
   const multiBackPingpong = sg.addChild(
     new Sprite({
       animation: multiPingpongBackwardsAnimation,
       animationIndex: 1,
       left: 478,
-    })
+    }),
   );
 
   multiVertical.animationIndex = 1;

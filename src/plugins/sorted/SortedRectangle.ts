@@ -16,7 +16,7 @@ export class SortedRectangle extends SortedBaseRectangle {
   constructor(
     options?: Partial<BaseSpriteOptions & SortedRectangleOptions> & {
       ref?: SpriteRef<SortedRectangle>;
-    }
+    },
   ) {
     super(options);
 

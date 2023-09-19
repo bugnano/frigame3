@@ -2,11 +2,11 @@ import { REFRESH_RATE } from "./defines.js";
 
 export type GConstructor<T extends object> = new (...args: any[]) => T;
 
-export function noop() {
+export function noop(): void {
   // no-op
 }
 
-export function isEmptyObject<T extends object>(obj: T) {
+export function isEmptyObject<T extends object>(obj: T): boolean {
   for (const name in obj) {
     return false;
   }
@@ -17,8 +17,8 @@ export function isEmptyObject<T extends object>(obj: T) {
 // Return a new object with only the keys defined in the keys array parameter
 export function pick<T extends object, U extends keyof T>(
   obj: T,
-  keys: readonly U[]
-) {
+  keys: readonly U[],
+): Partial<Pick<T, U>> {
   const result: Partial<Pick<T, U>> = {};
 
   for (const key of keys) {
@@ -33,19 +33,19 @@ export function pick<T extends object, U extends keyof T>(
   return result;
 }
 
-export function clamp(n: number, minVal: number, maxVal: number) {
+export function clamp(n: number, minVal: number, maxVal: number): number {
   return Math.min(Math.max(n, minVal), maxVal);
 }
 
-export function mod(n: number, m: number) {
+export function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }
 
-export function framesFromMs(ms: number) {
+export function framesFromMs(ms: number): number {
   return Math.max(Math.round(ms / REFRESH_RATE), 1) || 1;
 }
 
-export function msFromFrames(frames: number) {
+export function msFromFrames(frames: number): number {
   return frames * REFRESH_RATE || 0;
 }
 

@@ -35,7 +35,7 @@ export class Sprite extends BaseSprite {
   _multiy = 0;
   _endAnimation = false;
 
-  get animation() {
+  get animation(): Animation | null {
     return this._animation;
   }
 
@@ -74,7 +74,7 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  get animationIndex() {
+  get animationIndex(): number {
     return this._animationIndex;
   }
 
@@ -88,7 +88,7 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  get callback() {
+  get callback(): (() => void) | null {
     return this._callback;
   }
 
@@ -98,7 +98,7 @@ export class Sprite extends BaseSprite {
     this._checkUpdate();
   }
 
-  get paused() {
+  get paused(): boolean {
     return this._paused;
   }
 
@@ -108,7 +108,7 @@ export class Sprite extends BaseSprite {
     this._checkUpdate();
   }
 
-  get rate() {
+  get rate(): number {
     return this._reportedRate;
   }
 
@@ -117,7 +117,7 @@ export class Sprite extends BaseSprite {
     this._reportedRate = value;
   }
 
-  get once() {
+  get once(): boolean {
     return this._once;
   }
 
@@ -125,7 +125,7 @@ export class Sprite extends BaseSprite {
     this._once = value;
   }
 
-  get pingpong() {
+  get pingpong(): boolean {
     return this._pingpong;
   }
 
@@ -133,7 +133,7 @@ export class Sprite extends BaseSprite {
     this._pingpong = value;
   }
 
-  get backwards() {
+  get backwards(): boolean {
     return this._backwards;
   }
 
@@ -147,7 +147,7 @@ export class Sprite extends BaseSprite {
   constructor(
     options?: Partial<BaseSpriteOptions & SpriteOptions> & {
       ref?: SpriteRef<Sprite>;
-    }
+    },
   ) {
     super(options);
 
@@ -163,7 +163,7 @@ export class Sprite extends BaseSprite {
           "once",
           "pingpong",
           "backwards",
-        ])
+        ]),
       );
 
       if (options.ref) {
@@ -178,7 +178,7 @@ export class Sprite extends BaseSprite {
 
   // Public functions
 
-  restartAnimation() {
+  restartAnimation(): this {
     const animation = this._animation;
 
     if (animation && this._backwards) {
@@ -220,7 +220,7 @@ export class Sprite extends BaseSprite {
 
   // Implementation details
 
-  _checkUpdate() {
+  _checkUpdate(): void {
     const oldNeedsUpdate = this._needsUpdate;
 
     if (
@@ -238,11 +238,11 @@ export class Sprite extends BaseSprite {
     this._updateNeedsUpdate(oldNeedsUpdate);
   }
 
-  _initRenderer() {
+  _initRenderer(): void {
     this.playground?._renderer.initSprite(this);
   }
 
-  _update() {
+  _update(): void {
     const callback = this._callback;
     const animation = this._animation;
 
@@ -459,13 +459,13 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  _draw(interp: number) {
+  _draw(interp: number): void {
     super._draw(interp);
 
     this.playground?._renderer.drawSprite(this, interp);
   }
 
-  _remove() {
+  _remove(): void {
     this.playground?._renderer.removeSprite(this);
   }
 }

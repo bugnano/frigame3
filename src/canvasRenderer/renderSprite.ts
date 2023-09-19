@@ -2,17 +2,17 @@ import { playgroundMap } from "./renderPlayground.js";
 import type { Sprite } from "../Sprite.js";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function initSprite(sprite: Sprite) {
+export function initSprite(sprite: Sprite): void {
   // no-op
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function removeSprite(sprite: Sprite) {
+export function removeSprite(sprite: Sprite): void {
   // no-op
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function drawSprite(sprite: Sprite, interp: number) {
+export function drawSprite(sprite: Sprite, interp: number): void {
   const playground = sprite.playground!;
 
   const left = sprite._drawLeft;
@@ -24,7 +24,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
     left,
     top,
     width,
-    height
+    height,
   );
   const animation = sprite._animation;
   const opacity = sprite._opacity;
@@ -118,7 +118,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
         0,
         0,
         width,
-        height
+        height,
       );
 
       ctx.restore();
@@ -136,7 +136,7 @@ export function drawSprite(sprite: Sprite, interp: number) {
         left,
         top,
         width,
-        height
+        height,
       );
 
       if (blend_mode_changed) {

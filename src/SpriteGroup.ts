@@ -13,7 +13,7 @@ export class SpriteGroup extends BaseSprite {
   _crop = false;
   _borderRadius = 0;
 
-  get crop() {
+  get crop(): boolean {
     return this._crop;
   }
 
@@ -21,7 +21,7 @@ export class SpriteGroup extends BaseSprite {
     this._crop = value;
   }
 
-  get borderRadius() {
+  get borderRadius(): number {
     return this._borderRadius;
   }
 
@@ -37,7 +37,7 @@ export class SpriteGroup extends BaseSprite {
   constructor(
     options?: Partial<BaseSpriteOptions & SpriteGroupOptions> & {
       ref?: SpriteRef<SpriteGroup>;
-    }
+    },
   ) {
     super(options);
 
@@ -60,7 +60,7 @@ export class SpriteGroup extends BaseSprite {
 
   // Public functions
 
-  clear() {
+  clear(): this {
     for (const sprite of this._layers) {
       sprite._remove();
     }
@@ -75,8 +75,8 @@ export class SpriteGroup extends BaseSprite {
 
   addChild<T extends BaseSprite>(
     child: T,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): T {
     if (!child.parent) {
       this._layers.push(child);
 
@@ -98,8 +98,8 @@ export class SpriteGroup extends BaseSprite {
 
   insertChild<T extends BaseSprite>(
     child: T,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): T {
     if (!child.parent) {
       this._layers.unshift(child);
 
@@ -121,8 +121,8 @@ export class SpriteGroup extends BaseSprite {
 
   removeChild(
     child: BaseSprite | null,
-    options?: { suppressWarning?: boolean }
-  ) {
+    options?: { suppressWarning?: boolean },
+  ): this {
     if (!child) {
       if (
         typeof console !== "undefined" &&
@@ -165,7 +165,7 @@ export class SpriteGroup extends BaseSprite {
 
   // Implementation details
 
-  _reparentChild(child: BaseSprite) {
+  _reparentChild(child: BaseSprite): void {
     child._parent = new WeakRef(this);
     child._needsUpdate = false;
     child._checkUpdate();
@@ -173,7 +173,7 @@ export class SpriteGroup extends BaseSprite {
     this._addPlaygroundToChild(child);
   }
 
-  _addPlaygroundToChild(child: BaseSprite) {
+  _addPlaygroundToChild(child: BaseSprite): void {
     const playground = this.playground;
 
     if (playground) {
@@ -190,7 +190,7 @@ export class SpriteGroup extends BaseSprite {
     }
   }
 
-  _checkUpdate() {
+  _checkUpdate(): void {
     const oldNeedsUpdate = this._needsUpdate;
 
     if (this._layers.length === 0) {
@@ -202,17 +202,17 @@ export class SpriteGroup extends BaseSprite {
     this._updateNeedsUpdate(oldNeedsUpdate);
   }
 
-  _initRenderer() {
+  _initRenderer(): void {
     this.playground?._renderer.initGroup(this);
   }
 
-  _update() {
+  _update(): void {
     for (const sprite of this._updateList) {
       sprite._update();
     }
   }
 
-  _draw(interp: number) {
+  _draw(interp: number): void {
     super._draw(interp);
 
     const playground = this.playground;
@@ -239,7 +239,7 @@ export class SpriteGroup extends BaseSprite {
     }
   }
 
-  _remove() {
+  _remove(): void {
     this.clear();
 
     this.playground?._renderer.removeGroup(this);

@@ -18,7 +18,7 @@ class Color {
   _a = 1;
   _str = "rgba(0,0,0,1)";
 
-  get r() {
+  get r(): number {
     return this._r;
   }
 
@@ -27,7 +27,7 @@ class Color {
     this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
   }
 
-  get g() {
+  get g(): number {
     return this._g;
   }
 
@@ -36,7 +36,7 @@ class Color {
     this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
   }
 
-  get b() {
+  get b(): number {
     return this._b;
   }
 
@@ -45,7 +45,7 @@ class Color {
     this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
   }
 
-  get a() {
+  get a(): number {
     return this._a;
   }
 
@@ -53,7 +53,7 @@ class Color {
     this._a = clamp(
       typeof value === "number" && !Number.isNaN(value) ? value : 1,
       0,
-      1
+      1,
     );
     this._str = `rgba(${this._r},${this._g},${this._b},${this._a})`;
   }
@@ -73,15 +73,20 @@ export class Gradient {
   constructor(
     startColor?: Partial<ColorObj> | Partial<ColorArr>,
     endColor?: Partial<ColorObj> | Partial<ColorArr>,
-    type: GradientType = "vertical"
+    type: GradientType = "vertical",
   ) {
-    const [r, g, b, a] = (() => {
+    const [r, g, b, a] = ((): ColorArr => {
       if (startColor) {
         if (Array.isArray(startColor)) {
-          return startColor;
+          return [
+            startColor[0] ?? 0,
+            startColor[1] ?? 0,
+            startColor[2] ?? 0,
+            startColor[3] ?? 1,
+          ];
         } else {
           const { r, g, b, a } = startColor;
-          return [r, g, b, a];
+          return [r ?? 0, g ?? 0, b ?? 0, a ?? 1];
         }
       } else {
         return [0, 0, 0, 1];
@@ -91,12 +96,17 @@ export class Gradient {
     this.startColor = new Color({ r, g, b, a });
 
     if (endColor) {
-      const [r, g, b, a] = (() => {
+      const [r, g, b, a] = ((): ColorArr => {
         if (Array.isArray(endColor)) {
-          return endColor;
+          return [
+            endColor[0] ?? 0,
+            endColor[1] ?? 0,
+            endColor[2] ?? 0,
+            endColor[3] ?? 1,
+          ];
         } else {
           const { r, g, b, a } = endColor;
-          return [r, g, b, a];
+          return [r ?? 0, g ?? 0, b ?? 0, a ?? 1];
         }
       })();
 

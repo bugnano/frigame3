@@ -1,7 +1,7 @@
 import { SpriteGroup } from "../SpriteGroup.js";
 import { Sprite } from "../Sprite.js";
 import { Rectangle } from "../Rectangle.js";
-import type { BaseSpriteOptions } from "../BaseSprite.js";
+import type { BaseSprite, BaseSpriteOptions } from "../BaseSprite.js";
 import type { SpriteGroupOptions } from "../SpriteGroup.js";
 import type { SpriteOptions } from "../Sprite.js";
 import type { RectangleOptions } from "../Rectangle.js";
@@ -32,7 +32,7 @@ export class Tilemap extends SpriteGroup {
     options: TilemapOptions &
       Partial<BaseSpriteOptions & SpriteGroupOptions> & {
         ref?: SpriteRef<Tilemap>;
-      }
+      },
   ) {
     super(options);
 
@@ -119,7 +119,7 @@ export class Tilemap extends SpriteGroup {
     }
   }
 
-  getAt(row: number, col: number) {
+  getAt(row: number, col: number): BaseSprite {
     return this._layers[this._locations[row * this.sizex + col]];
   }
 }

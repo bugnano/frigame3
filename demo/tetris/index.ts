@@ -64,7 +64,7 @@ function clearPiece(
   level: Piece[][],
   block: Piece[][],
   pos_x: number,
-  pos_y: number
+  pos_y: number,
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
@@ -86,7 +86,7 @@ function drawPiece(
   level: Piece[][],
   block: Piece[][],
   pos_x: number,
-  pos_y: number
+  pos_y: number,
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
@@ -108,7 +108,7 @@ function fitsPiece(
   level: Piece[][],
   block: Piece[][],
   pos_x: number,
-  pos_y: number
+  pos_y: number,
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
@@ -310,7 +310,7 @@ function fitsPiece(
       height: 20 * BLOCK_SIZE,
       borderWidth: BLOCK_SIZE,
       borderColor: [128, 128, 128],
-    })
+    }),
   );
 
   const content = sg.addChild(
@@ -323,7 +323,7 @@ function fitsPiece(
       tileHeight: BLOCK_SIZE,
       data: Array(10 * 20).fill(1),
       animationList: { 1: { background: COLOURS[" "] } },
-    })
+    }),
   );
 
   const preview_box = sg.addChild(
@@ -334,7 +334,7 @@ function fitsPiece(
       height: 6 * BLOCK_SIZE,
       borderWidth: BLOCK_SIZE,
       borderColor: [128, 128, 128],
-    })
+    }),
   );
 
   const preview = sg.addChild(
@@ -347,7 +347,7 @@ function fitsPiece(
       tileHeight: BLOCK_SIZE,
       data: Array(6 * 6).fill(1),
       animationList: { 1: { background: COLOURS[" "] } },
-    })
+    }),
   );
 
   const preview_pieces: Piece[][] = [
