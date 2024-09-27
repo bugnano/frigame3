@@ -1,6 +1,6 @@
-import { playgroundMap } from "./renderPlayground.js";
-import type { Rectangle } from "../Rectangle.js";
 import type { GradientType } from "../Gradient.js";
+import type { Rectangle } from "../Rectangle.js";
+import { playgroundMap } from "./renderPlayground.js";
 
 export interface GradientObj {
   width: number;
@@ -11,8 +11,15 @@ export interface GradientObj {
   gradient: CanvasGradient | null;
 }
 
-export const fillMap = new WeakMap<Rectangle, GradientObj>();
-export const strokeMap = new WeakMap<Rectangle, GradientObj>();
+export const fillMap: WeakMap<Rectangle, GradientObj> = new WeakMap<
+  Rectangle,
+  GradientObj
+>();
+
+export const strokeMap: WeakMap<Rectangle, GradientObj> = new WeakMap<
+  Rectangle,
+  GradientObj
+>();
 
 export function initRectangle(rectangle: Rectangle): void {
   for (const map of [fillMap, strokeMap]) {
@@ -27,12 +34,12 @@ export function initRectangle(rectangle: Rectangle): void {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function removeRectangle(rectangle: Rectangle): void {
   // no-op
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function drawRectangle(rectangle: Rectangle, interp: number): void {
   const playground = rectangle.playground!;
 

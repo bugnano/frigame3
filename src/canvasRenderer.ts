@@ -1,25 +1,25 @@
 import type { Renderer } from "./Renderer.js";
 import {
-  initPlayground,
-  drawPlaygroundBeforeChildren,
-  drawPlaygroundAfterChildren,
-} from "./canvasRenderer/renderPlayground.js";
-import {
+  drawGroupAfterChildren,
+  drawGroupBeforeChildren,
   initGroup,
   removeGroup,
-  drawGroupBeforeChildren,
-  drawGroupAfterChildren,
 } from "./canvasRenderer/renderGroup.js";
 import {
-  initSprite,
-  removeSprite,
-  drawSprite,
-} from "./canvasRenderer/renderSprite.js";
+  drawPlaygroundAfterChildren,
+  drawPlaygroundBeforeChildren,
+  initPlayground,
+} from "./canvasRenderer/renderPlayground.js";
 import {
+  drawRectangle,
   initRectangle,
   removeRectangle,
-  drawRectangle,
 } from "./canvasRenderer/renderRectangle.js";
+import {
+  drawSprite,
+  initSprite,
+  removeSprite,
+} from "./canvasRenderer/renderSprite.js";
 
 export const canvasRenderer: Renderer = {
   initPlayground,

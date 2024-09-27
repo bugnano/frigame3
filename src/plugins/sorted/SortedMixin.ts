@@ -1,7 +1,7 @@
-import { SortedGroup } from "./SortedGroup.js";
 import type { BaseSprite } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
 import type { GConstructor } from "../../utils.js";
+import { SortedGroup } from "./SortedGroup.js";
 
 export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
   return class SortedMixin extends Base {

@@ -1,5 +1,5 @@
 import type { Resource } from "../resourceManager.js";
-import { clamp, pick, noop } from "../utils.js";
+import { clamp, noop, pick } from "../utils.js";
 
 export interface ChannelOptions {
   muted: boolean;

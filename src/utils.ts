@@ -1,5 +1,6 @@
 import { REFRESH_RATE } from "./defines.js";
 
+// biome-ignore lint/suspicious/noExplicitAny:
 export type GConstructor<T extends object> = new (...args: any[]) => T;
 
 export function noop(): void {
@@ -7,7 +8,7 @@ export function noop(): void {
 }
 
 export function isEmptyObject<T extends object>(obj: T): boolean {
-  for (const name in obj) {
+  for (const _name in obj) {
     return false;
   }
 

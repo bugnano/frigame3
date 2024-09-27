@@ -1,8 +1,8 @@
 import { Animation } from "../../Animation.js";
 import type {
-  SpriteSheet,
   AnimationOptions,
   FrameOptions,
+  SpriteSheet,
 } from "../../Animation.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
 

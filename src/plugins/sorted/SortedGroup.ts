@@ -1,10 +1,9 @@
-import { BaseSprite } from "../../BaseSprite.js";
-import { SpriteGroup } from "../../SpriteGroup.js";
-import { Sorted } from "./SortedMixin.js";
-import type { SpriteGroupOptions } from "../../SpriteGroup.js";
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
+import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import { SpriteGroup } from "../../SpriteGroup.js";
+import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import type { SpriteRef } from "../../utils.js";
+import { Sorted } from "./SortedMixin.js";
 
 export interface SortedGroupOptions extends SpriteGroupOptions {
   originx: keyof RectSizeX | number;

@@ -1,7 +1,7 @@
 import type { Playground } from "./Playground.js";
-import type { SpriteGroup } from "./SpriteGroup.js";
-import type { Sprite } from "./Sprite.js";
 import type { Rectangle } from "./Rectangle.js";
+import type { Sprite } from "./Sprite.js";
+import type { SpriteGroup } from "./SpriteGroup.js";
 
 export interface RendererElement {
   offsetWidth: number;

@@ -1,7 +1,7 @@
 import { BaseSprite } from "./BaseSprite.js";
-import { Gradient } from "./Gradient.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
-import type { ColorObj, ColorArr } from "./Gradient.js";
+import { Gradient } from "./Gradient.js";
+import type { ColorArr, ColorObj } from "./Gradient.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
@@ -22,9 +22,11 @@ export class Rectangle extends BaseSprite {
     return this._background;
   }
 
-  set background(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
-  ) {
+  set background(value:
+    | Gradient
+    | Partial<ColorObj>
+    | Partial<ColorArr>
+    | null) {
     if (value === null || value instanceof Gradient) {
       this._background = value;
     } else {
@@ -52,9 +54,11 @@ export class Rectangle extends BaseSprite {
     return this._borderColor;
   }
 
-  set borderColor(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
-  ) {
+  set borderColor(value:
+    | Gradient
+    | Partial<ColorObj>
+    | Partial<ColorArr>
+    | null) {
     if (value === null || value instanceof Gradient) {
       this._borderColor = value;
     } else {

@@ -2,6 +2,11 @@ import type { Playground } from "../Playground.js";
 import type { RendererElement } from "../Renderer.js";
 import { cssClass } from "../defines.js";
 
+export interface PlaygroundObj {
+  ctx: CanvasRenderingContext2D;
+  globalAlpha: number;
+}
+
 const canvasRegistry = new FinalizationRegistry(
   (canvas: HTMLCanvasElement): void => {
     if (canvas.parentNode) {
@@ -10,12 +15,9 @@ const canvasRegistry = new FinalizationRegistry(
   },
 );
 
-export const playgroundMap = new WeakMap<
+export const playgroundMap: WeakMap<Playground, PlaygroundObj> = new WeakMap<
   Playground,
-  {
-    ctx: CanvasRenderingContext2D;
-    globalAlpha: number;
-  }
+  PlaygroundObj
 >();
 
 export function initPlayground(
@@ -85,7 +87,8 @@ export function initPlayground(
 
 export function drawPlaygroundBeforeChildren(
   playground: Playground,
-  interp: number, // eslint-disable-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedVariables:
+  interp: number,
 ): void {
   const playgroundData = playgroundMap.get(playground)!;
 
@@ -94,8 +97,10 @@ export function drawPlaygroundBeforeChildren(
 }
 
 export function drawPlaygroundAfterChildren(
-  playground: Playground, // eslint-disable-line @typescript-eslint/no-unused-vars
-  interp: number, // eslint-disable-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedVariables:
+  playground: Playground,
+  // biome-ignore lint/correctness/noUnusedVariables:
+  interp: number,
 ): void {
   // no-op
 }

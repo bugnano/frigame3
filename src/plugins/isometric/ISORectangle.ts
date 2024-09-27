@@ -1,14 +1,14 @@
-import { Rectangle } from "../../Rectangle.js";
-import { ISO } from "./ISOMixin.js";
-import { SortedRectangle } from "../sorted/SortedRectangle.js";
-import { pick } from "../../utils.js";
-import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import type { ISORectOptions } from "./ISORect.js";
-import type { RectangleOptions } from "../../Rectangle.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
+import type { ColorArr, ColorObj, Gradient } from "../../Gradient.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import type { Gradient, ColorObj, ColorArr } from "../../Gradient.js";
+import { Rectangle } from "../../Rectangle.js";
+import type { RectangleOptions } from "../../Rectangle.js";
+import { pick } from "../../utils.js";
 import type { SpriteRef } from "../../utils.js";
+import { SortedRectangle } from "../sorted/SortedRectangle.js";
+import { ISO } from "./ISOMixin.js";
+import type { ISORectOptions } from "./ISORect.js";
+import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
 export interface ISORectangleOptions extends RectangleOptions {
   reference: (keyof RectSizeX & keyof RectSizeY) | number;
@@ -27,9 +27,11 @@ export class ISORectangle extends ISOBaseRectangle {
     return super.background;
   }
 
-  set background(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
-  ) {
+  set background(value:
+    | Gradient
+    | Partial<ColorObj>
+    | Partial<ColorArr>
+    | null) {
     super.background = value;
 
     if (this._screen_obj) {
@@ -65,9 +67,11 @@ export class ISORectangle extends ISOBaseRectangle {
     return super.borderColor;
   }
 
-  set borderColor(
-    value: Gradient | Partial<ColorObj> | Partial<ColorArr> | null,
-  ) {
+  set borderColor(value:
+    | Gradient
+    | Partial<ColorObj>
+    | Partial<ColorArr>
+    | null) {
     super.borderColor = value;
 
     if (this._screen_obj) {

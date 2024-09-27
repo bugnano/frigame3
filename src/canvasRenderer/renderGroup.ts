@@ -1,17 +1,19 @@
-import { playgroundMap } from "./renderPlayground.js";
 import type { SpriteGroup } from "../SpriteGroup.js";
+import { playgroundMap } from "./renderPlayground.js";
 
-export const spriteGroupMap = new WeakMap<
+export interface GroupObj {
+  oldAlpha: number;
+  alphaChanged: boolean;
+  oldBlendMode: GlobalCompositeOperation;
+  blendModeChanged: boolean;
+  left: number;
+  top: number;
+  contextSaved: boolean;
+}
+
+export const spriteGroupMap: WeakMap<SpriteGroup, GroupObj> = new WeakMap<
   SpriteGroup,
-  {
-    oldAlpha: number;
-    alphaChanged: boolean;
-    oldBlendMode: GlobalCompositeOperation;
-    blendModeChanged: boolean;
-    left: number;
-    top: number;
-    contextSaved: boolean;
-  }
+  GroupObj
 >();
 
 export function initGroup(group: SpriteGroup): void {
@@ -26,14 +28,14 @@ export function initGroup(group: SpriteGroup): void {
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function removeGroup(group: SpriteGroup): void {
   // no-op
 }
 
 export function drawGroupBeforeChildren(
   group: SpriteGroup,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedVariables:
   interp: number,
 ): void {
   const opacity = group._opacity;
@@ -146,7 +148,7 @@ export function drawGroupBeforeChildren(
 
 export function drawGroupAfterChildren(
   group: SpriteGroup,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedVariables:
   interp: number,
 ): void {
   if (

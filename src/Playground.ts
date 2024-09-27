@@ -1,7 +1,13 @@
-import { SpriteGroup } from "./SpriteGroup.js";
 import type { Renderer, RendererElement } from "./Renderer.js";
+import { SpriteGroup } from "./SpriteGroup.js";
 import { REFRESH_RATE } from "./defines.js";
 import { framesFromMs } from "./utils.js";
+
+interface CallbackObj {
+  callback: () => void;
+  rate: number;
+  idleCounter: number;
+}
 
 export class Playground extends EventTarget {
   _width = 0;
@@ -16,14 +22,7 @@ export class Playground extends EventTarget {
 
   _renderer: Renderer;
   _nextId = 1; // Start from 1 to guarantee that callbackId is always truthy
-  _callbacks = new Map<
-    number,
-    {
-      callback: () => void;
-      rate: number;
-      idleCounter: number;
-    }
-  >();
+  _callbacks: Map<number, CallbackObj> = new Map<number, CallbackObj>();
   _idDraw: number | null = null;
   _accumulator = 0;
   _currentTime = 0;

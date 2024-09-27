@@ -1,17 +1,17 @@
-import { playgroundMap } from "./renderPlayground.js";
 import type { Sprite } from "../Sprite.js";
+import { playgroundMap } from "./renderPlayground.js";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function initSprite(sprite: Sprite): void {
   // no-op
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function removeSprite(sprite: Sprite): void {
   // no-op
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// biome-ignore lint/correctness/noUnusedVariables:
 export function drawSprite(sprite: Sprite, interp: number): void {
   const playground = sprite.playground!;
 

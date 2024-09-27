@@ -1,6 +1,6 @@
-import { swing } from "./easing.js";
-import { framesFromMs } from "../../utils.js";
 import type { Playground } from "../../Playground.js";
+import { framesFromMs } from "../../utils.js";
+import { swing } from "./easing.js";
 
 export type Speed = "slow" | "fast";
 
@@ -33,7 +33,10 @@ const speeds = {
 
 export class Tweener extends EventTarget {
   _nextId = 1; // Start from 1 to guarantee that tweenId is always truthy
-  _tween_queue = new Map<number, TweenObj<Record<string, number>>>();
+  _tween_queue: Map<number, TweenObj<Record<string, number>>> = new Map<
+    number,
+    TweenObj<Record<string, number>>
+  >();
   _tweening = false;
   _playground: WeakRef<Playground>;
   _callbackId: number | null = null;

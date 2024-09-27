@@ -1,10 +1,10 @@
-import { ISORect } from "./ISORect.js";
 import type { BaseSprite, BlendMode } from "../../BaseSprite.js";
-import type { SortedGroup } from "../sorted/SortedGroup.js";
-import type { SortedSprite } from "../sorted/SortedSprite.js";
-import type { SortedRectangle } from "../sorted/SortedRectangle.js";
 import type { RectPosX, RectPosY, RectSizeX, RectSizeY } from "../../Rect.js";
 import type { GConstructor } from "../../utils.js";
+import type { SortedGroup } from "../sorted/SortedGroup.js";
+import type { SortedRectangle } from "../sorted/SortedRectangle.js";
+import type { SortedSprite } from "../sorted/SortedSprite.js";
+import { ISORect } from "./ISORect.js";
 import { screenFromGrid } from "./utils.js";
 
 export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
@@ -443,7 +443,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       // no-op
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // biome-ignore lint/correctness/noUnusedVariables:
     _draw(interp: number): void {
       // The drawing is performed only on the screen objects
     }

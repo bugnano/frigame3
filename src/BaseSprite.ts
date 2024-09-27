@@ -1,14 +1,14 @@
+import type { Playground } from "./Playground.js";
 import { Rect } from "./Rect.js";
 import type {
+  RectOptions,
   RectPosX,
   RectPosY,
   RectSizeX,
   RectSizeY,
-  RectOptions,
 } from "./Rect.js";
-import type { Playground } from "./Playground.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
-import { pick, clamp } from "./utils.js";
+import { clamp, pick } from "./utils.js";
 
 // source-over, lighter, multiply, screen
 export type BlendMode = "normal" | "add" | "multiply" | "screen";

@@ -1,14 +1,14 @@
-import { Sprite } from "../../Sprite.js";
-import { ISO } from "./ISOMixin.js";
-import { SortedSprite } from "../sorted/SortedSprite.js";
-import { pick } from "../../utils.js";
-import type { SortedAnimation } from "../sorted/SortedAnimation.js";
-import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import type { ISORectOptions } from "./ISORect.js";
-import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import { Sprite } from "../../Sprite.js";
+import type { SpriteOptions } from "../../Sprite.js";
+import { pick } from "../../utils.js";
 import type { SpriteRef } from "../../utils.js";
+import type { SortedAnimation } from "../sorted/SortedAnimation.js";
+import { SortedSprite } from "../sorted/SortedSprite.js";
+import { ISO } from "./ISOMixin.js";
+import type { ISORectOptions } from "./ISORect.js";
+import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
 export interface ISOSpriteOptions extends SpriteOptions {
   reference: (keyof RectSizeX & keyof RectSizeY) | number;

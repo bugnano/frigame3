@@ -1,7 +1,7 @@
 import type { Playground } from "../Playground.js";
 
 export class GamepadTracker extends EventTarget {
-  controllers = new Map<number, Gamepad>();
+  controllers: Map<number, Gamepad> = new Map<number, Gamepad>();
 
   _playground: WeakRef<Playground>;
   _callbackId: number | null = null;

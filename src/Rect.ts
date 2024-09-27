@@ -1,4 +1,4 @@
-import { pick, clamp } from "./utils.js";
+import { clamp, pick } from "./utils.js";
 
 export interface RectPosX {
   left: number;

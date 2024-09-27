@@ -169,7 +169,7 @@ export class Animation implements Resource {
         imageURL ??=
           typeof options.frameset[0] === "string"
             ? options.frameset[0]
-            : options.frameset[0].imageURL ?? "";
+            : (options.frameset[0].imageURL ?? "");
 
         for (const sprite_sheet of options.frameset) {
           if (typeof sprite_sheet === "string") {

@@ -1,11 +1,11 @@
-import { Sprite } from "../../Sprite.js";
-import { Sorted } from "./SortedMixin.js";
-import { SortedGroup } from "./SortedGroup.js";
-import type { SortedAnimation } from "./SortedAnimation.js";
-import type { SpriteOptions } from "../../Sprite.js";
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import { Sprite } from "../../Sprite.js";
+import type { SpriteOptions } from "../../Sprite.js";
 import type { SpriteRef } from "../../utils.js";
+import type { SortedAnimation } from "./SortedAnimation.js";
+import { SortedGroup } from "./SortedGroup.js";
+import { Sorted } from "./SortedMixin.js";
 
 export interface SortedSpriteOptions extends SpriteOptions {
   originx: keyof RectSizeX | number;

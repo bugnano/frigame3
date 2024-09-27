@@ -1,12 +1,12 @@
-import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
-import { ISOSprite } from "./ISOSprite.js";
-import { ISORectangle } from "./ISORectangle.js";
-import type { ISORectOptions } from "./ISORect.js";
 import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
-import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
-import type { ISOSpriteOptions } from "./ISOSprite.js";
-import type { ISORectangleOptions } from "./ISORectangle.js";
 import type { SpriteRef } from "../../utils.js";
+import type { ISORectOptions } from "./ISORect.js";
+import { ISORectangle } from "./ISORectangle.js";
+import type { ISORectangleOptions } from "./ISORectangle.js";
+import { ISOSprite } from "./ISOSprite.js";
+import type { ISOSpriteOptions } from "./ISOSprite.js";
+import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
+import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
 
 // animationList MUST have at least `animation` or `background`
 export interface ISOTilemapOptions {
