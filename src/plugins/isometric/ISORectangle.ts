@@ -144,7 +144,6 @@ export class ISORectangle extends ISOBaseRectangle {
     // screen object.
     super._resize(prop, value);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     this._screen_obj?._resize(prop, value);
   }
 

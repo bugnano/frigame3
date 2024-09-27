@@ -72,11 +72,7 @@ export class Tilemap extends SpriteGroup {
     let top = 0;
     for (const data of options.data) {
       const animation_options = animationList[data];
-      if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        animation_options &&
-        "animation" in animation_options
-      ) {
+      if (animation_options && "animation" in animation_options) {
         // Sprite
         const sprite_options = Object.assign({}, animation_options, {
           left,
@@ -86,11 +82,7 @@ export class Tilemap extends SpriteGroup {
         });
         this.addChild(new Sprite(sprite_options));
         locations[i_location] = layers.length - 1;
-      } else if (
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        animation_options &&
-        "background" in animation_options
-      ) {
+      } else if (animation_options && "background" in animation_options) {
         // Rectangle
         const rectangle_options = Object.assign({}, animation_options, {
           left,
