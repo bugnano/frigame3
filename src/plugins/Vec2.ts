@@ -194,6 +194,18 @@ export class Vec2 {
     return this.subtract(axisPoint).rotate(angle).add(axisPoint);
   }
 
+  scaleAndRotate(
+    axisPoint: Vec2,
+    scalex: number,
+    scaley: number,
+    angle: number,
+  ): this {
+    return this.subtract(axisPoint)
+      .scale(scalex, scaley)
+      .rotate(angle)
+      .add(axisPoint);
+  }
+
   lerp(a: Vec2, t: number): this {
     const x = this.x;
     const y = this.y;
