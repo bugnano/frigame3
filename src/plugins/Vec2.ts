@@ -36,6 +36,20 @@ export class Vec2 {
     return Vec2.clone(a).subtract(axisPoint).rotate(angle).add(axisPoint);
   }
 
+  static scaleAndRotate(
+    a: Vec2,
+    axisPoint: Vec2,
+    scalex: number,
+    scaley: number,
+    angle: number,
+  ): Vec2 {
+    return Vec2.clone(a)
+      .subtract(axisPoint)
+      .scale(scalex, scaley)
+      .rotate(angle)
+      .add(axisPoint);
+  }
+
   static lerp(a: Vec2, b: Vec2, t: number): Vec2 {
     const ax = a.x;
     const ay = a.y;
@@ -192,6 +206,18 @@ export class Vec2 {
 
   rotateAroundPoint(axisPoint: Vec2, angle: number): this {
     return this.subtract(axisPoint).rotate(angle).add(axisPoint);
+  }
+
+  scaleAndRotate(
+    axisPoint: Vec2,
+    scalex: number,
+    scaley: number,
+    angle: number,
+  ): this {
+    return this.subtract(axisPoint)
+      .scale(scalex, scaley)
+      .rotate(angle)
+      .add(axisPoint);
   }
 
   lerp(a: Vec2, t: number): this {
