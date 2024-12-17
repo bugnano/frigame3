@@ -82,6 +82,13 @@ export class Vec2 {
     return this;
   }
 
+  assign(x: number, y: number): this {
+    this.x = x;
+    this.y = y;
+
+    return this;
+  }
+
   toString(): string {
     return `Vec2(${this.x}, ${this.y})`;
   }
