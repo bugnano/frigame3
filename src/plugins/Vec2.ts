@@ -68,6 +68,10 @@ export class Vec2 {
     return new Vec2(a.x, a.y);
   }
 
+  static perp(a: Vec2): Vec2 {
+    return new Vec2(-a.y, a.x);
+  }
+
   fromMagAngle(mag: number, angle: number): this {
     this.x = Math.cos(angle) * mag;
     this.y = Math.sin(angle) * mag;
@@ -85,6 +89,16 @@ export class Vec2 {
   assign(x: number, y: number): this {
     this.x = x;
     this.y = y;
+
+    return this;
+  }
+
+  perp(): this {
+    const x = this.x;
+    const y = this.y;
+
+    this.x = -y;
+    this.y = x;
 
     return this;
   }
