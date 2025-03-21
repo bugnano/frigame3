@@ -390,7 +390,19 @@ function fitsPiece(
   let typematic_right = 0;
   let old_up = true;
   let typematic_down = 0;
+  let paused = false;
+  let old_p = false;
   playground.registerCallback(() => {
+    if (keyTracker.KeyP && !old_p) {
+      paused = !paused;
+    }
+
+    old_p = keyTracker.KeyP;
+
+    if (paused) {
+      return;
+    }
+
     // Process inputs at every frame to be responsive
     if (keyTracker.ArrowLeft) {
       if (typematic_left === 0) {
