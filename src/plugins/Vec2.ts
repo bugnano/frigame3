@@ -7,31 +7,35 @@ export class Vec2 {
     this.y = y;
   }
 
-  assign(x: number, y: number): this {
+  static clone(a: Vec2): Vec2 {
+    return new Vec2(a.x, a.y);
+  }
+
+  clone(b: Vec2): this {
+    this.x = b.x;
+    this.y = b.y;
+
+    return this;
+  }
+
+  static fromValues(x: number, y: number): Vec2 {
+    return new Vec2(x, y);
+  }
+
+  fromValues(x: number, y: number): this {
     this.x = x;
     this.y = y;
 
     return this;
   }
 
-  static fromMagAngle(mag: number, angle: number): Vec2 {
+  static fromPolar(mag: number, angle: number): Vec2 {
     return new Vec2(Math.cos(angle) * mag, Math.sin(angle) * mag);
   }
 
-  fromMagAngle(mag: number, angle: number): this {
+  fromPolar(mag: number, angle: number): this {
     this.x = Math.cos(angle) * mag;
     this.y = Math.sin(angle) * mag;
-
-    return this;
-  }
-
-  static clone(a: Vec2): Vec2 {
-    return new Vec2(a.x, a.y);
-  }
-
-  clone(a: Vec2): this {
-    this.x = a.x;
-    this.y = a.y;
 
     return this;
   }
@@ -51,15 +55,15 @@ export class Vec2 {
     return this;
   }
 
-  static random(scale = 1): Vec2 {
-    const mag = Math.random() * scale;
+  static random(scalar = 1): Vec2 {
+    const mag = Math.random() * scalar;
     const angle = Math.random() * Math.PI * 2;
 
     return new Vec2(Math.cos(angle) * mag, Math.sin(angle) * mag);
   }
 
-  random(scale = 1): this {
-    const mag = Math.random() * scale;
+  random(scalar = 1): this {
+    const mag = Math.random() * scalar;
     const angle = Math.random() * Math.PI * 2;
 
     this.x = Math.cos(angle) * mag;
@@ -72,20 +76,20 @@ export class Vec2 {
     return new Vec2(a.x + b.x, a.y + b.y);
   }
 
-  add(a: Vec2): this {
-    this.x += a.x;
-    this.y += a.y;
+  add(b: Vec2): this {
+    this.x += b.x;
+    this.y += b.y;
 
     return this;
   }
 
-  static subtract(a: Vec2, b: Vec2): Vec2 {
+  static sub(a: Vec2, b: Vec2): Vec2 {
     return new Vec2(a.x - b.x, a.y - b.y);
   }
 
-  subtract(a: Vec2): this {
-    this.x -= a.x;
-    this.y -= a.y;
+  sub(b: Vec2): this {
+    this.x -= b.x;
+    this.y -= b.y;
 
     return this;
   }
@@ -139,7 +143,7 @@ export class Vec2 {
     const ct = Math.cos(angle);
     const st = Math.sin(angle);
 
-    return new Vec2(x * ct - y * st, y * ct + x * st);
+    return new Vec2(x * ct - y * st, x * st + y * ct);
   }
 
   rotate(angle: number): this {
@@ -149,17 +153,17 @@ export class Vec2 {
     const st = Math.sin(angle);
 
     this.x = x * ct - y * st;
-    this.y = y * ct + x * st;
+    this.y = x * st + y * ct;
 
     return this;
   }
 
   static rotateAroundPoint(a: Vec2, axisPoint: Vec2, angle: number): Vec2 {
-    return Vec2.clone(a).subtract(axisPoint).rotate(angle).add(axisPoint);
+    return Vec2.clone(a).sub(axisPoint).rotate(angle).add(axisPoint);
   }
 
   rotateAroundPoint(axisPoint: Vec2, angle: number): this {
-    return this.subtract(axisPoint).rotate(angle).add(axisPoint);
+    return this.sub(axisPoint).rotate(angle).add(axisPoint);
   }
 
   static scaleAndRotate(
@@ -170,7 +174,7 @@ export class Vec2 {
     sy: number = sx,
   ): Vec2 {
     return Vec2.clone(a)
-      .subtract(axisPoint)
+      .sub(axisPoint)
       .scale(sx, sy)
       .rotate(angle)
       .add(axisPoint);
@@ -182,25 +186,22 @@ export class Vec2 {
     sx: number,
     sy: number = sx,
   ): this {
-    return this.subtract(axisPoint).scale(sx, sy).rotate(angle).add(axisPoint);
+    return this.sub(axisPoint).scale(sx, sy).rotate(angle).add(axisPoint);
   }
 
   static lerp(a: Vec2, b: Vec2, t: number): Vec2 {
     const ax = a.x;
     const ay = a.y;
 
-    const x = ax + t * (b.x - ax);
-    const y = ay + t * (b.y - ay);
-
-    return new Vec2(x, y);
+    return new Vec2(ax + t * (b.x - ax), ay + t * (b.y - ay));
   }
 
-  lerp(a: Vec2, t: number): this {
+  lerp(b: Vec2, t: number): this {
     const x = this.x;
     const y = this.y;
 
-    this.x = x + t * (a.x - x);
-    this.y = y + t * (a.y - y);
+    this.x = x + t * (b.x - x);
+    this.y = y + t * (b.y - y);
 
     return this;
   }
@@ -253,32 +254,24 @@ export class Vec2 {
     return a.x * b.x + a.y * b.y;
   }
 
-  dot(a: Vec2): number {
-    return this.x * a.x + this.y * a.y;
+  dot(b: Vec2): number {
+    return this.x * b.x + this.y * b.y;
   }
 
-  static determinant(a: Vec2, b: Vec2): number {
+  static cross(a: Vec2, b: Vec2): number {
     return a.x * b.y - a.y * b.x;
   }
 
-  determinant(a: Vec2): number {
-    return this.x * a.y - this.y * a.x;
-  }
-
-  static equals(a: Vec2, b: Vec2): boolean {
-    return a.x === b.x && a.y === b.y;
-  }
-
-  equals(a: Vec2): boolean {
-    return this.x === a.x && this.y === a.y;
+  cross(b: Vec2): number {
+    return this.x * b.y - this.y * b.x;
   }
 
   static distance(a: Vec2, b: Vec2): number {
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
 
-  distance(a: Vec2): number {
-    return Math.hypot(this.x - a.x, this.y - a.y);
+  distance(b: Vec2): number {
+    return Math.hypot(this.x - b.x, this.y - b.y);
   }
 
   static squaredDistance(a: Vec2, b: Vec2): number {
@@ -288,11 +281,49 @@ export class Vec2 {
     return dx * dx + dy * dy;
   }
 
-  squaredDistance(a: Vec2): number {
-    const dx = this.x - a.x;
-    const dy = this.y - a.y;
+  squaredDistance(b: Vec2): number {
+    const dx = this.x - b.x;
+    const dy = this.y - b.y;
 
     return dx * dx + dy * dy;
+  }
+
+  static direction(a: Vec2, b: Vec2): Vec2 {
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+
+    let mag = Math.hypot(dx, dy);
+    if (mag !== 0) {
+      mag = 1 / mag;
+    }
+
+    return new Vec2(dx * mag, dy * mag);
+  }
+
+  direction(b: Vec2): this {
+    const dx = b.x - this.x;
+    const dy = b.y - this.y;
+
+    let mag = Math.hypot(dx, dy);
+    if (mag !== 0) {
+      mag = 1 / mag;
+    }
+
+    this.x = dx * mag;
+    this.y = dy * mag;
+
+    return this;
+  }
+
+  static abs(a: Vec2): Vec2 {
+    return new Vec2(Math.abs(a.x), Math.abs(a.y));
+  }
+
+  abs(): this {
+    this.x = Math.abs(this.x);
+    this.y = Math.abs(this.y);
+
+    return this;
   }
 
   static ceil(a: Vec2): Vec2 {
@@ -339,11 +370,11 @@ export class Vec2 {
     return this;
   }
 
-  static toString(a: Vec2): string {
-    return `Vec2(${a.x}, ${a.y})`;
+  static equals(a: Vec2, b: Vec2): boolean {
+    return a.x === b.x && a.y === b.y;
   }
 
-  toString(): string {
-    return `Vec2(${this.x}, ${this.y})`;
+  equals(b: Vec2): boolean {
+    return this.x === b.x && this.y === b.y;
   }
 }
