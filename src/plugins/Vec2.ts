@@ -315,6 +315,41 @@ export class Vec2 {
     return this;
   }
 
+  static project(a: Vec2, b: Vec2): Vec2 {
+    const bx = b.x;
+    const by = b.y;
+
+    const dotAB = a.x * bx + a.y * by;
+
+    let squaredMagB = bx * bx + by * by;
+    if (squaredMagB !== 0) {
+      squaredMagB = 1 / squaredMagB;
+    }
+
+    const scalar = dotAB * squaredMagB;
+
+    return new Vec2(bx * scalar, by * scalar);
+  }
+
+  project(b: Vec2): this {
+    const bx = b.x;
+    const by = b.y;
+
+    const dotAB = this.x * bx + this.y * by;
+
+    let squaredMagB = bx * bx + by * by;
+    if (squaredMagB !== 0) {
+      squaredMagB = 1 / squaredMagB;
+    }
+
+    const scalar = dotAB * squaredMagB;
+
+    this.x *= scalar;
+    this.y *= scalar;
+
+    return this;
+  }
+
   static abs(a: Vec2): Vec2 {
     return new Vec2(Math.abs(a.x), Math.abs(a.y));
   }
