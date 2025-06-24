@@ -1,6 +1,6 @@
 import { REFRESH_RATE } from "./defines.js";
 
-// biome-ignore lint/suspicious/noExplicitAny:
+// biome-ignore lint/suspicious/noExplicitAny: reason
 export type GConstructor<T extends object> = new (...args: any[]) => T;
 
 export function noop(): void {

@@ -14,8 +14,8 @@
     "frigame3": "../"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0",
-    "prettier": "^3.3.0",
-    "typescript": "^5.6.0"
+    "esbuild": "^0.25.0",
+    "prettier": "^3.6.0",
+    "typescript": "^5.8.0"
   }
 }

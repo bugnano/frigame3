@@ -1,7 +1,7 @@
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import { Sprite } from "../../Sprite.js";
 import type { SpriteOptions } from "../../Sprite.js";
+import { Sprite } from "../../Sprite.js";
 import type { SpriteRef } from "../../utils.js";
 import type { SortedAnimation } from "./SortedAnimation.js";
 import { SortedGroup } from "./SortedGroup.js";

@@ -1,7 +1,6 @@
-import type { Animation } from "./Animation.js";
-import type { AnimationOptions } from "./Animation.js";
-import { BaseSprite } from "./BaseSprite.js";
+import type { Animation, AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
+import { BaseSprite } from "./BaseSprite.js";
 import type { SpriteRef } from "./utils.js";
 import { framesFromMs, pick } from "./utils.js";
 

@@ -1,9 +1,9 @@
-import { Animation } from "../../Animation.js";
 import type {
   AnimationOptions,
   FrameOptions,
   SpriteSheet,
 } from "../../Animation.js";
+import { Animation } from "../../Animation.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
 
 export interface SortedAnimationOptions extends AnimationOptions {

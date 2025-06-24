@@ -1,9 +1,9 @@
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import { SpriteGroup } from "../../SpriteGroup.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
-import { pick } from "../../utils.js";
+import { SpriteGroup } from "../../SpriteGroup.js";
 import type { SpriteRef } from "../../utils.js";
+import { pick } from "../../utils.js";
 import { SortedGroup } from "../sorted/SortedGroup.js";
 import { ISO } from "./ISOMixin.js";
 import type { ISORectOptions } from "./ISORect.js";

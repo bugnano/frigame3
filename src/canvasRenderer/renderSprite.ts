@@ -1,17 +1,17 @@
 import type { Sprite } from "../Sprite.js";
 import { playgroundMap } from "./renderPlayground.js";
 
-// biome-ignore lint/correctness/noUnusedVariables:
+// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
 export function initSprite(sprite: Sprite): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedVariables:
+// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
 export function removeSprite(sprite: Sprite): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedVariables:
+// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
 export function drawSprite(sprite: Sprite, interp: number): void {
   const playground = sprite.playground!;
 

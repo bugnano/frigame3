@@ -1,10 +1,10 @@
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { ColorArr, ColorObj, Gradient } from "../../Gradient.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import { Rectangle } from "../../Rectangle.js";
 import type { RectangleOptions } from "../../Rectangle.js";
-import { pick } from "../../utils.js";
+import { Rectangle } from "../../Rectangle.js";
 import type { SpriteRef } from "../../utils.js";
+import { pick } from "../../utils.js";
 import { SortedRectangle } from "../sorted/SortedRectangle.js";
 import { ISO } from "./ISOMixin.js";
 import type { ISORectOptions } from "./ISORect.js";

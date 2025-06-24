@@ -443,7 +443,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       // no-op
     }
 
-    // biome-ignore lint/correctness/noUnusedVariables:
+    // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
     _draw(interp: number): void {
       // The drawing is performed only on the screen objects
     }
