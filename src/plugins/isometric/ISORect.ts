@@ -1,5 +1,5 @@
-import { Rect } from "../../Rect.js";
 import type { RectOptions, RectSizeX, RectSizeY } from "../../Rect.js";
+import { Rect } from "../../Rect.js";
 import { pick } from "../../utils.js";
 
 export interface ISORectOptions {

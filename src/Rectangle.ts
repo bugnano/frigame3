@@ -1,7 +1,7 @@
-import { BaseSprite } from "./BaseSprite.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
-import { Gradient } from "./Gradient.js";
+import { BaseSprite } from "./BaseSprite.js";
 import type { ColorArr, ColorObj } from "./Gradient.js";
+import { Gradient } from "./Gradient.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 

@@ -1,7 +1,7 @@
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import { Rectangle } from "../../Rectangle.js";
 import type { RectangleOptions } from "../../Rectangle.js";
+import { Rectangle } from "../../Rectangle.js";
 import type { SpriteRef } from "../../utils.js";
 import { Sorted } from "./SortedMixin.js";
 

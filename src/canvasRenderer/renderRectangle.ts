@@ -34,12 +34,12 @@ export function initRectangle(rectangle: Rectangle): void {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedVariables:
+// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
 export function removeRectangle(rectangle: Rectangle): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedVariables:
+// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
 export function drawRectangle(rectangle: Rectangle, interp: number): void {
   const playground = rectangle.playground!;
 

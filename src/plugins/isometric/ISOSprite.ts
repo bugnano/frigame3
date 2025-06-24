@@ -1,9 +1,9 @@
 import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import { Sprite } from "../../Sprite.js";
 import type { SpriteOptions } from "../../Sprite.js";
-import { pick } from "../../utils.js";
+import { Sprite } from "../../Sprite.js";
 import type { SpriteRef } from "../../utils.js";
+import { pick } from "../../utils.js";
 import type { SortedAnimation } from "../sorted/SortedAnimation.js";
 import { SortedSprite } from "../sorted/SortedSprite.js";
 import { ISO } from "./ISOMixin.js";

@@ -1,3 +1,5 @@
+// biome-ignore-all lint/style/noParameterAssign: reason
+
 export function linear(t: number): number {
   return t;
 }

@@ -1,4 +1,3 @@
-import type { Renderer } from "./Renderer.js";
 import {
   drawGroupAfterChildren,
   drawGroupBeforeChildren,
@@ -20,6 +19,7 @@ import {
   initSprite,
   removeSprite,
 } from "./canvasRenderer/renderSprite.js";
+import type { Renderer } from "./Renderer.js";
 
 export const canvasRenderer: Renderer = {
   initPlayground,

@@ -1,5 +1,4 @@
 import type { Playground } from "./Playground.js";
-import { Rect } from "./Rect.js";
 import type {
   RectOptions,
   RectPosX,
@@ -7,6 +6,7 @@ import type {
   RectSizeX,
   RectSizeY,
 } from "./Rect.js";
+import { Rect } from "./Rect.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
 import { clamp, pick } from "./utils.js";
 

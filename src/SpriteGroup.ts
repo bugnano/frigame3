@@ -1,5 +1,5 @@
-import { BaseSprite } from "./BaseSprite.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
+import { BaseSprite } from "./BaseSprite.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 

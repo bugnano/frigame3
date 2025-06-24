@@ -1,6 +1,6 @@
+import { cssClass } from "../defines.js";
 import type { Playground } from "../Playground.js";
 import type { RendererElement } from "../Renderer.js";
-import { cssClass } from "../defines.js";
 
 export interface PlaygroundObj {
   ctx: CanvasRenderingContext2D;
@@ -87,7 +87,7 @@ export function initPlayground(
 
 export function drawPlaygroundBeforeChildren(
   playground: Playground,
-  // biome-ignore lint/correctness/noUnusedVariables:
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
   interp: number,
 ): void {
   const playgroundData = playgroundMap.get(playground)!;
@@ -97,9 +97,9 @@ export function drawPlaygroundBeforeChildren(
 }
 
 export function drawPlaygroundAfterChildren(
-  // biome-ignore lint/correctness/noUnusedVariables:
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
   playground: Playground,
-  // biome-ignore lint/correctness/noUnusedVariables:
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
   interp: number,
 ): void {
   // no-op

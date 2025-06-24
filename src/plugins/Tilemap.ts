@@ -1,10 +1,10 @@
 import type { BaseSprite, BaseSpriteOptions } from "../BaseSprite.js";
-import { Rectangle } from "../Rectangle.js";
 import type { RectangleOptions } from "../Rectangle.js";
-import { Sprite } from "../Sprite.js";
+import { Rectangle } from "../Rectangle.js";
 import type { SpriteOptions } from "../Sprite.js";
-import { SpriteGroup } from "../SpriteGroup.js";
+import { Sprite } from "../Sprite.js";
 import type { SpriteGroupOptions } from "../SpriteGroup.js";
+import { SpriteGroup } from "../SpriteGroup.js";
 import type { SpriteRef } from "../utils.js";
 
 // animationList MUST have at least `animation` or `background`

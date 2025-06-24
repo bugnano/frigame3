@@ -1,6 +1,6 @@
+import { REFRESH_RATE } from "./defines.js";
 import type { Renderer, RendererElement } from "./Renderer.js";
 import { SpriteGroup } from "./SpriteGroup.js";
-import { REFRESH_RATE } from "./defines.js";
 import { framesFromMs } from "./utils.js";
 
 interface CallbackObj {
