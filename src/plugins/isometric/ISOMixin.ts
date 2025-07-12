@@ -331,14 +331,20 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     // Proxy functions
 
     drawFirst(): this {
-      super.drawFirst();
+      // super.drawFirst() is deliberately omitted because:
+      // 1. Only the screen_obj is drawn
+      // 2. Allows for changing the drawing order inside a tilemap
+
       this._screen_obj?.drawFirst();
 
       return this;
     }
 
     drawLast(): this {
-      super.drawLast();
+      // super.drawLast() is deliberately omitted because:
+      // 1. Only the screen_obj is drawn
+      // 2. Allows for changing the drawing order inside a tilemap
+
       this._screen_obj?.drawLast();
 
       return this;
@@ -348,19 +354,24 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       if (this._screen_obj) {
         return this._screen_obj.getDrawIndex();
       } else {
-        return super.getDrawIndex();
+        return -1;
       }
     }
 
     drawTo(index: number): this {
-      super.drawTo(index);
+      // super.drawTo(index) is deliberately omitted because:
+      // 1. Only the screen_obj is drawn
+      // 2. Allows for changing the drawing order inside a tilemap
+
       this._screen_obj?.drawTo(index);
 
       return this;
     }
 
     drawBefore(sprite: BaseSprite): this {
-      super.drawBefore(sprite);
+      // super.drawBefore(sprite) is deliberately omitted because:
+      // 1. Only the screen_obj is drawn
+      // 2. Allows for changing the drawing order inside a tilemap
 
       if ("_screen_obj" in sprite) {
         const s = sprite as ISOMixin;
@@ -368,13 +379,17 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
         if (s._screen_obj) {
           this._screen_obj?.drawBefore(s._screen_obj);
         }
+      } else {
+        this._screen_obj?.drawBefore(sprite);
       }
 
       return this;
     }
 
     drawAfter(sprite: BaseSprite): this {
-      super.drawAfter(sprite);
+      // super.drawAfter(sprite) is deliberately omitted because:
+      // 1. Only the screen_obj is drawn
+      // 2. Allows for changing the drawing order inside a tilemap
 
       if ("_screen_obj" in sprite) {
         const s = sprite as ISOMixin;
@@ -382,6 +397,8 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
         if (s._screen_obj) {
           this._screen_obj?.drawAfter(s._screen_obj);
         }
+      } else {
+        this._screen_obj?.drawAfter(sprite);
       }
 
       return this;
