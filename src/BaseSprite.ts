@@ -463,7 +463,7 @@ export class BaseSprite extends Rect {
     return this;
   }
 
-  getAbsRect(): Rect {
+  getAbsRect(absRect?: Rect): Rect {
     let left = this.left;
     let top = this.top;
     let parent = this.parent;
@@ -473,12 +473,21 @@ export class BaseSprite extends Rect {
       parent = parent.parent;
     }
 
-    return new Rect({
-      left: left,
-      top: top,
-      width: this.width,
-      height: this.height,
-    });
+    if (absRect !== undefined) {
+      absRect.left = left;
+      absRect.top = top;
+      absRect.width = this.width;
+      absRect.height = this.height;
+
+      return absRect;
+    } else {
+      return new Rect({
+        left: left,
+        top: top,
+        width: this.width,
+        height: this.height,
+      });
+    }
   }
 
   teleport(): this {

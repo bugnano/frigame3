@@ -256,7 +256,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Public functions
 
-    getScreenRect(): ISORect | null {
+    getScreenRect(screenRect?: ISORect): ISORect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj) {
@@ -272,7 +272,17 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
           originy = screen_obj[originy];
         }
 
-        const screen_rect = new ISORect(screen_obj);
+        let screen_rect: ISORect;
+
+        if (screenRect !== undefined) {
+          screen_rect = screenRect;
+          screen_rect.left = screen_obj.left;
+          screen_rect.top = screen_obj.top;
+          screen_rect.width = screen_obj.width;
+          screen_rect.height = screen_obj.height;
+        } else {
+          screen_rect = new ISORect(screen_obj);
+        }
 
         screen_rect.originx = originx;
         screen_rect.originy = originy;
@@ -284,7 +294,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return null;
     }
 
-    getScreenAbsRect(): ISORect | null {
+    getScreenAbsRect(absRect?: ISORect): ISORect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj) {
@@ -300,7 +310,13 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
           originy = screen_obj[originy];
         }
 
-        const screen_rect = new ISORect(screen_obj.getAbsRect());
+        let screen_rect: ISORect;
+
+        if (absRect !== undefined) {
+          screen_rect = screen_obj.getAbsRect(absRect) as ISORect;
+        } else {
+          screen_rect = new ISORect(screen_obj.getAbsRect());
+        }
 
         screen_rect.originx = originx;
         screen_rect.originy = originy;
