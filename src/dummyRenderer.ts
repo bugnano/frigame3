@@ -1,12 +1,12 @@
-import type { Playground } from "./Playground.js";
+import type { Playground, PlaygroundOptions } from "./Playground.js";
 import type { Rectangle } from "./Rectangle.js";
-import type { Renderer, RendererElement } from "./Renderer.js";
+import type { Renderer } from "./Renderer.js";
 import type { Sprite } from "./Sprite.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
 
 export const dummyRenderer: Renderer = {
   // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  initPlayground(playground: Playground, dom?: string | RendererElement) {
+  initPlayground(playground: Playground, options?: Partial<PlaygroundOptions>) {
     return [0, 0];
   },
 

@@ -86,7 +86,7 @@ export class SpriteGroup extends BaseSprite {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("child already has a parent");
         console.trace();
@@ -109,7 +109,7 @@ export class SpriteGroup extends BaseSprite {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("child already has a parent");
         console.trace();
@@ -126,7 +126,7 @@ export class SpriteGroup extends BaseSprite {
     if (!child) {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("child is null");
         console.trace();
@@ -153,7 +153,7 @@ export class SpriteGroup extends BaseSprite {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("No children removed");
         console.trace();

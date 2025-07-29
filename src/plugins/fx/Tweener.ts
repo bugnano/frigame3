@@ -1,5 +1,4 @@
 import type { Playground } from "../../Playground.js";
-import { framesFromMs } from "../../utils.js";
 import { swing } from "./easing.js";
 
 export type Speed = "slow" | "fast";
@@ -8,6 +7,7 @@ export interface TweenOptions {
   duration: Speed | number;
   easing: (t: number) => number;
   callback: () => void;
+  suppressWarning: boolean;
 }
 
 interface TweenProp {
@@ -102,7 +102,7 @@ export class Tweener extends EventTarget {
       } else {
         if (
           typeof console !== "undefined" &&
-          (!options || options.suppressWarning === false)
+          options?.suppressWarning === false
         ) {
           console.warn("playground has been garbage collected");
           console.trace();
@@ -111,7 +111,7 @@ export class Tweener extends EventTarget {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("Callback already registered");
         console.trace();
@@ -129,7 +129,7 @@ export class Tweener extends EventTarget {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("playground has been garbage collected");
         console.trace();
@@ -153,45 +153,59 @@ export class Tweener extends EventTarget {
     properties: Partial<Record<keyof T, number>>,
     options?: Partial<TweenOptions>,
   ): number {
-    const duration =
-      (typeof options?.duration === "string"
-        ? speeds[options.duration]
-        : options?.duration) ?? speeds._default;
+    const playground = this._playground.deref();
 
-    const easing = options?.easing ?? swing;
+    if (playground) {
+      const duration =
+        (typeof options?.duration === "string"
+          ? speeds[options.duration]
+          : options?.duration) ?? speeds._default;
 
-    const tween_obj: TweenObj<T> = {
-      target_obj: target_obj,
-      current_step: 0,
-      num_step: framesFromMs(duration),
-      easing: easing,
-      callback: options?.callback,
-      property_list: new Map<keyof T, TweenProp>(),
-    };
+      const easing = options?.easing ?? swing;
 
-    const property_list = tween_obj.property_list;
+      const tween_obj: TweenObj<T> = {
+        target_obj: target_obj,
+        current_step: 0,
+        num_step: playground.framesFromMs(duration),
+        easing: easing,
+        callback: options?.callback,
+        property_list: new Map<keyof T, TweenProp>(),
+      };
 
-    for (const [property, value] of Object.entries(properties)) {
-      const start_value = target_obj[property as keyof T] as number;
-      const target_value = value as number;
+      const property_list = tween_obj.property_list;
 
-      property_list.set(property as keyof T, {
-        start_value: start_value,
-        target_value: target_value,
-        change: target_value - start_value,
-      });
+      for (const [property, value] of Object.entries(properties)) {
+        const start_value = target_obj[property as keyof T] as number;
+        const target_value = value as number;
+
+        property_list.set(property as keyof T, {
+          start_value: start_value,
+          target_value: target_value,
+          change: target_value - start_value,
+        });
+      }
+
+      const tweenId = this._nextId;
+      this._nextId += 1;
+
+      this._tween_queue.set(
+        tweenId,
+        tween_obj as unknown as TweenObj<Record<string, number>>,
+      );
+      this._tweening = true;
+
+      return tweenId;
+    } else {
+      if (
+        typeof console !== "undefined" &&
+        options?.suppressWarning === false
+      ) {
+        console.warn("playground has been garbage collected");
+        console.trace();
+      }
+
+      return -1;
     }
-
-    const tweenId = this._nextId;
-    this._nextId += 1;
-
-    this._tween_queue.set(
-      tweenId,
-      tween_obj as unknown as TweenObj<Record<string, number>>,
-    );
-    this._tweening = true;
-
-    return tweenId;
   }
 
   removeTween(
@@ -201,7 +215,7 @@ export class Tweener extends EventTarget {
     if (tweenId !== 0 && !tweenId) {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("tweenId is null");
         console.trace();
@@ -214,7 +228,7 @@ export class Tweener extends EventTarget {
     if (
       !deleted &&
       typeof console !== "undefined" &&
-      (!options || options.suppressWarning === false)
+      options?.suppressWarning === false
     ) {
       console.warn("No tweens removed");
       console.trace();

@@ -1,4 +1,4 @@
-import type { Playground } from "./Playground.js";
+import type { Playground, PlaygroundOptions } from "./Playground.js";
 import type { Rectangle } from "./Rectangle.js";
 import type { Sprite } from "./Sprite.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
@@ -11,7 +11,7 @@ export interface RendererElement {
 export interface Renderer {
   initPlayground(
     playground: Playground,
-    dom?: string | RendererElement,
+    options?: Partial<PlaygroundOptions>,
   ): [number, number];
   drawPlaygroundBeforeChildren(playground: Playground, interp: number): void;
   drawPlaygroundAfterChildren(playground: Playground, interp: number): void;

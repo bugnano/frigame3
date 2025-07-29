@@ -1,5 +1,3 @@
-import { REFRESH_RATE } from "./defines.js";
-
 // biome-ignore lint/suspicious/noExplicitAny: reason
 export type GConstructor<T extends object> = new (...args: any[]) => T;
 
@@ -39,14 +37,6 @@ export function clamp(n: number, minVal: number, maxVal: number): number {
 
 export function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
-}
-
-export function framesFromMs(ms: number): number {
-  return Math.max(Math.round(ms / REFRESH_RATE), 1) || 1;
-}
-
-export function msFromFrames(frames: number): number {
-  return frames * REFRESH_RATE || 0;
 }
 
 export interface SpriteRef<T> {

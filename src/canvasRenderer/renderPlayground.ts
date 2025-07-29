@@ -1,6 +1,4 @@
-import { cssClass } from "../defines.js";
-import type { Playground } from "../Playground.js";
-import type { RendererElement } from "../Renderer.js";
+import type { Playground, PlaygroundOptions } from "../Playground.js";
 
 export interface PlaygroundObj {
   ctx: CanvasRenderingContext2D;
@@ -22,8 +20,10 @@ export const playgroundMap: WeakMap<Playground, PlaygroundObj> = new WeakMap<
 
 export function initPlayground(
   playground: Playground,
-  dom?: string | RendererElement,
+  options?: Partial<PlaygroundOptions>,
 ): [number, number] {
+  const dom = options?.dom;
+
   const parentDOM = ((): HTMLElement => {
     if (typeof dom === "string") {
       // Allow the ID to start with the '#' symbol
@@ -32,7 +32,7 @@ export function initPlayground(
       } else {
         return document.getElementById(dom)!;
       }
-    } else if (!dom) {
+    } else if (dom === undefined) {
       // Default to the element with id of 'playground'
       return document.getElementById("playground")!;
     } else {
@@ -60,7 +60,7 @@ export function initPlayground(
       canvas.width = width;
       canvas.height = height;
       parentDOM.insertBefore(canvas, parentDOM.firstChild);
-      canvas.className = cssClass; // Reset background properties set by external CSS
+      canvas.className = options?.cssClass ?? "friGame"; // Reset background properties set by external CSS
       Object.assign(canvas.style, {
         left: "0px",
         top: "0px",

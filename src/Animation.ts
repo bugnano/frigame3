@@ -1,5 +1,4 @@
 import type { Resource } from "./resourceManager.js";
-import { framesFromMs } from "./utils.js";
 
 export type AnimationType = "vertical" | "horizontal";
 
@@ -74,18 +73,13 @@ const imagesRegistry = new FinalizationRegistry((imageURLs: string[]): void => {
 });
 
 export class Animation implements Resource {
-  _rate = 1;
-  _reportedRate = 0;
+  rate = 0;
   once = false;
   pingpong = false;
   backwards = false;
   frameWidth = 0;
   frameHeight = 0;
   frameset: SpriteSheet[] = [];
-
-  get rate(): number {
-    return this._reportedRate;
-  }
 
   get width(): number {
     return this.frameWidth;
@@ -125,8 +119,7 @@ export class Animation implements Resource {
         _multiy: 0,
       });
     } else {
-      this._reportedRate = options.rate ?? 0;
-      this._rate = framesFromMs(this._reportedRate);
+      this.rate = Number(options.rate) || 0;
 
       if (options.once !== undefined) {
         this.once = options.once;

@@ -1,7 +1,5 @@
-import { REFRESH_RATE } from "./defines.js";
 import type { Renderer, RendererElement } from "./Renderer.js";
 import { SpriteGroup } from "./SpriteGroup.js";
-import { framesFromMs } from "./utils.js";
 
 interface CallbackObj {
   callback: () => void;
@@ -9,9 +7,16 @@ interface CallbackObj {
   idleCounter: number;
 }
 
+export interface PlaygroundOptions {
+  refreshRate: number;
+  dom: string | RendererElement;
+  cssClass: string;
+}
+
 export class Playground extends EventTarget {
   _width = 0;
   _height = 0;
+  _refreshRate = 1000 / 60;
 
   running = false;
   frameCounter = 0;
@@ -45,15 +50,23 @@ export class Playground extends EventTarget {
     return this._height / 2;
   }
 
-  constructor(renderer: Renderer, dom?: string | RendererElement) {
+  get refreshRate(): number {
+    return this._refreshRate;
+  }
+
+  constructor(renderer: Renderer, options?: Partial<PlaygroundOptions>) {
     super();
 
     this._renderer = renderer;
 
-    const [width, height] = renderer.initPlayground(this, dom);
+    const [width, height] = renderer.initPlayground(this, options);
 
     this._width = width;
     this._height = height;
+
+    if (options?.refreshRate !== undefined) {
+      this._refreshRate = Number(options.refreshRate) || 1;
+    }
 
     this.scenegraph = new SpriteGroup({ width, height });
     this.scenegraph._playground = new WeakRef(this);
@@ -70,7 +83,7 @@ export class Playground extends EventTarget {
 
     this._callbacks.set(callbackId, {
       callback: callback,
-      rate: framesFromMs(rate ?? 0),
+      rate: this.framesFromMs(rate ?? 0),
       idleCounter: 0,
     });
 
@@ -84,7 +97,7 @@ export class Playground extends EventTarget {
     if (callbackId !== 0 && !callbackId) {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("callbackId is null");
         console.trace();
@@ -97,7 +110,7 @@ export class Playground extends EventTarget {
     if (
       !deleted &&
       typeof console !== "undefined" &&
-      (!options || options.suppressWarning === false)
+      options?.suppressWarning === false
     ) {
       console.warn("No callbacks removed");
       console.trace();
@@ -147,6 +160,14 @@ export class Playground extends EventTarget {
     return this;
   }
 
+  framesFromMs(ms: number): number {
+    return Math.max(Math.round(ms / this._refreshRate), 1) || 1;
+  }
+
+  msFromFrames(frames: number): number {
+    return frames * this._refreshRate || 0;
+  }
+
   // Implementation details
 
   _update(): void {
@@ -164,7 +185,7 @@ export class Playground extends EventTarget {
   }
 
   _draw = (timestamp: number): void => {
-    const dt = REFRESH_RATE;
+    const dt = this._refreshRate;
     let accumulator = this._accumulator;
 
     if (this.running) {

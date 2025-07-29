@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -23,6 +23,11 @@
       "correctness": {
         "noUndeclaredVariables": "error",
         "noUnusedVariables": "error"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "useExhaustiveSwitchCases": "error"
       },
       "style": {
         "noNamespace": "error",

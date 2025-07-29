@@ -2,7 +2,7 @@ import type { Animation, AnimationOptions } from "./Animation.js";
 import type { BaseSpriteOptions } from "./BaseSprite.js";
 import { BaseSprite } from "./BaseSprite.js";
 import type { SpriteRef } from "./utils.js";
-import { framesFromMs, pick } from "./utils.js";
+import { pick } from "./utils.js";
 
 export interface SpriteOptions extends AnimationOptions {
   animation: Animation | null;
@@ -43,8 +43,13 @@ export class Sprite extends BaseSprite {
       this._animation = value;
 
       if (value) {
-        this._rate = value._rate;
-        this._reportedRate = value._reportedRate;
+        const playground = this.playground;
+
+        if (playground) {
+          this._rate = playground.framesFromMs(value.rate);
+        }
+
+        this._reportedRate = value.rate;
         this._once = value.once;
         this._pingpong = value.pingpong;
         this._backwards = value.backwards;
@@ -112,7 +117,12 @@ export class Sprite extends BaseSprite {
   }
 
   set rate(value: number) {
-    this._rate = framesFromMs(value);
+    const playground = this.playground;
+
+    if (playground) {
+      this._rate = playground.framesFromMs(value);
+    }
+
     this._reportedRate = value;
   }
 
@@ -235,6 +245,14 @@ export class Sprite extends BaseSprite {
     }
 
     this._updateNeedsUpdate(oldNeedsUpdate);
+  }
+
+  _onReparent(): void {
+    const playground = this.playground;
+
+    if (playground) {
+      this._rate = playground.framesFromMs(this._reportedRate);
+    }
   }
 
   _initRenderer(): void {

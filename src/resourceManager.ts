@@ -82,7 +82,7 @@ export const resourceManager: ResourceManager = {
     if (!resource) {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("resource is null");
         console.trace();
@@ -96,7 +96,7 @@ export const resourceManager: ResourceManager = {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("No resources removed");
         console.trace();

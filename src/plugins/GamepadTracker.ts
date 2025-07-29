@@ -49,7 +49,7 @@ export class GamepadTracker extends EventTarget {
       } else {
         if (
           typeof console !== "undefined" &&
-          (!options || options.suppressWarning === false)
+          options?.suppressWarning === false
         ) {
           console.warn("playground has been garbage collected");
           console.trace();
@@ -58,7 +58,7 @@ export class GamepadTracker extends EventTarget {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("Callback already registered");
         console.trace();
@@ -76,7 +76,7 @@ export class GamepadTracker extends EventTarget {
     } else {
       if (
         typeof console !== "undefined" &&
-        (!options || options.suppressWarning === false)
+        options?.suppressWarning === false
       ) {
         console.warn("playground has been garbage collected");
         console.trace();
