@@ -1,4 +1,9 @@
-export class Vec2 {
+export interface IVec2 {
+  x: number;
+  y: number;
+}
+
+export class Vec2 implements IVec2 {
   x: number;
   y: number;
 
@@ -7,11 +12,11 @@ export class Vec2 {
     this.y = y;
   }
 
-  static clone(a: Vec2): Vec2 {
+  static clone(a: IVec2): Vec2 {
     return new Vec2(a.x, a.y);
   }
 
-  clone(b: Vec2): this {
+  clone(b: IVec2): this {
     this.x = b.x;
     this.y = b.y;
 
@@ -72,29 +77,29 @@ export class Vec2 {
     return this;
   }
 
-  static add(a: Vec2, b: Vec2): Vec2 {
+  static add(a: IVec2, b: IVec2): Vec2 {
     return new Vec2(a.x + b.x, a.y + b.y);
   }
 
-  add(b: Vec2): this {
+  add(b: IVec2): this {
     this.x += b.x;
     this.y += b.y;
 
     return this;
   }
 
-  static sub(a: Vec2, b: Vec2): Vec2 {
+  static sub(a: IVec2, b: IVec2): Vec2 {
     return new Vec2(a.x - b.x, a.y - b.y);
   }
 
-  sub(b: Vec2): this {
+  sub(b: IVec2): this {
     this.x -= b.x;
     this.y -= b.y;
 
     return this;
   }
 
-  static scale(a: Vec2, sx: number, sy: number = sx): Vec2 {
+  static scale(a: IVec2, sx: number, sy: number = sx): Vec2 {
     return new Vec2(a.x * sx, a.y * sy);
   }
 
@@ -105,7 +110,7 @@ export class Vec2 {
     return this;
   }
 
-  static invert(a: Vec2): Vec2 {
+  static invert(a: IVec2): Vec2 {
     return new Vec2(-a.x, -a.y);
   }
 
@@ -116,7 +121,7 @@ export class Vec2 {
     return this;
   }
 
-  static normalize(a: Vec2): Vec2 {
+  static normalize(a: IVec2): Vec2 {
     let mag = Math.hypot(a.x, a.y);
     if (mag !== 0) {
       mag = 1 / mag;
@@ -137,7 +142,7 @@ export class Vec2 {
     return this;
   }
 
-  static rotate(a: Vec2, angle: number): Vec2 {
+  static rotate(a: IVec2, angle: number): Vec2 {
     const x = a.x;
     const y = a.y;
     const ct = Math.cos(angle);
@@ -158,17 +163,17 @@ export class Vec2 {
     return this;
   }
 
-  static rotateAroundPoint(a: Vec2, axisPoint: Vec2, angle: number): Vec2 {
+  static rotateAroundPoint(a: IVec2, axisPoint: IVec2, angle: number): Vec2 {
     return Vec2.clone(a).sub(axisPoint).rotate(angle).add(axisPoint);
   }
 
-  rotateAroundPoint(axisPoint: Vec2, angle: number): this {
+  rotateAroundPoint(axisPoint: IVec2, angle: number): this {
     return this.sub(axisPoint).rotate(angle).add(axisPoint);
   }
 
   static scaleAndRotate(
-    a: Vec2,
-    axisPoint: Vec2,
+    a: IVec2,
+    axisPoint: IVec2,
     angle: number,
     sx: number,
     sy: number = sx,
@@ -181,7 +186,7 @@ export class Vec2 {
   }
 
   scaleAndRotate(
-    axisPoint: Vec2,
+    axisPoint: IVec2,
     angle: number,
     sx: number,
     sy: number = sx,
@@ -189,14 +194,14 @@ export class Vec2 {
     return this.sub(axisPoint).scale(sx, sy).rotate(angle).add(axisPoint);
   }
 
-  static lerp(a: Vec2, b: Vec2, t: number): Vec2 {
+  static lerp(a: IVec2, b: IVec2, t: number): Vec2 {
     const ax = a.x;
     const ay = a.y;
 
     return new Vec2(ax + t * (b.x - ax), ay + t * (b.y - ay));
   }
 
-  lerp(b: Vec2, t: number): this {
+  lerp(b: IVec2, t: number): this {
     const x = this.x;
     const y = this.y;
 
@@ -206,7 +211,7 @@ export class Vec2 {
     return this;
   }
 
-  static perp(a: Vec2): Vec2 {
+  static perp(a: IVec2): Vec2 {
     return new Vec2(-a.y, a.x);
   }
 
@@ -220,7 +225,7 @@ export class Vec2 {
     return this;
   }
 
-  static magnitude(a: Vec2): number {
+  static magnitude(a: IVec2): number {
     return Math.hypot(a.x, a.y);
   }
 
@@ -228,7 +233,7 @@ export class Vec2 {
     return Math.hypot(this.x, this.y);
   }
 
-  static squaredMagnitude(a: Vec2): number {
+  static squaredMagnitude(a: IVec2): number {
     const x = a.x;
     const y = a.y;
 
@@ -242,7 +247,7 @@ export class Vec2 {
     return x * x + y * y;
   }
 
-  static azimuth(a: Vec2): number {
+  static azimuth(a: IVec2): number {
     return Math.atan2(a.y, a.x);
   }
 
@@ -250,45 +255,45 @@ export class Vec2 {
     return Math.atan2(this.y, this.x);
   }
 
-  static dot(a: Vec2, b: Vec2): number {
+  static dot(a: IVec2, b: IVec2): number {
     return a.x * b.x + a.y * b.y;
   }
 
-  dot(b: Vec2): number {
+  dot(b: IVec2): number {
     return this.x * b.x + this.y * b.y;
   }
 
-  static cross(a: Vec2, b: Vec2): number {
+  static cross(a: IVec2, b: IVec2): number {
     return a.x * b.y - a.y * b.x;
   }
 
-  cross(b: Vec2): number {
+  cross(b: IVec2): number {
     return this.x * b.y - this.y * b.x;
   }
 
-  static distance(a: Vec2, b: Vec2): number {
+  static distance(a: IVec2, b: IVec2): number {
     return Math.hypot(a.x - b.x, a.y - b.y);
   }
 
-  distance(b: Vec2): number {
+  distance(b: IVec2): number {
     return Math.hypot(this.x - b.x, this.y - b.y);
   }
 
-  static squaredDistance(a: Vec2, b: Vec2): number {
+  static squaredDistance(a: IVec2, b: IVec2): number {
     const dx = a.x - b.x;
     const dy = a.y - b.y;
 
     return dx * dx + dy * dy;
   }
 
-  squaredDistance(b: Vec2): number {
+  squaredDistance(b: IVec2): number {
     const dx = this.x - b.x;
     const dy = this.y - b.y;
 
     return dx * dx + dy * dy;
   }
 
-  static direction(a: Vec2, b: Vec2): Vec2 {
+  static direction(a: IVec2, b: IVec2): Vec2 {
     const dx = b.x - a.x;
     const dy = b.y - a.y;
 
@@ -300,7 +305,7 @@ export class Vec2 {
     return new Vec2(dx * mag, dy * mag);
   }
 
-  direction(b: Vec2): this {
+  direction(b: IVec2): this {
     const dx = b.x - this.x;
     const dy = b.y - this.y;
 
@@ -315,7 +320,7 @@ export class Vec2 {
     return this;
   }
 
-  static project(a: Vec2, b: Vec2): Vec2 {
+  static project(a: IVec2, b: IVec2): Vec2 {
     const bx = b.x;
     const by = b.y;
 
@@ -331,7 +336,7 @@ export class Vec2 {
     return new Vec2(bx * scalar, by * scalar);
   }
 
-  project(b: Vec2): this {
+  project(b: IVec2): this {
     const bx = b.x;
     const by = b.y;
 
@@ -350,7 +355,7 @@ export class Vec2 {
     return this;
   }
 
-  static abs(a: Vec2): Vec2 {
+  static abs(a: IVec2): Vec2 {
     return new Vec2(Math.abs(a.x), Math.abs(a.y));
   }
 
@@ -361,7 +366,7 @@ export class Vec2 {
     return this;
   }
 
-  static ceil(a: Vec2): Vec2 {
+  static ceil(a: IVec2): Vec2 {
     return new Vec2(Math.ceil(a.x), Math.ceil(a.y));
   }
 
@@ -372,7 +377,7 @@ export class Vec2 {
     return this;
   }
 
-  static floor(a: Vec2): Vec2 {
+  static floor(a: IVec2): Vec2 {
     return new Vec2(Math.floor(a.x), Math.floor(a.y));
   }
 
@@ -383,7 +388,7 @@ export class Vec2 {
     return this;
   }
 
-  static round(a: Vec2): Vec2 {
+  static round(a: IVec2): Vec2 {
     return new Vec2(Math.round(a.x), Math.round(a.y));
   }
 
@@ -394,7 +399,7 @@ export class Vec2 {
     return this;
   }
 
-  static trunc(a: Vec2): Vec2 {
+  static trunc(a: IVec2): Vec2 {
     return new Vec2(Math.trunc(a.x), Math.trunc(a.y));
   }
 
@@ -405,11 +410,11 @@ export class Vec2 {
     return this;
   }
 
-  static equals(a: Vec2, b: Vec2): boolean {
+  static equals(a: IVec2, b: IVec2): boolean {
     return a.x === b.x && a.y === b.y;
   }
 
-  equals(b: Vec2): boolean {
+  equals(b: IVec2): boolean {
     return this.x === b.x && this.y === b.y;
   }
 }
