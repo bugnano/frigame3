@@ -87,8 +87,7 @@ export function initPlayground(
 
 export function drawPlaygroundBeforeChildren(
   playground: Playground,
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  interp: number,
+  _interp: number,
 ): void {
   const playgroundData = playgroundMap.get(playground)!;
 
@@ -97,10 +96,8 @@ export function drawPlaygroundBeforeChildren(
 }
 
 export function drawPlaygroundAfterChildren(
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  playground: Playground,
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  interp: number,
+  _playground: Playground,
+  _interp: number,
 ): void {
   // no-op
 }

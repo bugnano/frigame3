@@ -190,7 +190,7 @@ export class SpriteGroup extends BaseSprite {
     }
   }
 
-  _checkUpdate(): void {
+  override _checkUpdate(): void {
     const oldNeedsUpdate = this._needsUpdate;
 
     if (this._layers.length === 0) {
@@ -202,17 +202,17 @@ export class SpriteGroup extends BaseSprite {
     this._updateNeedsUpdate(oldNeedsUpdate);
   }
 
-  _initRenderer(): void {
+  override _initRenderer(): void {
     this.playground?._renderer.initGroup(this);
   }
 
-  _update(): void {
+  override _update(): void {
     for (const sprite of this._updateList) {
       sprite._update();
     }
   }
 
-  _draw(interp: number): void {
+  override _draw(interp: number): void {
     super._draw(interp);
 
     const playground = this.playground;
@@ -239,7 +239,7 @@ export class SpriteGroup extends BaseSprite {
     }
   }
 
-  _remove(): void {
+  override _remove(): void {
     this.clear();
 
     this.playground?._renderer.removeGroup(this);

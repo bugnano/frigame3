@@ -28,15 +28,13 @@ export function initGroup(group: SpriteGroup): void {
   });
 }
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function removeGroup(group: SpriteGroup): void {
+export function removeGroup(_group: SpriteGroup): void {
   // no-op
 }
 
 export function drawGroupBeforeChildren(
   group: SpriteGroup,
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  interp: number,
+  _interp: number,
 ): void {
   const opacity = group._opacity;
   const scaleh = group._scaleh;
@@ -148,8 +146,7 @@ export function drawGroupBeforeChildren(
 
 export function drawGroupAfterChildren(
   group: SpriteGroup,
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  interp: number,
+  _interp: number,
 ): void {
   if (
     group._layers.length &&

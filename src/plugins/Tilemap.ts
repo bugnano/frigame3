@@ -111,7 +111,13 @@ export class Tilemap extends SpriteGroup {
     }
   }
 
-  getAt(row: number, col: number): BaseSprite {
-    return this._layers[this._locations[row * this.sizex + col]];
+  getAt(row: number, col: number): BaseSprite | undefined {
+    const i = row * this.sizex + col;
+
+    if (i < this._locations.length) {
+      return this._layers[this._locations[i]!];
+    } else {
+      return undefined;
+    }
   }
 }

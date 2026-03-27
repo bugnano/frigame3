@@ -3,7 +3,6 @@ import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
 import { Rectangle } from "frigame3/lib/Rectangle.js";
 import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
-import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 import { Tilemap } from "frigame3/lib/plugins/Tilemap.js";
 
 const GAME_SPEED = 24;
@@ -23,7 +22,7 @@ function* tgm3Randomizer(): Generator<Piece> {
   // First piece special conditions
   let piece: Piece = (["I", "J", "L", "T"] as const)[
     Math.floor(Math.random() * 4)
-  ];
+  ]!;
   yield piece;
 
   let history: Piece[] = ["S", "Z", "S", piece];
@@ -33,14 +32,14 @@ function* tgm3Randomizer(): Generator<Piece> {
     // Roll For piece
     for (let roll = 0; roll < 6; roll += 1) {
       i = Math.floor(Math.random() * 35);
-      piece = pool[i];
+      piece = pool[i]!;
 
       if (history.includes(piece) === false || roll === 5) {
         break;
       }
 
       if (order.length) {
-        pool[i] = order[0];
+        pool[i] = order[0]!;
       }
     }
 
@@ -50,7 +49,7 @@ function* tgm3Randomizer(): Generator<Piece> {
     }
     order.push(piece);
 
-    pool[i] = order[0];
+    pool[i] = order[0]!;
 
     // Update history
     history.shift();
@@ -68,14 +67,14 @@ function clearPiece(
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
-      if (block[y][x] !== " ") {
+      if (block[y]![x]! !== " ") {
         if (
           pos_y + y >= 0 &&
           pos_y + y < level.length &&
           pos_x + x >= 0 &&
-          pos_x + x < level[pos_y + y].length
+          pos_x + x < level[pos_y + y]!.length
         ) {
-          level[pos_y + y][pos_x + x] = " ";
+          level[pos_y + y]![pos_x + x] = " ";
         }
       }
     }
@@ -90,14 +89,14 @@ function drawPiece(
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
-      if (block[y][x] !== " ") {
+      if (block[y]![x]! !== " ") {
         if (
           pos_y + y >= 0 &&
           pos_y + y < level.length &&
           pos_x + x >= 0 &&
-          pos_x + x < level[pos_y + y].length
+          pos_x + x < level[pos_y + y]!.length
         ) {
-          level[pos_y + y][pos_x + x] = block[y][x];
+          level[pos_y + y]![pos_x + x] = block[y]![x]!;
         }
       }
     }
@@ -112,19 +111,19 @@ function fitsPiece(
 ) {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
-      if (block[y][x] !== " ") {
+      if (block[y]![x]! !== " ") {
         // Out of bounds check
         if (
           pos_y + y < 0 ||
           pos_y + y >= level.length ||
           pos_x + x < 0 ||
-          pos_x + x >= level[pos_y + y].length
+          pos_x + x >= level[pos_y + y]!.length
         ) {
           return false;
         }
 
         // Occupied check
-        if (level[pos_y + y][pos_x + x] !== " ") {
+        if (level[pos_y + y]![pos_x + x]! !== " ") {
           return false;
         }
       }
@@ -302,7 +301,9 @@ function fitsPiece(
 
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
-  const box = sg.addChild(
+
+  // box
+  sg.addChild(
     new Rectangle({
       centerx: sg.width / 2,
       centery: sg.centery,
@@ -326,7 +327,8 @@ function fitsPiece(
     }),
   );
 
-  const preview_box = sg.addChild(
+  // preview_box
+  sg.addChild(
     new Rectangle({
       centerx: (sg.width * 3) / 4,
       centery: sg.height / 3,
@@ -364,8 +366,8 @@ function fitsPiece(
   let piece: Piece = gen.next().value;
   let next_piece: Piece = gen.next().value;
   let rotation = 0;
-  let block = BLOCKS[piece][rotation];
-  let next_block = BLOCKS[next_piece][0];
+  let block = BLOCKS[piece]![rotation]!;
+  let next_block = BLOCKS[next_piece]![0]!;
   let pos_x = Math.floor(5 - block.length / 2);
   let pos_y = 0;
 
@@ -373,14 +375,14 @@ function fitsPiece(
 
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
-      if (block[y][x] !== " ") {
+      if (block[y]![x]! !== " ") {
         if (
           pos_y + y >= 0 &&
           pos_y + y < level.length &&
           pos_x + x >= 0 &&
-          pos_x + x < level[pos_y + y].length
+          pos_x + x < level[pos_y + y]!.length
         ) {
-          level[pos_y + y][pos_x + x] = block[y][x];
+          level[pos_y + y]![pos_x + x] = block[y]![x]!;
         }
       }
     }
@@ -393,18 +395,18 @@ function fitsPiece(
   let paused = false;
   let old_p = false;
   playground.registerCallback(() => {
-    if (keyTracker.KeyP && !old_p) {
+    if (keyTracker["KeyP"] && !old_p) {
       paused = !paused;
     }
 
-    old_p = keyTracker.KeyP;
+    old_p = keyTracker["KeyP"] ?? false;
 
     if (paused) {
       return;
     }
 
     // Process inputs at every frame to be responsive
-    if (keyTracker.ArrowLeft) {
+    if (keyTracker["ArrowLeft"]) {
       if (typematic_left === 0) {
         typematic_left = TYPEMATIC_SPEED;
         clearPiece(level, block, pos_x, pos_y);
@@ -423,7 +425,7 @@ function fitsPiece(
       typematic_left = 0;
     }
 
-    if (keyTracker.ArrowRight) {
+    if (keyTracker["ArrowRight"]) {
       if (typematic_right === 0) {
         typematic_right = TYPEMATIC_SPEED;
         clearPiece(level, block, pos_x, pos_y);
@@ -441,11 +443,11 @@ function fitsPiece(
     } else {
       typematic_right = 0;
     }
-    if (keyTracker.ArrowUp && !old_up) {
+    if (keyTracker["ArrowUp"] && !old_up) {
       clearPiece(level, block, pos_x, pos_y);
 
       const new_rotation = (rotation + 1) % BLOCKS[piece].length;
-      const new_block = BLOCKS[piece][new_rotation];
+      const new_block = BLOCKS[piece]![new_rotation]!;
       if (fitsPiece(level, new_block, pos_x, pos_y)) {
         rotation = new_rotation;
         block = new_block;
@@ -454,9 +456,9 @@ function fitsPiece(
       drawPiece(level, block, pos_x, pos_y);
     }
 
-    old_up = keyTracker.ArrowUp;
+    old_up = keyTracker["ArrowUp"] ?? false;
 
-    if (keyTracker.ArrowDown) {
+    if (keyTracker["ArrowDown"]) {
       if (typematic_down === 0) {
         typematic_down = TYPEMATIC_DOWN_SPEED;
         delay_counter = 0;
@@ -482,7 +484,7 @@ function fitsPiece(
 
         // Delete cleared lines
         for (let y = level.length - 1; y >= 0; y -= 1) {
-          if (!level[y].includes(" ")) {
+          if (!level[y]!.includes(" ")) {
             level.splice(y, 1);
           }
         }
@@ -496,8 +498,8 @@ function fitsPiece(
         piece = next_piece;
         next_piece = gen.next().value;
         rotation = 0;
-        block = BLOCKS[piece][rotation];
-        next_block = BLOCKS[next_piece][0];
+        block = BLOCKS[piece]![rotation]!;
+        next_block = BLOCKS[next_piece]![0]!;
         pos_x = Math.floor(5 - block.length / 2);
         pos_y = 0;
         if (!fitsPiece(level, block, pos_x, pos_y)) {
@@ -514,9 +516,9 @@ function fitsPiece(
     // Draw the level
     for (let y = 0; y < 20; y += 1) {
       for (let x = 0; x < 10; x += 1) {
-        const tile = content.getAt(y, x);
+        const tile = content.getAt(y, x)!;
         if ("background" in tile) {
-          tile.background = COLOURS[level[y][x]];
+          tile.background = COLOURS[level[y]![x]!]!;
         }
       }
     }
@@ -524,9 +526,9 @@ function fitsPiece(
     // Draw the preview
     for (let y = 0; y < 6; y += 1) {
       for (let x = 0; x < 6; x += 1) {
-        const tile = preview.getAt(y, x);
+        const tile = preview.getAt(y, x)!;
         if ("background" in tile) {
-          tile.background = COLOURS[preview_pieces[y][x]];
+          tile.background = COLOURS[preview_pieces[y]![x]!]!;
         }
       }
     }

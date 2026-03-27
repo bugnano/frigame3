@@ -34,7 +34,7 @@ export class SortedGroup extends SortedBaseGroup {
     this._sort_y = this._calcSortY();
   }
 
-  addChild<T extends BaseSprite>(
+  override addChild<T extends BaseSprite>(
     child: T,
     options?: { suppressWarning?: boolean },
   ): T {
@@ -45,7 +45,7 @@ export class SortedGroup extends SortedBaseGroup {
     return child;
   }
 
-  insertChild<T extends BaseSprite>(
+  override insertChild<T extends BaseSprite>(
     child: T,
     options?: { suppressWarning?: boolean },
   ): T {
@@ -88,7 +88,7 @@ export class SortedGroup extends SortedBaseGroup {
     }
   }
 
-  _draw(interp: number): void {
+  override _draw(interp: number): void {
     if (this._needsSorting) {
       this._needsSorting = false;
       this._sortLayers();

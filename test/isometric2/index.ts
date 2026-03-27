@@ -90,7 +90,10 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
   const sg = playground.scenegraph;
 
   const my_group = sg.addChild(new SpriteGroup({ left: 512, top: 64 }));
-  const floor_tilemap = my_group.addChild(new ISOTilemap(floorTiles));
+
+  // floor_tilemap
+  my_group.addChild(new ISOTilemap(floorTiles));
+
   const object_tilemap = my_group.addChild(new ISOTilemap(objectTiles));
   const iso_knight = object_tilemap.addChild(
     new ISOSprite({

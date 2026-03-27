@@ -142,13 +142,16 @@ import { Sprite } from "frigame3/lib/Sprite.js";
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
 
-  const simpleVertical = sg.addChild(
+  // simpleVertical
+  sg.addChild(
     new Sprite({
       animation: simpleVerticalAnimation,
       left: 0,
     }),
   );
-  const simpleHorizontal = sg.addChild(
+
+  // simpleHorizontal
+  sg.addChild(
     new Sprite({
       animation: simpleHorizontalAnimation,
       backwards: true,
@@ -167,32 +170,41 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       left: 109,
     }),
   );
-  const simpleOffsetVertical = sg.addChild(
+
+  // simpleOffsetVertical
+  sg.addChild(
     new Sprite({
       animation: simpleOffsetVerticalAnimation,
       left: 150,
     }),
   );
-  const simpleOffsetHorizontal = sg.addChild(
+
+  // simpleOffsetHorizontal
+  sg.addChild(
     new Sprite({
       animation: simpleOffsetHorizontalAnimation,
       left: 184,
     }),
   );
-  const multiOffsetVertical = sg.addChild(
+
+  // multiOffsetVertical
+  sg.addChild(
     new Sprite({
       animation: multiOffsetVerticalAnimation,
       animationIndex: 1,
       left: 225,
     }),
   );
-  const multiOffsetHorizontal = sg.addChild(
+
+  // multiOffsetHorizontal
+  sg.addChild(
     new Sprite({
       animation: multiOffsetHorizontalAnimation,
       animationIndex: 1,
       left: 259,
     }),
   );
+
   const pingpong = sg.addChild(
     new Sprite({
       animation: pingpongAnimation,
@@ -211,7 +223,9 @@ import { Sprite } from "frigame3/lib/Sprite.js";
       left: 414,
     }),
   );
-  const multiBackPingpong = sg.addChild(
+
+  // multiBackPingpong
+  sg.addChild(
     new Sprite({
       animation: multiPingpongBackwardsAnimation,
       animationIndex: 1,

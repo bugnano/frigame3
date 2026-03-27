@@ -17,19 +17,19 @@ export interface ISOGroupOptions extends SpriteGroupOptions {
 const ISOBaseGroup = ISO(SpriteGroup);
 
 export class ISOSpriteGroup extends ISOBaseGroup {
-  _originx: keyof RectSizeX | number = 0;
-  _originy: keyof RectSizeY | number = 0;
-  _referencex: keyof RectSizeX | number = 0;
-  _referencey: keyof RectSizeY | number = 0;
-  _screen_obj: SortedGroup | null = null;
+  override _originx: keyof RectSizeX | number = 0;
+  override _originy: keyof RectSizeY | number = 0;
+  override _referencex: keyof RectSizeX | number = 0;
+  override _referencey: keyof RectSizeY | number = 0;
+  override _screen_obj: SortedGroup | null = null;
 
   // Proxy getters & setters
 
-  get crop(): boolean {
+  override get crop(): boolean {
     return super.crop;
   }
 
-  set crop(value: boolean) {
+  override set crop(value: boolean) {
     super.crop = value;
 
     if (this._screen_obj) {
@@ -37,11 +37,11 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     }
   }
 
-  get borderRadius(): number {
+  override get borderRadius(): number {
     return super.borderRadius;
   }
 
-  set borderRadius(value: number) {
+  override set borderRadius(value: number) {
     super.borderRadius = value;
 
     if (this._screen_obj) {
@@ -111,7 +111,10 @@ export class ISOSpriteGroup extends ISOBaseGroup {
 
   // Implementation details
 
-  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number): void {
+  override _resize(
+    prop: keyof RectSizeX | keyof RectSizeY,
+    value: number,
+  ): void {
     // TODO: I'm not sure that proxying the new size is the right approach here,
     // as the screen object is merely a graphical representation of a projection.
     // In theory the size of any ISO should be independent of the size of its
@@ -121,7 +124,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     this._screen_obj?._resize(prop, value);
   }
 
-  _onReparent(): void {
+  override _onReparent(): void {
     // The screen sprite group must be created in the screen layer
     const parent = this.parent!;
     const parent_screen_obj =
@@ -153,7 +156,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
     this.teleport();
   }
 
-  _remove(): void {
+  override _remove(): void {
     super._remove();
 
     this.clear();

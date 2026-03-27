@@ -5,68 +5,58 @@ import type { Sprite } from "./Sprite.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
 
 export const dummyRenderer: Renderer = {
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  initPlayground(playground: Playground, options?: Partial<PlaygroundOptions>) {
+  initPlayground(
+    _playground: Playground,
+    _options?: Partial<PlaygroundOptions>,
+  ) {
     return [0, 0];
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawPlaygroundBeforeChildren(playground: Playground, interp: number) {
+  drawPlaygroundBeforeChildren(_playground: Playground, _interp: number) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawPlaygroundAfterChildren(playground: Playground, interp: number) {
+  drawPlaygroundAfterChildren(_playground: Playground, _interp: number) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  initGroup(group: SpriteGroup) {
+  initGroup(_group: SpriteGroup) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  removeGroup(group: SpriteGroup) {
+  removeGroup(_group: SpriteGroup) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawGroupBeforeChildren(group: SpriteGroup, interp: number) {
+  drawGroupBeforeChildren(_group: SpriteGroup, _interp: number) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawGroupAfterChildren(group: SpriteGroup, interp: number) {
+  drawGroupAfterChildren(_group: SpriteGroup, _interp: number) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  initSprite(sprite: Sprite) {
+  initSprite(_sprite: Sprite) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  removeSprite(sprite: Sprite) {
+  removeSprite(_sprite: Sprite) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawSprite(sprite: Sprite, interp: number) {
+  drawSprite(_sprite: Sprite, _interp: number) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  initRectangle(rectangle: Rectangle) {
+  initRectangle(_rectangle: Rectangle) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  removeRectangle(rectangle: Rectangle) {
+  removeRectangle(_rectangle: Rectangle) {
     // no-op
   },
 
-  // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-  drawRectangle(rectangle: Rectangle, interp: number) {
+  drawRectangle(_rectangle: Rectangle, _interp: number) {
     // no-op
   },
 };

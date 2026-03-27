@@ -168,9 +168,12 @@ export class Tweener extends EventTarget {
         current_step: 0,
         num_step: playground.framesFromMs(duration),
         easing: easing,
-        callback: options?.callback,
         property_list: new Map<keyof T, TweenProp>(),
       };
+
+      if (options?.callback !== undefined) {
+        tween_obj.callback = options.callback;
+      }
 
       const property_list = tween_obj.property_list;
 

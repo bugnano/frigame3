@@ -94,17 +94,17 @@ export class Rectangle extends BaseSprite {
 
   // Implementation details
 
-  _initRenderer(): void {
+  override _initRenderer(): void {
     this.playground?._renderer.initRectangle(this);
   }
 
-  _draw(interp: number): void {
+  override _draw(interp: number): void {
     super._draw(interp);
 
     this.playground?._renderer.drawRectangle(this, interp);
   }
 
-  _remove(): void {
+  override _remove(): void {
     this.playground?._renderer.removeRectangle(this);
   }
 }

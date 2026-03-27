@@ -32,7 +32,7 @@ export class SortedAnimation extends Animation {
     }
   }
 
-  onLoad(): void {
+  override onLoad(): void {
     super.onLoad();
 
     const originx = this.originx;

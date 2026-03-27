@@ -1,18 +1,15 @@
 import type { Sprite } from "../Sprite.js";
 import { playgroundMap } from "./renderPlayground.js";
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function initSprite(sprite: Sprite): void {
+export function initSprite(_sprite: Sprite): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function removeSprite(sprite: Sprite): void {
+export function removeSprite(_sprite: Sprite): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function drawSprite(sprite: Sprite, interp: number): void {
+export function drawSprite(sprite: Sprite, _interp: number): void {
   const playground = sprite.playground!;
 
   const left = sprite._drawLeft;
@@ -69,7 +66,7 @@ export function drawSprite(sprite: Sprite, interp: number): void {
     }
 
     const angle = sprite._angle;
-    const sprite_sheet = animation.frameset[sprite._currentSpriteSheet];
+    const sprite_sheet = animation.frameset[sprite._currentSpriteSheet]!;
     const currentFrame = sprite._currentFrame;
 
     if (angle || scaleh !== 1 || scalev !== 1) {

@@ -46,19 +46,19 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 
   playground.registerCallback(() => {
     // Process inputs at every frame to be responsive
-    if (keyTracker.ArrowLeft && add_x === 0) {
+    if (keyTracker["ArrowLeft"] && add_x === 0) {
       add_x = -1;
       add_y = 0;
     }
-    if (keyTracker.ArrowRight && add_x === 0) {
+    if (keyTracker["ArrowRight"] && add_x === 0) {
       add_x = 1;
       add_y = 0;
     }
-    if (keyTracker.ArrowUp && add_y === 0) {
+    if (keyTracker["ArrowUp"] && add_y === 0) {
       add_x = 0;
       add_y = -1;
     }
-    if (keyTracker.ArrowDown && add_y === 0) {
+    if (keyTracker["ArrowDown"] && add_y === 0) {
       add_x = 0;
       add_y = 1;
     }

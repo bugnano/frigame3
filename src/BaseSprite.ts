@@ -214,91 +214,91 @@ export class BaseSprite extends Rect {
     this._blendMode = value;
   }
 
-  get left(): number {
+  override get left(): number {
     return super.left;
   }
 
-  set left(value: number) {
+  override set left(value: number) {
     this._move("left", value);
   }
 
-  get right(): number {
+  override get right(): number {
     return super.right;
   }
 
-  set right(value: number) {
+  override set right(value: number) {
     this._move("right", value);
   }
 
-  get centerx(): number {
+  override get centerx(): number {
     return super.centerx;
   }
 
-  set centerx(value: number) {
+  override set centerx(value: number) {
     this._move("centerx", value);
   }
 
-  get top(): number {
+  override get top(): number {
     return super.top;
   }
 
-  set top(value: number) {
+  override set top(value: number) {
     this._move("top", value);
   }
 
-  get bottom(): number {
+  override get bottom(): number {
     return super.bottom;
   }
 
-  set bottom(value: number) {
+  override set bottom(value: number) {
     this._move("bottom", value);
   }
 
-  get centery(): number {
+  override get centery(): number {
     return super.centery;
   }
 
-  set centery(value: number) {
+  override set centery(value: number) {
     this._move("centery", value);
   }
 
-  get width(): number {
+  override get width(): number {
     return super.width;
   }
 
-  set width(value: number) {
+  override set width(value: number) {
     this._resize("width", value);
   }
 
-  get halfWidth(): number {
+  override get halfWidth(): number {
     return super.halfWidth;
   }
 
-  set halfWidth(value: number) {
+  override set halfWidth(value: number) {
     this._resize("halfWidth", value);
   }
 
-  get height(): number {
+  override get height(): number {
     return super.height;
   }
 
-  set height(value: number) {
+  override set height(value: number) {
     this._resize("height", value);
   }
 
-  get halfHeight(): number {
+  override get halfHeight(): number {
     return super.halfHeight;
   }
 
-  set halfHeight(value: number) {
+  override set halfHeight(value: number) {
     this._resize("halfHeight", value);
   }
 
-  get radius(): number {
+  override get radius(): number {
     return super.radius;
   }
 
-  set radius(value: number) {
+  override set radius(value: number) {
     this._resize("radius", value);
   }
 

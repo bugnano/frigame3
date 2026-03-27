@@ -22,7 +22,10 @@ import { spriteRef } from "frigame3/lib/utils.js";
   const gradient = new Gradient({ r: 128 }, { b: 255, a: 0.3 }, "horizontal");
   const red = new Gradient({ r: 128 });
   const blue = new Gradient({ b: 255, a: 0.6 });
-  const grassblock = rm.addResource(new Animation("grassblock.png"));
+
+  // grassblock
+  rm.addResource(new Animation("grassblock.png"));
+
   const boy = rm.addResource(new Animation("boy.png"));
   const catgirl = rm.addResource(new Animation("catgirl.png"));
   const horngirl = rm.addResource(new Animation("horngirl.png"));

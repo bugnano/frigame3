@@ -34,13 +34,11 @@ export function initRectangle(rectangle: Rectangle): void {
   }
 }
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function removeRectangle(rectangle: Rectangle): void {
+export function removeRectangle(_rectangle: Rectangle): void {
   // no-op
 }
 
-// biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-export function drawRectangle(rectangle: Rectangle, interp: number): void {
+export function drawRectangle(rectangle: Rectangle, _interp: number): void {
   const playground = rectangle.playground!;
 
   const trunc = Math.trunc;

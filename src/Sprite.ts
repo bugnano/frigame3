@@ -194,14 +194,14 @@ export class Sprite extends BaseSprite {
       this._lastSpriteSheet = animation.frameset.length - 1;
       this._currentSpriteSheet = this._lastSpriteSheet;
       this._numberOfFrame =
-        animation.frameset[this._currentSpriteSheet].numberOfFrame;
+        animation.frameset[this._currentSpriteSheet]!.numberOfFrame;
       this._currentFrame = this._numberOfFrame - 1;
       this._frameIncrement = -1;
     } else {
       this._currentSpriteSheet = 0;
       if (animation) {
         this._lastSpriteSheet = animation.frameset.length - 1;
-        this._numberOfFrame = animation.frameset[0].numberOfFrame;
+        this._numberOfFrame = animation.frameset[0]!.numberOfFrame;
       } else {
         this._lastSpriteSheet = 0;
         this._numberOfFrame = 0;
@@ -216,7 +216,7 @@ export class Sprite extends BaseSprite {
     const index = this._animationIndex;
 
     if (animation && index) {
-      const sprite_sheet = animation.frameset[this._currentSpriteSheet];
+      const sprite_sheet = animation.frameset[this._currentSpriteSheet]!;
       this._multix = index * sprite_sheet._multix;
       this._multiy = index * sprite_sheet._multiy;
     } else {
@@ -229,7 +229,7 @@ export class Sprite extends BaseSprite {
 
   // Implementation details
 
-  _checkUpdate(): void {
+  override _checkUpdate(): void {
     const oldNeedsUpdate = this._needsUpdate;
 
     if (
@@ -247,7 +247,7 @@ export class Sprite extends BaseSprite {
     this._updateNeedsUpdate(oldNeedsUpdate);
   }
 
-  _onReparent(): void {
+  override _onReparent(): void {
     const playground = this.playground;
 
     if (playground) {
@@ -255,11 +255,11 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  _initRenderer(): void {
+  override _initRenderer(): void {
     this.playground?._renderer.initSprite(this);
   }
 
-  _update(): void {
+  override _update(): void {
     const callback = this._callback;
     const animation = this._animation;
 
@@ -281,7 +281,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet += 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = 0;
                 } else {
                   this._frameIncrement = -1;
@@ -297,7 +297,7 @@ export class Sprite extends BaseSprite {
                       currentSpriteSheet -= 1;
                       this._currentSpriteSheet = currentSpriteSheet;
                       this._numberOfFrame =
-                        animation.frameset[currentSpriteSheet].numberOfFrame;
+                        animation.frameset[currentSpriteSheet]!.numberOfFrame;
                       currentFrame = this._numberOfFrame - 1;
                     } else {
                       currentFrame -= 1;
@@ -314,7 +314,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet -= 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = this._numberOfFrame - 1;
                 } else {
                   // Last frame reached, change animation direction
@@ -326,7 +326,7 @@ export class Sprite extends BaseSprite {
                     currentSpriteSheet += 1;
                     this._currentSpriteSheet = currentSpriteSheet;
                     this._numberOfFrame =
-                      animation.frameset[currentSpriteSheet].numberOfFrame;
+                      animation.frameset[currentSpriteSheet]!.numberOfFrame;
                     currentFrame = 0;
                   } else {
                     currentFrame = 0;
@@ -344,7 +344,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet -= 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = this._numberOfFrame - 1;
                 } else {
                   // Last frame reached
@@ -356,7 +356,7 @@ export class Sprite extends BaseSprite {
                     currentSpriteSheet = this._lastSpriteSheet;
                     this._currentSpriteSheet = currentSpriteSheet;
                     this._numberOfFrame =
-                      animation.frameset[currentSpriteSheet].numberOfFrame;
+                      animation.frameset[currentSpriteSheet]!.numberOfFrame;
                     currentFrame = this._numberOfFrame - 1;
                   }
 
@@ -379,7 +379,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet -= 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = this._numberOfFrame - 1;
                 } else {
                   this._frameIncrement = 1;
@@ -395,7 +395,7 @@ export class Sprite extends BaseSprite {
                       currentSpriteSheet += 1;
                       this._currentSpriteSheet = currentSpriteSheet;
                       this._numberOfFrame =
-                        animation.frameset[currentSpriteSheet].numberOfFrame;
+                        animation.frameset[currentSpriteSheet]!.numberOfFrame;
                       currentFrame = 0;
                     } else {
                       currentFrame = 0;
@@ -412,7 +412,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet += 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = 0;
                 } else {
                   // Last frame reached, change animation direction
@@ -423,7 +423,7 @@ export class Sprite extends BaseSprite {
                     currentSpriteSheet -= 1;
                     this._currentSpriteSheet = currentSpriteSheet;
                     this._numberOfFrame =
-                      animation.frameset[currentSpriteSheet].numberOfFrame;
+                      animation.frameset[currentSpriteSheet]!.numberOfFrame;
                     currentFrame = this._numberOfFrame - 1;
                   } else {
                     currentFrame -= 1;
@@ -441,7 +441,7 @@ export class Sprite extends BaseSprite {
                   currentSpriteSheet += 1;
                   this._currentSpriteSheet = currentSpriteSheet;
                   this._numberOfFrame =
-                    animation.frameset[currentSpriteSheet].numberOfFrame;
+                    animation.frameset[currentSpriteSheet]!.numberOfFrame;
                   this._currentFrame = 0;
                 } else {
                   // Last frame reached
@@ -453,7 +453,7 @@ export class Sprite extends BaseSprite {
                     currentSpriteSheet = 0;
                     this._currentSpriteSheet = currentSpriteSheet;
                     this._numberOfFrame =
-                      animation.frameset[currentSpriteSheet].numberOfFrame;
+                      animation.frameset[currentSpriteSheet]!.numberOfFrame;
                     currentFrame = 0;
                   }
 
@@ -476,13 +476,13 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  _draw(interp: number): void {
+  override _draw(interp: number): void {
     super._draw(interp);
 
     this.playground?._renderer.drawSprite(this, interp);
   }
 
-  _remove(): void {
+  override _remove(): void {
     this.playground?._renderer.removeSprite(this);
   }
 }

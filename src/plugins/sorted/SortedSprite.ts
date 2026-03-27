@@ -15,11 +15,11 @@ export interface SortedSpriteOptions extends SpriteOptions {
 const SortedBaseSprite = Sorted(Sprite);
 
 export class SortedSprite extends SortedBaseSprite {
-  get animation(): SortedAnimation | null {
+  override get animation(): SortedAnimation | null {
     return super.animation as SortedAnimation | null;
   }
 
-  set animation(value: SortedAnimation | null) {
+  override set animation(value: SortedAnimation | null) {
     if (value !== super.animation) {
       const parent = this.parent;
 

@@ -19,15 +19,15 @@ export interface ISOSpriteOptions extends SpriteOptions {
 const ISOBaseSprite = ISO(Sprite);
 
 export class ISOSprite extends ISOBaseSprite {
-  _screen_obj: SortedSprite | null = null;
+  override _screen_obj: SortedSprite | null = null;
 
   // Proxy getters & setters
 
-  get animation(): SortedAnimation | null {
+  override get animation(): SortedAnimation | null {
     return super.animation as SortedAnimation | null;
   }
 
-  set animation(value: SortedAnimation | null) {
+  override set animation(value: SortedAnimation | null) {
     if (value !== super.animation) {
       const width = super.width;
       const height = super.height;
@@ -48,11 +48,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get animationIndex(): number {
+  override get animationIndex(): number {
     return super.animationIndex;
   }
 
-  set animationIndex(value: number) {
+  override set animationIndex(value: number) {
     super.animationIndex = value;
 
     if (this._screen_obj) {
@@ -60,11 +60,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get callback(): (() => void) | null {
+  override get callback(): (() => void) | null {
     return super.callback;
   }
 
-  set callback(value: (() => void) | null) {
+  override set callback(value: (() => void) | null) {
     super.callback = value;
 
     if (this._screen_obj) {
@@ -72,11 +72,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get paused(): boolean {
+  override get paused(): boolean {
     return super.paused;
   }
 
-  set paused(value: boolean) {
+  override set paused(value: boolean) {
     super.paused = value;
 
     if (this._screen_obj) {
@@ -84,11 +84,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get rate(): number {
+  override get rate(): number {
     return super.rate;
   }
 
-  set rate(value: number) {
+  override set rate(value: number) {
     super.rate = value;
 
     if (this._screen_obj) {
@@ -96,11 +96,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get once(): boolean {
+  override get once(): boolean {
     return super.once;
   }
 
-  set once(value: boolean) {
+  override set once(value: boolean) {
     super.once = value;
 
     if (this._screen_obj) {
@@ -108,11 +108,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get pingpong(): boolean {
+  override get pingpong(): boolean {
     return super.pingpong;
   }
 
-  set pingpong(value: boolean) {
+  override set pingpong(value: boolean) {
     super.pingpong = value;
 
     if (this._screen_obj) {
@@ -120,11 +120,11 @@ export class ISOSprite extends ISOBaseSprite {
     }
   }
 
-  get backwards(): boolean {
+  override get backwards(): boolean {
     return super.backwards;
   }
 
-  set backwards(value: boolean) {
+  override set backwards(value: boolean) {
     super.backwards = value;
 
     if (this._screen_obj) {
@@ -196,7 +196,7 @@ export class ISOSprite extends ISOBaseSprite {
   // as the screen object automatically gets the size of the animation
   // and the size of the ISOSprite is independent of it
 
-  _onReparent(): void {
+  override _onReparent(): void {
     // The screen sprite must be created in the screen layer
     const parent = this.parent as ISOSpriteGroup;
     const parent_screen_obj = parent._screen_obj!;

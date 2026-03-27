@@ -33,11 +33,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get top(): number {
+    override get top(): number {
       return super.top;
     }
 
-    set top(value: number) {
+    override set top(value: number) {
       if (value !== super.top) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {
@@ -49,11 +49,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get bottom(): number {
+    override get bottom(): number {
       return super.bottom;
     }
 
-    set bottom(value: number) {
+    override set bottom(value: number) {
       if (value !== super.bottom) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {
@@ -65,11 +65,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get centery(): number {
+    override get centery(): number {
       return super.centery;
     }
 
-    set centery(value: number) {
+    override set centery(value: number) {
       if (value !== super.centery) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {
@@ -81,11 +81,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get height(): number {
+    override get height(): number {
       return super.height;
     }
 
-    set height(value: number) {
+    override set height(value: number) {
       if (value !== super.height) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {
@@ -97,11 +97,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get halfHeight(): number {
+    override get halfHeight(): number {
       return super.halfHeight;
     }
 
-    set halfHeight(value: number) {
+    override set halfHeight(value: number) {
       if (value !== super.halfHeight) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {
@@ -113,11 +113,11 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get radius(): number {
+    override get radius(): number {
       return super.radius;
     }
 
-    set radius(value: number) {
+    override set radius(value: number) {
       if (value !== super.halfWidth || value !== super.halfHeight) {
         const parent = this.parent;
         if (parent instanceof SortedGroup) {

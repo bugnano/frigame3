@@ -16,7 +16,7 @@ export interface PlaygroundOptions {
 export class Playground extends EventTarget {
   _width = 0;
   _height = 0;
-  _refreshRate = 1000 / 60;
+  _refreshRate: number = 1000 / 60;
 
   running = false;
   frameCounter = 0;

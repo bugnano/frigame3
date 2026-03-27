@@ -157,14 +157,16 @@ export class Animation implements Resource {
         });
       }
 
-      if (options.frameset?.length) {
+      if (options.frameset?.length !== 0) {
+        const frameset = options.frameset!;
+
         // The default imageURL is the one of the first element
         imageURL ??=
-          typeof options.frameset[0] === "string"
-            ? options.frameset[0]
-            : (options.frameset[0].imageURL ?? "");
+          typeof frameset[0] === "string"
+            ? frameset[0]
+            : (frameset[0]!.imageURL ?? "");
 
-        for (const sprite_sheet of options.frameset) {
+        for (const sprite_sheet of frameset) {
           if (typeof sprite_sheet === "string") {
             this.frameset.push({
               imageURL: sprite_sheet,
@@ -224,7 +226,7 @@ export class Animation implements Resource {
   onLoad(): void {
     if (this.frameset.length) {
       // The first sprite sheet is used to calculate the frame dimensions
-      const sprite_sheet = this.frameset[0];
+      const sprite_sheet = this.frameset[0]!;
       const img = sprite_sheet._img;
 
       if (sprite_sheet.type === "vertical") {

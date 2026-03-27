@@ -98,11 +98,15 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy getters & setters
 
-    get transformOrigin(): (keyof RectSizeX & keyof RectSizeY) | number {
+    override get transformOrigin():
+      | (keyof RectSizeX & keyof RectSizeY)
+      | number {
       return super.transformOrigin;
     }
 
-    set transformOrigin(value: (keyof RectSizeX & keyof RectSizeY) | number) {
+    override set transformOrigin(value:
+      | (keyof RectSizeX & keyof RectSizeY)
+      | number) {
       super.transformOrigin = value;
 
       if (this._screen_obj) {
@@ -110,11 +114,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get transformOriginx(): keyof RectSizeX | number {
+    override get transformOriginx(): keyof RectSizeX | number {
       return super.transformOriginx;
     }
 
-    set transformOriginx(value: keyof RectSizeX | number) {
+    override set transformOriginx(value: keyof RectSizeX | number) {
       super.transformOriginx = value;
 
       if (this._screen_obj) {
@@ -122,11 +126,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get transformOriginy(): keyof RectSizeY | number {
+    override get transformOriginy(): keyof RectSizeY | number {
       return super.transformOriginy;
     }
 
-    set transformOriginy(value: keyof RectSizeY | number) {
+    override set transformOriginy(value: keyof RectSizeY | number) {
       super.transformOriginy = value;
 
       if (this._screen_obj) {
@@ -134,11 +138,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get angle(): number {
+    override get angle(): number {
       return super.angle;
     }
 
-    set angle(value: number) {
+    override set angle(value: number) {
       super.angle = value;
 
       if (this._screen_obj) {
@@ -146,11 +150,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scalex(): number {
+    override get scalex(): number {
       return super.scalex;
     }
 
-    set scalex(value: number) {
+    override set scalex(value: number) {
       super.scalex = value;
 
       if (this._screen_obj) {
@@ -158,11 +162,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scaley(): number {
+    override get scaley(): number {
       return super.scaley;
     }
 
-    set scaley(value: number) {
+    override set scaley(value: number) {
       super.scaley = value;
 
       if (this._screen_obj) {
@@ -170,11 +174,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get scale(): number {
+    override get scale(): number {
       return super.scale;
     }
 
-    set scale(value: number) {
+    override set scale(value: number) {
       super.scale = value;
 
       if (this._screen_obj) {
@@ -182,11 +186,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get fliph(): boolean {
+    override get fliph(): boolean {
       return super.fliph;
     }
 
-    set fliph(value: boolean) {
+    override set fliph(value: boolean) {
       super.fliph = value;
 
       if (this._screen_obj) {
@@ -194,11 +198,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get flipv(): boolean {
+    override get flipv(): boolean {
       return super.flipv;
     }
 
-    set flipv(value: boolean) {
+    override set flipv(value: boolean) {
       super.flipv = value;
 
       if (this._screen_obj) {
@@ -206,11 +210,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get flip(): boolean {
+    override get flip(): boolean {
       return super.flip;
     }
 
-    set flip(value: boolean) {
+    override set flip(value: boolean) {
       super.flip = value;
 
       if (this._screen_obj) {
@@ -218,11 +222,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get opacity(): number {
+    override get opacity(): number {
       return super.opacity;
     }
 
-    set opacity(value: number) {
+    override set opacity(value: number) {
       super.opacity = value;
 
       if (this._screen_obj) {
@@ -230,11 +234,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get hidden(): boolean {
+    override get hidden(): boolean {
       return super.hidden;
     }
 
-    set hidden(value: boolean) {
+    override set hidden(value: boolean) {
       super.hidden = value;
 
       if (this._screen_obj) {
@@ -242,11 +246,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    get blendMode(): BlendMode {
+    override get blendMode(): BlendMode {
       return super.blendMode;
     }
 
-    set blendMode(value: BlendMode) {
+    override set blendMode(value: BlendMode) {
       super.blendMode = value;
 
       if (this._screen_obj) {
@@ -330,7 +334,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy functions
 
-    drawFirst(): this {
+    override drawFirst(): this {
       // super.drawFirst() is deliberately omitted because:
       // 1. Only the screen_obj is drawn
       // 2. Allows for changing the drawing order inside a tilemap
@@ -340,7 +344,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    drawLast(): this {
+    override drawLast(): this {
       // super.drawLast() is deliberately omitted because:
       // 1. Only the screen_obj is drawn
       // 2. Allows for changing the drawing order inside a tilemap
@@ -350,7 +354,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    getDrawIndex(): number {
+    override getDrawIndex(): number {
       if (this._screen_obj) {
         return this._screen_obj.getDrawIndex();
       } else {
@@ -358,7 +362,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    drawTo(index: number): this {
+    override drawTo(index: number): this {
       // super.drawTo(index) is deliberately omitted because:
       // 1. Only the screen_obj is drawn
       // 2. Allows for changing the drawing order inside a tilemap
@@ -368,7 +372,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    drawBefore(sprite: BaseSprite): this {
+    override drawBefore(sprite: BaseSprite): this {
       // super.drawBefore(sprite) is deliberately omitted because:
       // 1. Only the screen_obj is drawn
       // 2. Allows for changing the drawing order inside a tilemap
@@ -386,7 +390,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    drawAfter(sprite: BaseSprite): this {
+    override drawAfter(sprite: BaseSprite): this {
       // super.drawAfter(sprite) is deliberately omitted because:
       // 1. Only the screen_obj is drawn
       // 2. Allows for changing the drawing order inside a tilemap
@@ -404,7 +408,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       return this;
     }
 
-    teleport(): this {
+    override teleport(): this {
       super.teleport();
       this._screen_obj?.teleport();
 
@@ -413,7 +417,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Implementation details
 
-    _move(
+    override _move(
       prop: keyof RectPosX | keyof RectPosY | "elevation" | null,
       value: number,
     ): void {
@@ -468,20 +472,19 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
-    _initRenderer(): void {
+    override _initRenderer(): void {
       // no-op
     }
 
-    _update(): void {
+    override _update(): void {
       // no-op
     }
 
-    // biome-ignore lint/correctness/noUnusedFunctionParameters: reason
-    _draw(interp: number): void {
+    override _draw(_interp: number): void {
       // The drawing is performed only on the screen objects
     }
 
-    _remove(): void {
+    override _remove(): void {
       this._screen_obj?.parent?.removeChild(this._screen_obj, {
         suppressWarning: true,
       });
