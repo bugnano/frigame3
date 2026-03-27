@@ -22,7 +22,7 @@ export class SortedAnimation extends Animation {
   ) {
     super(options);
 
-    if (options && typeof options !== "string") {
+    if (options !== undefined && typeof options !== "string") {
       if (options.originx !== undefined) {
         this.originx = options.originx;
       }

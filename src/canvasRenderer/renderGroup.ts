@@ -40,7 +40,13 @@ export function drawGroupBeforeChildren(
   const scaleh = group._scaleh;
   const scalev = group._scalev;
 
-  if (group._layers.length && opacity && scaleh && scalev && !group._hidden) {
+  if (
+    group._layers.length !== 0 &&
+    opacity !== 0 &&
+    scaleh !== 0 &&
+    scalev !== 0 &&
+    !group._hidden
+  ) {
     const playground = group.playground!;
 
     const playgroundData = playgroundMap.get(playground)!;
@@ -52,7 +58,7 @@ export function drawGroupBeforeChildren(
     const crop = group._crop;
 
     groupData.contextSaved = false;
-    if (angle || scaleh !== 1 || scalev !== 1 || crop) {
+    if (angle !== 0 || scaleh !== 1 || scalev !== 1 || crop) {
       ctx.save();
       groupData.contextSaved = true;
     }
@@ -86,7 +92,7 @@ export function drawGroupBeforeChildren(
     const left = group._drawLeft;
     const top = group._drawTop;
 
-    if (angle || scaleh !== 1 || scalev !== 1) {
+    if (angle !== 0 || scaleh !== 1 || scalev !== 1) {
       let transformOriginx = group._transformOriginx;
 
       if (typeof transformOriginx === "string") {
@@ -105,7 +111,7 @@ export function drawGroupBeforeChildren(
 
       ctx.translate(left + transformOriginx, top + transformOriginy);
 
-      if (angle) {
+      if (angle !== 0) {
         ctx.rotate(angle);
       }
 
@@ -118,7 +124,7 @@ export function drawGroupBeforeChildren(
       groupData.left = left;
       groupData.top = top;
 
-      if (left || top) {
+      if (left !== 0 || top !== 0) {
         ctx.translate(left, top);
       }
     }
@@ -149,10 +155,10 @@ export function drawGroupAfterChildren(
   _interp: number,
 ): void {
   if (
-    group._layers.length &&
-    group._opacity &&
-    group._scaleh &&
-    group._scalev &&
+    group._layers.length !== 0 &&
+    group._opacity !== 0 &&
+    group._scaleh !== 0 &&
+    group._scalev !== 0 &&
     !group._hidden
   ) {
     const playground = group.playground!;
@@ -170,7 +176,7 @@ export function drawGroupAfterChildren(
       const left = groupData.left;
       const top = groupData.top;
 
-      if (left || top) {
+      if (left !== 0 || top !== 0) {
         ctx.translate(-left, -top);
       }
 

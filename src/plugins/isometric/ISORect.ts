@@ -16,7 +16,7 @@ export class ISORect extends Rect {
   constructor(options?: Partial<RectOptions & ISORectOptions>) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(this, pick(options, ["originx", "originy", "elevation"]));
     }
   }

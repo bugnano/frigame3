@@ -78,7 +78,7 @@ export class Sound implements Resource {
       | Partial<Record<keyof typeof canPlay, string>>,
     options?: { streaming: boolean },
   ) {
-    if (options?.streaming) {
+    if (options?.streaming === true) {
       this.streaming = true;
     }
 
@@ -118,7 +118,7 @@ export class Sound implements Resource {
       // Create the sound or the Audio element
       const sound_url = this.soundURL;
 
-      if (sound_url) {
+      if (sound_url !== "") {
         if (!this.streaming) {
           // Sound supported through Web Audio API
           this._waitAudioBuffer = true;
@@ -152,7 +152,7 @@ export class Sound implements Resource {
 
     const audio = this._audio;
 
-    if (audio && audio.readyState < audio.HAVE_ENOUGH_DATA) {
+    if (audio !== null && audio.readyState < audio.HAVE_ENOUGH_DATA) {
       completed = false;
     }
 
@@ -160,7 +160,7 @@ export class Sound implements Resource {
   }
 
   onLoad(): void {
-    if (this._audio) {
+    if (this._audio !== null) {
       this._source = new MediaElementAudioSourceNode(audioCtx, {
         mediaElement: this._audio,
       });
@@ -225,7 +225,7 @@ class Channel {
     this._gainNode = new GainNode(audioCtx);
     this._gainNode.connect(this._panner);
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(this, pick(options, ["muted", "volume", "panning"]));
     }
   }
@@ -254,7 +254,7 @@ export class SingleChannel extends Channel {
     if (playbackRate !== oldPlaybackRate) {
       this._playbackRate = playbackRate;
 
-      if (this._audio) {
+      if (this._audio !== null) {
         this._audio.playbackRate = playbackRate;
       } else {
         const currentTime = this._pauseTime || audioCtx.currentTime;
@@ -273,13 +273,13 @@ export class SingleChannel extends Channel {
     // Make sure the audio is stopped before changing its options
     this.stop();
 
-    if (options?.playbackRate) {
-      this._playbackRate = clamp(options.playbackRate, 0.25, 4) || 1;
+    if ((options?.playbackRate ?? 0) !== 0) {
+      this._playbackRate = clamp(options!.playbackRate!, 0.25, 4) || 1;
     } else {
       this._playbackRate = 1;
     }
 
-    if (sound._audio) {
+    if (sound._audio !== null) {
       const audio = sound._audio;
 
       this._audio = audio;
@@ -287,10 +287,10 @@ export class SingleChannel extends Channel {
       audio.pause();
       audio.currentTime = 0;
 
-      if (options?.loop) {
+      if (options?.loop === true) {
         audio.loop = true;
         audio.onended = null;
-      } else if (options?.callback) {
+      } else if (options?.callback !== undefined) {
         const callback = options.callback;
 
         audio.loop = false;
@@ -311,7 +311,7 @@ export class SingleChannel extends Channel {
       sound._source?.connect(this._gainNode);
 
       audio.play().catch(noop);
-    } else if (sound._audioBuffer) {
+    } else if (sound._audioBuffer !== null) {
       const audioBuffer = sound._audioBuffer;
 
       this._audioBuffer = audioBuffer;
@@ -322,10 +322,10 @@ export class SingleChannel extends Channel {
       this._source = source;
       source.connect(this._gainNode);
 
-      if (options?.loop) {
+      if (options?.loop === true) {
         source.loop = true;
         source.onended = null;
-      } else if (options?.callback) {
+      } else if (options?.callback !== undefined) {
         const callback = options.callback;
 
         source.loop = false;
@@ -345,7 +345,7 @@ export class SingleChannel extends Channel {
       source.start();
     } else {
       // Make sure the callback gets called even if the sound cannot be played
-      if (!options?.loop && options?.callback) {
+      if (options?.loop !== true && options?.callback !== undefined) {
         const callback = options.callback;
 
         callback();
@@ -356,7 +356,7 @@ export class SingleChannel extends Channel {
   }
 
   stop(): this {
-    if (this._audio) {
+    if (this._audio !== null) {
       this._audio.pause();
       this._audio.currentTime = 0;
     }
@@ -377,11 +377,14 @@ export class SingleChannel extends Channel {
   }
 
   pause(): this {
-    if (this._audio) {
+    if (this._audio !== null) {
       this._audio.pause();
     }
 
-    if (this._source instanceof AudioBufferSourceNode && !this._pauseTime) {
+    if (
+      this._source instanceof AudioBufferSourceNode &&
+      this._pauseTime === 0
+    ) {
       const source = this._source;
 
       // Since pause / resume is not supported in the Web Audio API, here the currentTime is saved,
@@ -401,11 +404,11 @@ export class SingleChannel extends Channel {
   }
 
   resume(): this {
-    if (this._audio) {
+    if (this._audio !== null) {
       this._audio.play().catch(noop);
     }
 
-    if (this._pauseTime) {
+    if (this._pauseTime !== 0) {
       // Since pause / resume is not supported in the Web Audio API, a new source object is created
       // containing all the values of the old source object
       const audioBuffer = this._audioBuffer!;
@@ -440,7 +443,7 @@ export class SingleChannel extends Channel {
   // Implementation details
 
   _disconnect = (): void => {
-    if (this._audio) {
+    if (this._audio !== null) {
       this._audio.loop = false;
     }
 
@@ -461,7 +464,7 @@ export class MultiChannel extends Channel {
   play(sound: Sound, options?: Partial<MultiChannelPlayOptions>): this {
     const playbackRate = clamp(options?.playbackRate ?? 1, 0.25, 4) || 1;
 
-    if (sound._audio) {
+    if (sound._audio !== null) {
       const audio = sound._audio;
 
       audio.pause();
@@ -469,7 +472,7 @@ export class MultiChannel extends Channel {
 
       audio.loop = false;
 
-      if (options?.callback) {
+      if (options?.callback !== undefined) {
         audio.onended = options.callback;
       } else {
         audio.onended = null;
@@ -481,7 +484,7 @@ export class MultiChannel extends Channel {
       sound._source?.connect(this._gainNode);
 
       audio.play().catch(noop);
-    } else if (sound._audioBuffer) {
+    } else if (sound._audioBuffer !== null) {
       const audioBuffer = sound._audioBuffer;
 
       const source = new AudioBufferSourceNode(audioCtx, {
@@ -491,7 +494,7 @@ export class MultiChannel extends Channel {
 
       source.loop = false;
 
-      if (options?.callback) {
+      if (options?.callback !== undefined) {
         source.onended = options.callback;
       } else {
         source.onended = null;
@@ -502,7 +505,7 @@ export class MultiChannel extends Channel {
       source.start();
     } else {
       // Make sure the callback gets called even if the sound cannot be played
-      if (options?.callback) {
+      if (options?.callback !== undefined) {
         const callback = options.callback;
 
         callback();

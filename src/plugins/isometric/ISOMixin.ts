@@ -33,7 +33,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
       const screen_obj = this._screen_obj;
 
-      if (screen_obj) {
+      if (screen_obj !== null) {
         let originx = value;
 
         if (typeof originx === "string") {
@@ -55,7 +55,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
       const screen_obj = this._screen_obj;
 
-      if (screen_obj) {
+      if (screen_obj !== null) {
         let originy = value;
 
         if (typeof originy === "string") {
@@ -109,7 +109,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       | number) {
       super.transformOrigin = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.transformOrigin = value;
       }
     }
@@ -121,7 +121,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set transformOriginx(value: keyof RectSizeX | number) {
       super.transformOriginx = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.transformOriginx = value;
       }
     }
@@ -133,7 +133,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set transformOriginy(value: keyof RectSizeY | number) {
       super.transformOriginy = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.transformOriginy = value;
       }
     }
@@ -145,7 +145,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set angle(value: number) {
       super.angle = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.angle = value;
       }
     }
@@ -157,7 +157,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set scalex(value: number) {
       super.scalex = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.scalex = value;
       }
     }
@@ -169,7 +169,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set scaley(value: number) {
       super.scaley = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.scaley = value;
       }
     }
@@ -181,7 +181,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set scale(value: number) {
       super.scale = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.scale = value;
       }
     }
@@ -193,7 +193,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set fliph(value: boolean) {
       super.fliph = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.fliph = value;
       }
     }
@@ -205,7 +205,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set flipv(value: boolean) {
       super.flipv = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.flipv = value;
       }
     }
@@ -217,7 +217,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set flip(value: boolean) {
       super.flip = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.flip = value;
       }
     }
@@ -229,7 +229,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set opacity(value: number) {
       super.opacity = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.opacity = value;
       }
     }
@@ -241,7 +241,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set hidden(value: boolean) {
       super.hidden = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.hidden = value;
       }
     }
@@ -253,7 +253,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     override set blendMode(value: BlendMode) {
       super.blendMode = value;
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.blendMode = value;
       }
     }
@@ -263,7 +263,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     getScreenRect(screenRect?: ISORect): ISORect | null {
       const screen_obj = this._screen_obj;
 
-      if (screen_obj) {
+      if (screen_obj !== null) {
         let originx = this._originx;
 
         if (typeof originx === "string") {
@@ -301,7 +301,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     getScreenAbsRect(absRect?: ISORect): ISORect | null {
       const screen_obj = this._screen_obj;
 
-      if (screen_obj) {
+      if (screen_obj !== null) {
         let originx = this._originx;
 
         if (typeof originx === "string") {
@@ -355,7 +355,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     }
 
     override getDrawIndex(): number {
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         return this._screen_obj.getDrawIndex();
       } else {
         return -1;
@@ -380,7 +380,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       if ("_screen_obj" in sprite) {
         const s = sprite as ISOMixin;
 
-        if (s._screen_obj) {
+        if (s._screen_obj !== null) {
           this._screen_obj?.drawBefore(s._screen_obj);
         }
       } else {
@@ -398,7 +398,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       if ("_screen_obj" in sprite) {
         const s = sprite as ISOMixin;
 
-        if (s._screen_obj) {
+        if (s._screen_obj !== null) {
           this._screen_obj?.drawAfter(s._screen_obj);
         }
       } else {
@@ -451,7 +451,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
         if (prop === "elevation") {
           this._elevation = value;
 
-          if (screen_obj) {
+          if (screen_obj !== null) {
             screen_obj.originy = originy + value;
           }
         } else {
@@ -466,7 +466,7 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       );
 
       // Step 2: Move the screen object
-      if (screen_obj) {
+      if (screen_obj !== null) {
         screen_obj.left = screen_x - originx;
         screen_obj.top = screen_y - originy - this._elevation;
       }

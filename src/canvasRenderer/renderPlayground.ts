@@ -7,7 +7,7 @@ export interface PlaygroundObj {
 
 const canvasRegistry = new FinalizationRegistry(
   (canvas: HTMLCanvasElement): void => {
-    if (canvas.parentNode) {
+    if (canvas.parentNode !== null) {
       canvas.parentNode.removeChild(canvas);
     }
   },

@@ -29,7 +29,7 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
   const max_x = Math.trunc(playground.width / rect_size);
   const max_y = Math.trunc(playground.height / rect_size);
   const snake: Rectangle[] = [];
-  let apple = sg.addChild(
+  const apple = sg.addChild(
     new Rectangle({
       left: (1 + Math.trunc(Math.random() * (max_x - 2))) * rect_size,
       top: (1 + Math.trunc(Math.random() * (max_y - 2))) * rect_size,
@@ -46,19 +46,19 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 
   playground.registerCallback(() => {
     // Process inputs at every frame to be responsive
-    if (keyTracker["ArrowLeft"] && add_x === 0) {
+    if (keyTracker["ArrowLeft"] === true && add_x === 0) {
       add_x = -1;
       add_y = 0;
     }
-    if (keyTracker["ArrowRight"] && add_x === 0) {
+    if (keyTracker["ArrowRight"] === true && add_x === 0) {
       add_x = 1;
       add_y = 0;
     }
-    if (keyTracker["ArrowUp"] && add_y === 0) {
+    if (keyTracker["ArrowUp"] === true && add_y === 0) {
       add_x = 0;
       add_y = -1;
     }
-    if (keyTracker["ArrowDown"] && add_y === 0) {
+    if (keyTracker["ArrowDown"] === true && add_y === 0) {
       add_x = 0;
       add_y = 1;
     }

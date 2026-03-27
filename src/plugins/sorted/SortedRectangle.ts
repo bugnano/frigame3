@@ -20,7 +20,7 @@ export class SortedRectangle extends SortedBaseRectangle {
   ) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       if (options.originx !== undefined) {
         this.originx = options.originx;
       }

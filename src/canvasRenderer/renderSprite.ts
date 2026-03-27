@@ -30,10 +30,10 @@ export function drawSprite(sprite: Sprite, _interp: number): void {
 
   if (
     insidePlayground &&
-    animation &&
-    opacity &&
-    scaleh &&
-    scalev &&
+    animation !== null &&
+    opacity !== 0 &&
+    scaleh !== 0 &&
+    scalev !== 0 &&
     !sprite._hidden
   ) {
     const playgroundData = playgroundMap.get(playground)!;
@@ -69,7 +69,7 @@ export function drawSprite(sprite: Sprite, _interp: number): void {
     const sprite_sheet = animation.frameset[sprite._currentSpriteSheet]!;
     const currentFrame = sprite._currentFrame;
 
-    if (angle || scaleh !== 1 || scalev !== 1) {
+    if (angle !== 0 || scaleh !== 1 || scalev !== 1) {
       const trunc = Math.trunc;
 
       ctx.save();
@@ -92,7 +92,7 @@ export function drawSprite(sprite: Sprite, _interp: number): void {
 
       ctx.translate(left + transformOriginx, top + transformOriginy);
 
-      if (angle) {
+      if (angle !== 0) {
         ctx.rotate(angle);
       }
 

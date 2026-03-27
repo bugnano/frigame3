@@ -32,7 +32,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   override set crop(value: boolean) {
     super.crop = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.crop = value;
     }
   }
@@ -44,7 +44,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   override set borderRadius(value: number) {
     super.borderRadius = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.borderRadius = value;
     }
   }
@@ -56,7 +56,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   ) {
     super();
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -94,13 +94,13 @@ export class ISOSpriteGroup extends ISOBaseGroup {
         ]),
       );
 
-      if (options.children) {
+      if (options.children !== undefined) {
         for (const child of options.children) {
           this.addChild(child);
         }
       }
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }

@@ -305,7 +305,7 @@ export class BaseSprite extends Rect {
   constructor(options?: Partial<BaseSpriteOptions>) {
     super();
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -345,7 +345,7 @@ export class BaseSprite extends Rect {
   drawFirst(): this {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_layers = parent._layers;
 
       const index = parent_layers.indexOf(this);
@@ -364,7 +364,7 @@ export class BaseSprite extends Rect {
   drawLast(): this {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_layers = parent._layers;
 
       const index = parent_layers.indexOf(this);
@@ -383,7 +383,7 @@ export class BaseSprite extends Rect {
   getDrawIndex(): number {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       return parent._layers.indexOf(this);
     }
 
@@ -393,7 +393,7 @@ export class BaseSprite extends Rect {
   drawTo(index: number): this {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_layers = parent._layers;
 
       const i = parent_layers.indexOf(this);
@@ -416,7 +416,7 @@ export class BaseSprite extends Rect {
   drawBefore(sprite: BaseSprite): this {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_layers = parent._layers;
       const sprite_index = parent_layers.indexOf(sprite);
 
@@ -441,7 +441,7 @@ export class BaseSprite extends Rect {
   drawAfter(sprite: BaseSprite): this {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_layers = parent._layers;
       const sprite_index = parent_layers.indexOf(sprite);
 
@@ -467,7 +467,7 @@ export class BaseSprite extends Rect {
     let left = this.left;
     let top = this.top;
     let parent = this.parent;
-    while (parent) {
+    while (parent !== undefined) {
       left += parent.left;
       top += parent.top;
       parent = parent.parent;
@@ -496,7 +496,7 @@ export class BaseSprite extends Rect {
     this._prevLeft = this._left;
     this._prevTop = this._top;
 
-    if (playground) {
+    if (playground !== undefined) {
       this._frameCounterLastMove = playground.frameCounter;
     }
 
@@ -586,7 +586,7 @@ export class BaseSprite extends Rect {
   _move(prop: keyof RectPosX | keyof RectPosY, value: number): void {
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       const frameCounter = playground.frameCounter;
 
       if (frameCounter !== this._frameCounterLastMove) {
@@ -610,7 +610,7 @@ export class BaseSprite extends Rect {
   _updateNeedsUpdate(oldNeedsUpdate: boolean): void {
     const parent = this.parent;
 
-    if (parent) {
+    if (parent !== undefined) {
       const parent_update_list = parent._updateList;
 
       if (this._needsUpdate && !oldNeedsUpdate) {
@@ -642,7 +642,7 @@ export class BaseSprite extends Rect {
   _draw(interp: number): void {
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       const trunc = Math.trunc;
       const myLeft = this._left;
       const myTop = this._top;

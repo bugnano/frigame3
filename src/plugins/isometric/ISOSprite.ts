@@ -37,12 +37,12 @@ export class ISOSprite extends ISOBaseSprite {
       super.width = width;
       super.height = height;
 
-      if (value) {
+      if (value !== null) {
         this.originx = value.originx;
         this.originy = value.originy;
       }
 
-      if (this._screen_obj) {
+      if (this._screen_obj !== null) {
         this._screen_obj.animation = value;
       }
     }
@@ -55,7 +55,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set animationIndex(value: number) {
     super.animationIndex = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.animationIndex = value;
     }
   }
@@ -67,7 +67,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set callback(value: (() => void) | null) {
     super.callback = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.callback = value;
     }
   }
@@ -79,7 +79,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set paused(value: boolean) {
     super.paused = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.paused = value;
     }
   }
@@ -91,7 +91,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set rate(value: number) {
     super.rate = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.rate = value;
     }
   }
@@ -103,7 +103,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set once(value: boolean) {
     super.once = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.once = value;
     }
   }
@@ -115,7 +115,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set pingpong(value: boolean) {
     super.pingpong = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.pingpong = value;
     }
   }
@@ -127,7 +127,7 @@ export class ISOSprite extends ISOBaseSprite {
   override set backwards(value: boolean) {
     super.backwards = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.backwards = value;
     }
   }
@@ -139,7 +139,7 @@ export class ISOSprite extends ISOBaseSprite {
   ) {
     super();
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -183,7 +183,7 @@ export class ISOSprite extends ISOBaseSprite {
         ]),
       );
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }

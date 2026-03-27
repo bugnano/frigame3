@@ -29,7 +29,7 @@ export class SortedSprite extends SortedBaseSprite {
 
       super.animation = value;
 
-      if (value) {
+      if (value !== null) {
         this._originx = value.originx;
         this._originy = value.originy;
       }
@@ -45,7 +45,7 @@ export class SortedSprite extends SortedBaseSprite {
   ) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       if (options.originx !== undefined) {
         this.originx = options.originx;
       }

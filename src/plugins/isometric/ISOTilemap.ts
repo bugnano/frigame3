@@ -70,7 +70,7 @@ export class ISOTilemap extends ISOSpriteGroup {
     let top = 0;
     for (const data of options.data) {
       const animation_options = animationList[data];
-      if (animation_options && "animation" in animation_options) {
+      if (animation_options !== undefined && "animation" in animation_options) {
         // Sprite
         const sprite_options = Object.assign({}, animation_options, {
           left,
@@ -80,7 +80,10 @@ export class ISOTilemap extends ISOSpriteGroup {
         });
         this.addChild(new ISOSprite(sprite_options));
         locations[i_location] = layers.length - 1;
-      } else if (animation_options && "background" in animation_options) {
+      } else if (
+        animation_options !== undefined &&
+        "background" in animation_options
+      ) {
         // Rectangle
         const rectangle_options = Object.assign({}, animation_options, {
           left,

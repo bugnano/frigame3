@@ -13,11 +13,11 @@ type Piece = "I" | "O" | "J" | "L" | "S" | "Z" | "T" | " ";
 
 // tgm3Randomizer function taken from: https://simon.lc/the-history-of-tetris-randomizers
 function* tgm3Randomizer(): Generator<Piece> {
-  let pieces: Piece[] = ["I", "J", "L", "O", "S", "T", "Z"];
-  let order: Piece[] = [];
+  const pieces: Piece[] = ["I", "J", "L", "O", "S", "T", "Z"];
+  const order: Piece[] = [];
 
   // Create 35 pool.
-  let pool = pieces.concat(pieces, pieces, pieces, pieces);
+  const pool = pieces.concat(pieces, pieces, pieces, pieces);
 
   // First piece special conditions
   let piece: Piece = (["I", "J", "L", "T"] as const)[
@@ -25,7 +25,7 @@ function* tgm3Randomizer(): Generator<Piece> {
   ]!;
   yield piece;
 
-  let history: Piece[] = ["S", "Z", "S", piece];
+  const history: Piece[] = ["S", "Z", "S", piece];
 
   let i = 0;
   while (true) {
@@ -38,7 +38,7 @@ function* tgm3Randomizer(): Generator<Piece> {
         break;
       }
 
-      if (order.length) {
+      if (order.length !== 0) {
         pool[i] = order[0]!;
       }
     }
@@ -395,7 +395,7 @@ function fitsPiece(
   let paused = false;
   let old_p = false;
   playground.registerCallback(() => {
-    if (keyTracker["KeyP"] && !old_p) {
+    if (keyTracker["KeyP"] === true && !old_p) {
       paused = !paused;
     }
 
@@ -406,7 +406,7 @@ function fitsPiece(
     }
 
     // Process inputs at every frame to be responsive
-    if (keyTracker["ArrowLeft"]) {
+    if (keyTracker["ArrowLeft"] === true) {
       if (typematic_left === 0) {
         typematic_left = TYPEMATIC_SPEED;
         clearPiece(level, block, pos_x, pos_y);
@@ -425,7 +425,7 @@ function fitsPiece(
       typematic_left = 0;
     }
 
-    if (keyTracker["ArrowRight"]) {
+    if (keyTracker["ArrowRight"] === true) {
       if (typematic_right === 0) {
         typematic_right = TYPEMATIC_SPEED;
         clearPiece(level, block, pos_x, pos_y);
@@ -443,7 +443,7 @@ function fitsPiece(
     } else {
       typematic_right = 0;
     }
-    if (keyTracker["ArrowUp"] && !old_up) {
+    if (keyTracker["ArrowUp"] === true && !old_up) {
       clearPiece(level, block, pos_x, pos_y);
 
       const new_rotation = (rotation + 1) % BLOCKS[piece].length;
@@ -458,7 +458,7 @@ function fitsPiece(
 
     old_up = keyTracker["ArrowUp"] ?? false;
 
-    if (keyTracker["ArrowDown"]) {
+    if (keyTracker["ArrowDown"] === true) {
       if (typematic_down === 0) {
         typematic_down = TYPEMATIC_DOWN_SPEED;
         delay_counter = 0;

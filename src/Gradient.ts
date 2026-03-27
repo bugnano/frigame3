@@ -59,7 +59,7 @@ class Color {
   }
 
   constructor(options?: Partial<ColorObj>) {
-    if (options) {
+    if (options !== undefined) {
       Object.assign(this, pick(options, ["r", "g", "b", "a"]));
     }
   }
@@ -76,7 +76,7 @@ export class Gradient {
     type: GradientType = "vertical",
   ) {
     const [r, g, b, a] = ((): ColorArr => {
-      if (startColor) {
+      if (startColor !== undefined) {
         if (Array.isArray(startColor)) {
           return [
             startColor[0] ?? 0,
@@ -95,7 +95,7 @@ export class Gradient {
 
     this.startColor = new Color({ r, g, b, a });
 
-    if (endColor) {
+    if (endColor !== undefined) {
       const [r, g, b, a] = ((): ColorArr => {
         if (Array.isArray(endColor)) {
           return [

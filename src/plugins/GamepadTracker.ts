@@ -22,7 +22,7 @@ export class GamepadTracker extends EventTarget {
 
     // Step 1: Update controller status
     for (const gamepad of gamepads) {
-      if (gamepad) {
+      if (gamepad !== null) {
         controllers.set(gamepad.index, gamepad);
       }
     }
@@ -44,7 +44,7 @@ export class GamepadTracker extends EventTarget {
     if (this._callbackId === null) {
       const playground = this._playground.deref();
 
-      if (playground) {
+      if (playground !== undefined) {
         this._callbackId = playground.registerCallback(this._scanGamepads);
       } else {
         if (
@@ -71,7 +71,7 @@ export class GamepadTracker extends EventTarget {
   removeCallback(options?: { suppressWarning?: boolean }): this {
     const playground = this._playground.deref();
 
-    if (playground) {
+    if (playground !== undefined) {
       playground.removeCallback(this._callbackId, options);
     } else {
       if (

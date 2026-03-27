@@ -43,7 +43,7 @@ function getImage(imageURL: string): HTMLImageElement {
   let img: HTMLImageElement;
 
   const image = images.get(imageURL);
-  if (image) {
+  if (image !== undefined) {
     img = image.img;
     image.refCount += 1;
   } else {
@@ -63,7 +63,7 @@ function getImage(imageURL: string): HTMLImageElement {
 const imagesRegistry = new FinalizationRegistry((imageURLs: string[]): void => {
   for (const imageURL of imageURLs) {
     const image = images.get(imageURL);
-    if (image) {
+    if (image !== undefined) {
       image.refCount -= 1;
       if (image.refCount <= 0) {
         images.delete(imageURL);
@@ -157,7 +157,7 @@ export class Animation implements Resource {
         });
       }
 
-      if (options.frameset?.length !== 0) {
+      if ((options.frameset?.length ?? 0) !== 0) {
         const frameset = options.frameset!;
 
         // The default imageURL is the one of the first element
@@ -215,7 +215,7 @@ export class Animation implements Resource {
       const img = sprite_sheet._img;
 
       // Apparently there are some cases where img.complete is true, even if its width and height are not known yet
-      if (!(img.complete && img.width && img.height)) {
+      if (!(img.complete && img.width !== 0 && img.height !== 0)) {
         return false;
       }
     }
@@ -224,7 +224,7 @@ export class Animation implements Resource {
   }
 
   onLoad(): void {
-    if (this.frameset.length) {
+    if (this.frameset.length !== 0) {
       // The first sprite sheet is used to calculate the frame dimensions
       const sprite_sheet = this.frameset[0]!;
       const img = sprite_sheet._img;

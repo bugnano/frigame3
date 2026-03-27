@@ -62,10 +62,10 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
 
   if (
     insidePlayground &&
-    (background || (border_width > 0 && border_color)) &&
-    opacity &&
-    scaleh &&
-    scalev &&
+    (background !== null || (border_width > 0 && border_color !== null)) &&
+    opacity !== 0 &&
+    scaleh !== 0 &&
+    scalev !== 0 &&
     !rectangle._hidden
   ) {
     const playgroundData = playgroundMap.get(playground)!;
@@ -101,7 +101,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
     const border_radius = trunc(rectangle._borderRadius);
     const border_half_width = border_width / 2;
 
-    if (angle || scaleh !== 1 || scalev !== 1) {
+    if (angle !== 0 || scaleh !== 1 || scalev !== 1) {
       ctx.save();
 
       let transformOriginx = rectangle._transformOriginx;
@@ -122,7 +122,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
 
       ctx.translate(left + transformOriginx, top + transformOriginy);
 
-      if (angle) {
+      if (angle !== 0) {
         ctx.rotate(angle);
       }
 
@@ -132,7 +132,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
 
       ctx.translate(-transformOriginx, -transformOriginy);
 
-      if (background) {
+      if (background !== null) {
         // Prepare a rect path for the background and the clipping region
         ctx.beginPath();
 
@@ -148,7 +148,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
         ctx.fill();
       }
 
-      if (border_width > 0 && border_color) {
+      if (border_width > 0 && border_color !== null) {
         ctx.beginPath();
 
         if (border_radius > 0) {
@@ -179,7 +179,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
     } else {
       let translated = false;
 
-      if (background) {
+      if (background !== null) {
         const startColorStr = background.startColor._str;
 
         if (startColorStr === background.endColor._str) {
@@ -198,7 +198,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
           ctx.fill();
         } else {
           // Gradient background
-          if (left || top) {
+          if (left !== 0 || top !== 0) {
             ctx.translate(left, top);
           }
           translated = true;
@@ -219,7 +219,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
         }
       }
 
-      if (border_width > 0 && border_color) {
+      if (border_width > 0 && border_color !== null) {
         const startColorStr = border_color.startColor._str;
 
         if (startColorStr === border_color.endColor._str) {
@@ -269,7 +269,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
           ctx.stroke();
         } else {
           // Gradient border
-          if (!translated && (left || top)) {
+          if (!translated && (left !== 0 || top !== 0)) {
             ctx.translate(left, top);
           }
           translated = true;
@@ -301,7 +301,7 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
         }
       }
 
-      if (translated && (left || top)) {
+      if (translated && (left !== 0 || top !== 0)) {
         ctx.translate(-left, -top);
       }
 
@@ -322,7 +322,7 @@ function setFillStyle(
 ): void {
   const background = rectangle._background;
 
-  if (background) {
+  if (background !== null) {
     const startColorStr = background.startColor._str;
     const endColorStr = background.endColor._str;
 
@@ -339,7 +339,7 @@ function setFillStyle(
       const type = background.type;
 
       if (
-        !gradient_obj.gradient ||
+        gradient_obj.gradient === null ||
         gradient_obj.width !== width ||
         gradient_obj.height !== height ||
         gradient_obj.startColorStr !== startColorStr ||
@@ -374,7 +374,7 @@ function setStrokeStyle(
 ): void {
   const border_color = rectangle._borderColor;
 
-  if (border_color) {
+  if (border_color !== null) {
     const startColorStr = border_color.startColor._str;
     const endColorStr = border_color.endColor._str;
 
@@ -391,7 +391,7 @@ function setStrokeStyle(
       const type = border_color.type;
 
       if (
-        !gradient_obj.gradient ||
+        gradient_obj.gradient === null ||
         gradient_obj.width !== width ||
         gradient_obj.height !== height ||
         gradient_obj.startColorStr !== startColorStr ||

@@ -42,10 +42,10 @@ export class Sprite extends BaseSprite {
     if (value !== this._animation) {
       this._animation = value;
 
-      if (value) {
+      if (value !== null) {
         const playground = this.playground;
 
-        if (playground) {
+        if (playground !== undefined) {
           this._rate = playground.framesFromMs(value.rate);
         }
 
@@ -119,7 +119,7 @@ export class Sprite extends BaseSprite {
   set rate(value: number) {
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       this._rate = playground.framesFromMs(value);
     }
 
@@ -160,7 +160,7 @@ export class Sprite extends BaseSprite {
   ) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -175,7 +175,7 @@ export class Sprite extends BaseSprite {
         ]),
       );
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }
@@ -190,7 +190,7 @@ export class Sprite extends BaseSprite {
   restartAnimation(): this {
     const animation = this._animation;
 
-    if (animation && this._backwards) {
+    if (animation !== null && this._backwards) {
       this._lastSpriteSheet = animation.frameset.length - 1;
       this._currentSpriteSheet = this._lastSpriteSheet;
       this._numberOfFrame =
@@ -199,7 +199,7 @@ export class Sprite extends BaseSprite {
       this._frameIncrement = -1;
     } else {
       this._currentSpriteSheet = 0;
-      if (animation) {
+      if (animation !== null) {
         this._lastSpriteSheet = animation.frameset.length - 1;
         this._numberOfFrame = animation.frameset[0]!.numberOfFrame;
       } else {
@@ -215,7 +215,7 @@ export class Sprite extends BaseSprite {
 
     const index = this._animationIndex;
 
-    if (animation && index) {
+    if (animation !== null && index !== 0) {
       const sprite_sheet = animation.frameset[this._currentSpriteSheet]!;
       this._multix = index * sprite_sheet._multix;
       this._multiy = index * sprite_sheet._multiy;
@@ -235,8 +235,8 @@ export class Sprite extends BaseSprite {
     if (
       this._endAnimation ||
       this._paused ||
-      (!this._callback &&
-        (!this._animation ||
+      (this._callback === null &&
+        (this._animation === null ||
           (this._lastSpriteSheet <= 0 && this._numberOfFrame <= 1)))
     ) {
       this._needsUpdate = false;
@@ -250,7 +250,7 @@ export class Sprite extends BaseSprite {
   override _onReparent(): void {
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       this._rate = playground.framesFromMs(this._reportedRate);
     }
   }
@@ -267,7 +267,7 @@ export class Sprite extends BaseSprite {
     let currentFrame = this._currentFrame;
 
     if (!(this._endAnimation || this._paused)) {
-      if (animation) {
+      if (animation !== null) {
         this._idleCounter += 1;
         if (this._idleCounter >= this._rate) {
           this._idleCounter = 0;

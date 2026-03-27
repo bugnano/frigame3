@@ -41,16 +41,16 @@ export class SpriteGroup extends BaseSprite {
   ) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(this, pick(options, ["crop", "borderRadius"]));
 
-      if (options.children) {
+      if (options.children !== undefined) {
         for (const child of options.children) {
           this.addChild(child);
         }
       }
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }
@@ -77,7 +77,7 @@ export class SpriteGroup extends BaseSprite {
     child: T,
     options?: { suppressWarning?: boolean },
   ): T {
-    if (!child.parent) {
+    if (child.parent === undefined) {
       this._layers.push(child);
 
       this._reparentChild(child);
@@ -100,7 +100,7 @@ export class SpriteGroup extends BaseSprite {
     child: T,
     options?: { suppressWarning?: boolean },
   ): T {
-    if (!child.parent) {
+    if (child.parent === undefined) {
       this._layers.unshift(child);
 
       this._reparentChild(child);
@@ -123,7 +123,7 @@ export class SpriteGroup extends BaseSprite {
     child: BaseSprite | null,
     options?: { suppressWarning?: boolean },
   ): this {
-    if (!child) {
+    if (child === null) {
       if (
         typeof console !== "undefined" &&
         options?.suppressWarning === false
@@ -176,7 +176,7 @@ export class SpriteGroup extends BaseSprite {
   _addPlaygroundToChild(child: BaseSprite): void {
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       child._playground = new WeakRef(playground);
       child._frameCounterLastMove = playground.frameCounter;
       child._initRenderer();
@@ -217,7 +217,7 @@ export class SpriteGroup extends BaseSprite {
 
     const playground = this.playground;
 
-    if (playground) {
+    if (playground !== undefined) {
       const absLeft = playground._absLeft;
       const absTop = playground._absTop;
 

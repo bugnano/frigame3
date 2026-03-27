@@ -21,7 +21,7 @@ function preload(): void {
   const len_preload_list = preloadList.length;
   const loadCallback = resourceManager.loadCallback;
 
-  if (loadCallback) {
+  if (loadCallback !== null) {
     if (len_preload_list !== 0) {
       loadCallback(completed / len_preload_list);
     } else {
@@ -49,7 +49,7 @@ function preload(): void {
     resolveCallback = null;
     rejectCallback = null;
 
-    if (resolve_callback) {
+    if (resolve_callback !== null) {
       resolve_callback();
     }
   }
@@ -79,7 +79,7 @@ export const resourceManager: ResourceManager = {
     resource: Resource | null,
     options?: { suppressWarning?: boolean },
   ): void {
-    if (!resource) {
+    if (resource === null) {
       if (
         typeof console !== "undefined" &&
         options?.suppressWarning === false

@@ -34,7 +34,7 @@ export class ISORectangle extends ISOBaseRectangle {
     | null) {
     super.background = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.background = value;
     }
   }
@@ -46,7 +46,7 @@ export class ISORectangle extends ISOBaseRectangle {
   override set borderRadius(value: number) {
     super.borderRadius = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.borderRadius = value;
     }
   }
@@ -58,7 +58,7 @@ export class ISORectangle extends ISOBaseRectangle {
   override set borderWidth(value: number) {
     super.borderWidth = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.borderWidth = value;
     }
   }
@@ -74,7 +74,7 @@ export class ISORectangle extends ISOBaseRectangle {
     | null) {
     super.borderColor = value;
 
-    if (this._screen_obj) {
+    if (this._screen_obj !== null) {
       this._screen_obj.borderColor = value;
     }
   }
@@ -86,7 +86,7 @@ export class ISORectangle extends ISOBaseRectangle {
   ) {
     super();
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -126,7 +126,7 @@ export class ISORectangle extends ISOBaseRectangle {
         ]),
       );
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }

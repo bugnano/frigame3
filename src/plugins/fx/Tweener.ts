@@ -97,7 +97,7 @@ export class Tweener extends EventTarget {
     if (this._callbackId === null) {
       const playground = this._playground.deref();
 
-      if (playground) {
+      if (playground !== undefined) {
         this._callbackId = playground.registerCallback(this._tweenStep);
       } else {
         if (
@@ -124,7 +124,7 @@ export class Tweener extends EventTarget {
   removeCallback(options?: { suppressWarning?: boolean }): this {
     const playground = this._playground.deref();
 
-    if (playground) {
+    if (playground !== undefined) {
       playground.removeCallback(this._callbackId, options);
     } else {
       if (
@@ -155,7 +155,7 @@ export class Tweener extends EventTarget {
   ): number {
     const playground = this._playground.deref();
 
-    if (playground) {
+    if (playground !== undefined) {
       const duration =
         (typeof options?.duration === "string"
           ? speeds[options.duration]
@@ -215,7 +215,7 @@ export class Tweener extends EventTarget {
     tweenId: number | null,
     options?: { suppressWarning?: boolean },
   ): this {
-    if (tweenId !== 0 && !tweenId) {
+    if (tweenId === null) {
       if (
         typeof console !== "undefined" &&
         options?.suppressWarning === false

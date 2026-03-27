@@ -156,7 +156,7 @@ export class Rect {
   }
 
   constructor(options?: Partial<RectOptions>) {
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [

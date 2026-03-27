@@ -94,7 +94,7 @@ export class Playground extends EventTarget {
     callbackId: number | null,
     options?: { suppressWarning?: boolean },
   ): this {
-    if (callbackId !== 0 && !callbackId) {
+    if (callbackId === null) {
       if (
         typeof console !== "undefined" &&
         options?.suppressWarning === false

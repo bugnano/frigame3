@@ -73,7 +73,7 @@ export class Rectangle extends BaseSprite {
   ) {
     super(options);
 
-    if (options) {
+    if (options !== undefined) {
       Object.assign(
         this,
         pick(options, [
@@ -84,7 +84,7 @@ export class Rectangle extends BaseSprite {
         ]),
       );
 
-      if (options.ref) {
+      if (options.ref !== undefined) {
         options.ref.current = this;
       }
     }
