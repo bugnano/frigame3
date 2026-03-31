@@ -304,14 +304,14 @@ export function drawRectangle(rectangle: Rectangle, _interp: number): void {
       if (translated && (left !== 0 || top !== 0)) {
         ctx.translate(-left, -top);
       }
+    }
 
-      if (blend_mode_changed) {
-        ctx.globalCompositeOperation = old_blend_mode;
-      }
+    if (blend_mode_changed) {
+      ctx.globalCompositeOperation = old_blend_mode;
+    }
 
-      if (alpha_changed) {
-        ctx.globalAlpha = old_alpha;
-      }
+    if (alpha_changed) {
+      ctx.globalAlpha = old_alpha;
     }
   }
 }

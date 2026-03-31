@@ -54,15 +54,6 @@ export function drawGroupBeforeChildren(
 
     const groupData = spriteGroupMap.get(group)!;
 
-    const angle = group._angle;
-    const crop = group._crop;
-
-    groupData.contextSaved = false;
-    if (angle !== 0 || scaleh !== 1 || scalev !== 1 || crop) {
-      ctx.save();
-      groupData.contextSaved = true;
-    }
-
     groupData.oldAlpha = playgroundData.globalAlpha;
     groupData.alphaChanged = false;
     if (opacity !== 1) {
@@ -86,6 +77,15 @@ export function drawGroupBeforeChildren(
       }
 
       groupData.blendModeChanged = true;
+    }
+
+    const angle = group._angle;
+    const crop = group._crop;
+
+    groupData.contextSaved = false;
+    if (angle !== 0 || scaleh !== 1 || scalev !== 1 || crop) {
+      ctx.save();
+      groupData.contextSaved = true;
     }
 
     const trunc = Math.trunc;
@@ -179,16 +179,16 @@ export function drawGroupAfterChildren(
       if (left !== 0 || top !== 0) {
         ctx.translate(-left, -top);
       }
+    }
 
-      if (groupData.blendModeChanged) {
-        ctx.globalCompositeOperation = groupData.oldBlendMode;
-      }
+    if (groupData.blendModeChanged) {
+      ctx.globalCompositeOperation = groupData.oldBlendMode;
+    }
 
-      if (groupData.alphaChanged) {
-        ctx.globalAlpha = groupData.oldAlpha;
+    if (groupData.alphaChanged) {
+      ctx.globalAlpha = groupData.oldAlpha;
 
-        playgroundData.globalAlpha = groupData.oldAlpha;
-      }
+      playgroundData.globalAlpha = groupData.oldAlpha;
     }
   }
 }

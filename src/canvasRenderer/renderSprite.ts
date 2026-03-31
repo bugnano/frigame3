@@ -135,14 +135,14 @@ export function drawSprite(sprite: Sprite, _interp: number): void {
         width,
         height,
       );
+    }
 
-      if (blend_mode_changed) {
-        ctx.globalCompositeOperation = old_blend_mode;
-      }
+    if (blend_mode_changed) {
+      ctx.globalCompositeOperation = old_blend_mode;
+    }
 
-      if (alpha_changed) {
-        ctx.globalAlpha = old_alpha;
-      }
+    if (alpha_changed) {
+      ctx.globalAlpha = old_alpha;
     }
   }
 }
