@@ -45,9 +45,7 @@ export class SpriteGroup extends BaseSprite {
       Object.assign(this, pick(options, ["crop", "borderRadius"]));
 
       if (options.children !== undefined) {
-        for (const child of options.children) {
-          this.addChild(child);
-        }
+        this.addChildren(options.children);
       }
 
       if (options.ref !== undefined) {
@@ -158,6 +156,14 @@ export class SpriteGroup extends BaseSprite {
         console.warn("No children removed");
         console.trace();
       }
+    }
+
+    return this;
+  }
+
+  addChildren(children: BaseSprite[]): this {
+    for (const child of children) {
+      this.addChild(child);
     }
 
     return this;

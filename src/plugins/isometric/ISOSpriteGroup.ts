@@ -95,9 +95,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
       );
 
       if (options.children !== undefined) {
-        for (const child of options.children) {
-          this.addChild(child);
-        }
+        this.addChildren(options.children);
       }
 
       if (options.ref !== undefined) {
