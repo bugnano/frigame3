@@ -1,9 +1,9 @@
+import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
 import { Gradient } from "frigame3/lib/Gradient.js";
 import { Playground } from "frigame3/lib/Playground.js";
-import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Rectangle } from "frigame3/lib/Rectangle.js";
-import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
 import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
+import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
+import { Rectangle } from "frigame3/lib/Rectangle.js";
 
 (() => {
   const green = new Gradient({ g: 128 });

@@ -1,10 +1,10 @@
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
 import { Animation } from "frigame3/lib/Animation.js";
-import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
+import { Playground } from "frigame3/lib/Playground.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
 import { Sprite } from "frigame3/lib/Sprite.js";
 
-(async () => {
+void (async () => {
   const simpleVerticalAnimation = rm.addResource(
     new Animation({
       imageURL: "sv.png",

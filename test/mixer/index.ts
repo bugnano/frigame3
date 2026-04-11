@@ -1,15 +1,15 @@
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+import { dummyRenderer } from "frigame3/lib/dummyRenderer.js";
+import { Playground } from "frigame3/lib/Playground.js";
+import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
 import {
   canPlay,
-  Sound,
   MultiChannel,
   SingleChannel,
+  Sound,
 } from "frigame3/lib/plugins/mixer.js";
-import { Playground } from "frigame3/lib/Playground.js";
-import { dummyRenderer } from "frigame3/lib/dummyRenderer.js";
-import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
 
-(async () => {
+(() => {
   const sfx = new MultiChannel();
   const music = new SingleChannel();
 
@@ -38,11 +38,11 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
       await rm.preload();
 
       console.log("Loaded mono");
-      console.log("audio: " + s_prova?._audio);
-      console.log("src: " + s_prova?._audio?.src);
-      console.log("error: " + s_prova?._audio?.error);
-      console.log("networkState: " + s_prova?._audio?.networkState);
-      console.log("readyState: " + s_prova?._audio?.readyState);
+      console.log(`audio: ${s_prova?._audio}`);
+      console.log(`src: ${s_prova?._audio?.src}`);
+      console.log(`error: ${s_prova?._audio?.error}`);
+      console.log(`networkState: ${s_prova?._audio?.networkState}`);
+      console.log(`readyState: ${s_prova?._audio?.readyState}`);
     });
     document
       .getElementById("loadstereo")
@@ -58,17 +58,17 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
         await rm.preload();
 
         console.log("Loaded stereo");
-        console.log("audio: " + s_news?._audio);
-        console.log("src: " + s_news?._audio?.src);
-        console.log("error: " + s_news?._audio?.error);
-        console.log("networkState: " + s_news?._audio?.networkState);
-        console.log("readyState: " + s_news?._audio?.readyState);
+        console.log(`audio: ${s_news?._audio}`);
+        console.log(`src: ${s_news?._audio?.src}`);
+        console.log(`error: ${s_news?._audio?.error}`);
+        console.log(`networkState: ${s_news?._audio?.networkState}`);
+        console.log(`readyState: ${s_news?._audio?.readyState}`);
       });
     console.log("canPlay:");
     for (const [k, v] of Object.entries(canPlay)) {
-      console.log("" + k + ": " + v);
+      console.log(`${k}: ${v}`);
     }
-    console.log("audioBuffer: " + news._audioBuffer);
+    console.log(`audioBuffer: ${news._audioBuffer}`);
 
     document.getElementById("monomp3")?.addEventListener("click", () => {
       sfx.play(monomp3);
@@ -118,10 +118,10 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
           loop: true,
         });
         if (s_prova._audio) {
-          console.log("src: " + s_prova._audio.src);
-          console.log("error: " + s_prova._audio.error);
-          console.log("networkState: " + s_prova._audio.networkState);
-          console.log("readyState: " + s_prova._audio.readyState);
+          console.log(`src: ${s_prova._audio.src}`);
+          console.log(`error: ${s_prova._audio.error}`);
+          console.log(`networkState: ${s_prova._audio.networkState}`);
+          console.log(`readyState: ${s_prova._audio.readyState}`);
         }
       }
     });
@@ -131,10 +131,10 @@ import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
           loop: true,
         });
         if (s_news._audio) {
-          console.log("src: " + s_news._audio.src);
-          console.log("error: " + s_news._audio.error);
-          console.log("networkState: " + s_news._audio.networkState);
-          console.log("readyState: " + s_news._audio.readyState);
+          console.log(`src: ${s_news._audio.src}`);
+          console.log(`error: ${s_news._audio.error}`);
+          console.log(`networkState: ${s_news._audio.networkState}`);
+          console.log(`readyState: ${s_news._audio.readyState}`);
         }
       }
     });

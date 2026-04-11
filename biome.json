@@ -7,7 +7,12 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/src/**/*.ts", "!**/tsconfig.json"]
+    "includes": [
+      "src/**/*.ts",
+      "demo/**/*.ts",
+      "test/**/*.ts",
+      "!**/node_modules"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -20,12 +25,16 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "useLiteralKeys": "off"
+      },
       "correctness": {
         "noUndeclaredVariables": "error",
         "noUnusedVariables": "error"
       },
       "nursery": {
         "noFloatingPromises": "error",
+        "noIncrementDecrement": "error",
         "noMisusedPromises": "error",
         "useExhaustiveSwitchCases": "error"
       },

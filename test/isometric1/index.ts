@@ -1,12 +1,12 @@
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
-import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
-import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
+import { Playground } from "frigame3/lib/Playground.js";
 import { ISOSpriteGroup } from "frigame3/lib/plugins/isometric/ISOSpriteGroup.js";
 import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
+import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
 
-(async () => {
+void (async () => {
   const beach = rm.addResource(
     new SortedAnimation({
       imageURL: "beach.png",
@@ -27,7 +27,8 @@ import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
     sizex: 8,
     sizey: 8,
     tileSize: 50,
-    data: /* prettier-ignore */ [
+    // biome-ignore format: reason
+    data: [
       3,1,1,1,1,1,1,2,
       1,1,1,1,1,1,1,1,
       1,1,1,1,1,1,1,1,
@@ -60,5 +61,6 @@ import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
   );
   const tilemap = iso_group.addChild(new ISOTilemap(tileDescription));
 
+  // biome-ignore lint/suspicious/noExplicitAny: reason
   (window as any).tilemap = tilemap;
 })();

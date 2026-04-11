@@ -1,13 +1,13 @@
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
-import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
-import { Playground } from "frigame3/lib/Playground.js";
 import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
+import { Playground } from "frigame3/lib/Playground.js";
 import { ISOSprite } from "frigame3/lib/plugins/isometric/ISOSprite.js";
 import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
 import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
+import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
+import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
 
-(async () => {
+void (async () => {
   const floor = rm.addResource(
     new SortedAnimation({
       imageURL: "tile.png",
@@ -54,7 +54,8 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
     sizex: 8,
     sizey: 8,
     tileSize: 64,
-    data: /* prettier-ignore */ [
+    // biome-ignore format: reason
+    data: [
       1,1,1,1,1,1,1,1,
       1,1,1,1,2,2,2,1,
       1,1,1,1,2,1,2,1,
@@ -71,7 +72,8 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
     sizex: 8,
     sizey: 8,
     tileSize: 64,
-    data: /* prettier-ignore */ [
+    // biome-ignore format: reason
+    data: [
       4,0,0,0,0,0,0,0,
       0,0,0,0,0,0,0,0,
       0,0,0,0,0,3,0,0,
@@ -120,5 +122,6 @@ import { gridFromScreen } from "frigame3/lib/plugins/isometric/utils.js";
     iso_knight.centery = iso_y;
   });
 
+  // biome-ignore lint/suspicious/noExplicitAny: reason
   (window as any).object_tilemap = object_tilemap;
 })();
