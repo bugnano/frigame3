@@ -1,13 +1,13 @@
-import { Animation } from "frigame3/lib/Animation.js";
-import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Gradient } from "frigame3/lib/Gradient.js";
-import { Playground } from "frigame3/lib/Playground.js";
-import { startKeyTracker } from "frigame3/lib/plugins/keyTracker.js";
-import { Rectangle } from "frigame3/lib/Rectangle.js";
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
-import { Sprite } from "frigame3/lib/Sprite.js";
-import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
-import { spriteRef } from "frigame3/lib/utils.js";
+import { Animation } from "frigame3/dist/Animation.js";
+import { canvasRenderer } from "frigame3/dist/canvasRenderer.js";
+import { Gradient } from "frigame3/dist/Gradient.js";
+import { Playground } from "frigame3/dist/Playground.js";
+import { startKeyTracker } from "frigame3/dist/plugins/keyTracker.js";
+import { Rectangle } from "frigame3/dist/Rectangle.js";
+import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { Sprite } from "frigame3/dist/Sprite.js";
+import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
+import { spriteRef } from "frigame3/dist/utils.js";
 
 void (async () => {
   const ruler = rm.addResource(new Animation("ruler.png"));

@@ -1,13 +1,13 @@
-import { dummyRenderer } from "frigame3/lib/dummyRenderer.js";
-import { Playground } from "frigame3/lib/Playground.js";
-import { Tweener } from "frigame3/lib/plugins/fx/Tweener.js";
+import { dummyRenderer } from "frigame3/dist/dummyRenderer.js";
+import { Playground } from "frigame3/dist/Playground.js";
+import { Tweener } from "frigame3/dist/plugins/fx/Tweener.js";
 import {
   canPlay,
   MultiChannel,
   SingleChannel,
   Sound,
-} from "frigame3/lib/plugins/mixer.js";
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
+} from "frigame3/dist/plugins/mixer.js";
+import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
 
 (() => {
   const sfx = new MultiChannel();

@@ -1,9 +1,9 @@
-import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Gradient } from "frigame3/lib/Gradient.js";
-import { Playground } from "frigame3/lib/Playground.js";
-import { keyTracker } from "frigame3/lib/plugins/keyTracker.js";
-import { Tilemap } from "frigame3/lib/plugins/Tilemap.js";
-import { Rectangle } from "frigame3/lib/Rectangle.js";
+import { canvasRenderer } from "frigame3/dist/canvasRenderer.js";
+import { Gradient } from "frigame3/dist/Gradient.js";
+import { Playground } from "frigame3/dist/Playground.js";
+import { keyTracker } from "frigame3/dist/plugins/keyTracker.js";
+import { Tilemap } from "frigame3/dist/plugins/Tilemap.js";
+import { Rectangle } from "frigame3/dist/Rectangle.js";
 
 const GAME_SPEED = 24;
 const TYPEMATIC_SPEED = 12;

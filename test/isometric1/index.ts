@@ -1,10 +1,10 @@
-import { canvasRenderer } from "frigame3/lib/canvasRenderer.js";
-import { Playground } from "frigame3/lib/Playground.js";
-import { ISOSpriteGroup } from "frigame3/lib/plugins/isometric/ISOSpriteGroup.js";
-import { ISOTilemap } from "frigame3/lib/plugins/isometric/ISOTilemap.js";
-import { SortedAnimation } from "frigame3/lib/plugins/sorted/SortedAnimation.js";
-import { resourceManager as rm } from "frigame3/lib/resourceManager.js";
-import { SpriteGroup } from "frigame3/lib/SpriteGroup.js";
+import { canvasRenderer } from "frigame3/dist/canvasRenderer.js";
+import { Playground } from "frigame3/dist/Playground.js";
+import { ISOSpriteGroup } from "frigame3/dist/plugins/isometric/ISOSpriteGroup.js";
+import { ISOTilemap } from "frigame3/dist/plugins/isometric/ISOTilemap.js";
+import { SortedAnimation } from "frigame3/dist/plugins/sorted/SortedAnimation.js";
+import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
 
 void (async () => {
   const beach = rm.addResource(
