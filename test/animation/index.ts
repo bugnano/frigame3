@@ -4,7 +4,7 @@ import { Playground } from "frigame3/dist/Playground.js";
 import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
 import { Sprite } from "frigame3/dist/Sprite.js";
 
-void (async () => {
+void (async (): Promise<void> => {
   const simpleVerticalAnimation = rm.addResource(
     new Animation({
       imageURL: "sv.png",
@@ -236,13 +236,13 @@ void (async () => {
   multiVertical.animationIndex = 1;
   multiHorizontal.animationIndex = 1;
   multiPingpong.animationIndex = 1;
-  pingpong.callback = () => {
+  pingpong.callback = (): void => {
     const p = document.createElement("p");
     p.innerHTML = "Forwards Done";
     Object.assign(p.style, { position: "absolute", top: "64px" });
     document.getElementById("playground")!.append(p);
   };
-  backPingpong.callback = () => {
+  backPingpong.callback = (): void => {
     const p = document.createElement("p");
     p.innerHTML = "Backwards Done";
     Object.assign(p.style, { position: "absolute", top: "88px" });

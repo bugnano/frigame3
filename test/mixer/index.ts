@@ -9,7 +9,7 @@ import {
 } from "frigame3/dist/plugins/mixer.js";
 import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
 
-(() => {
+((): void => {
   const sfx = new MultiChannel();
   const music = new SingleChannel();
 

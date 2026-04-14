@@ -64,7 +64,7 @@ function clearPiece(
   block: Piece[][],
   pos_x: number,
   pos_y: number,
-) {
+): void {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
       if (block[y]![x]! !== " ") {
@@ -86,7 +86,7 @@ function drawPiece(
   block: Piece[][],
   pos_x: number,
   pos_y: number,
-) {
+): void {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
       if (block[y]![x]! !== " ") {
@@ -108,7 +108,7 @@ function fitsPiece(
   block: Piece[][],
   pos_x: number,
   pos_y: number,
-) {
+): boolean {
   for (let y = 0; y < block.length; y += 1) {
     for (let x = 0; x < block.length; x += 1) {
       if (block[y]![x]! !== " ") {
@@ -133,7 +133,7 @@ function fitsPiece(
   return true;
 }
 
-(() => {
+((): void => {
   const BLOCK_SIZE = 40;
 
   const BLOCK_I: Piece[][][] = [

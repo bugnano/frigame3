@@ -9,7 +9,7 @@ import { Sprite } from "frigame3/dist/Sprite.js";
 import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
 import { spriteRef } from "frigame3/dist/utils.js";
 
-void (async () => {
+void (async (): Promise<void> => {
   const ruler = rm.addResource(new Animation("ruler.png"));
   const animation = rm.addResource(
     new Animation({

@@ -3,6 +3,7 @@ import type { RectSizeX, RectSizeY } from "../../Rect.js";
 import type { GConstructor } from "../../utils.js";
 import { SortedGroup } from "./SortedGroup.js";
 
+// biome-ignore lint/nursery/useExplicitReturnType: reason
 export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
   return class SortedMixin extends Base {
     _originx: keyof RectSizeX | number = "halfWidth";

@@ -7,7 +7,7 @@ import { SortedAnimation } from "frigame3/dist/plugins/sorted/SortedAnimation.js
 import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
 import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
 
-void (async () => {
+void (async (): Promise<void> => {
   const floor = rm.addResource(
     new SortedAnimation({
       imageURL: "tile.png",

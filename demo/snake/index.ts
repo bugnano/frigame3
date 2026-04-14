@@ -5,14 +5,14 @@ import { Tweener } from "frigame3/dist/plugins/fx/Tweener.js";
 import { keyTracker } from "frigame3/dist/plugins/keyTracker.js";
 import { Rectangle } from "frigame3/dist/Rectangle.js";
 
-(() => {
+((): void => {
   const green = new Gradient({ g: 128 });
   const red = new Gradient({ r: 240 });
   const playground = new Playground(canvasRenderer);
   const sg = playground.scenegraph;
 
   const fx = new Tweener(playground);
-  const endTween = () => {
+  const endTween = (): void => {
     fx.tween(
       green.startColor,
       {

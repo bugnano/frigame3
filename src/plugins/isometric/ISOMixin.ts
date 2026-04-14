@@ -7,6 +7,7 @@ import type { SortedSprite } from "../sorted/SortedSprite.js";
 import { ISORect } from "./ISORect.js";
 import { screenFromGrid } from "./utils.js";
 
+// biome-ignore lint/nursery/useExplicitReturnType: reason
 export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
   return class ISOMixin extends Base {
     _elevation = 0;

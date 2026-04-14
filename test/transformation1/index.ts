@@ -4,7 +4,7 @@ import { Playground } from "frigame3/dist/Playground.js";
 import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
 import { Sprite } from "frigame3/dist/Sprite.js";
 
-void (async () => {
+void (async (): Promise<void> => {
   const animation = rm.addResource(
     new Animation({
       imageURL: "sh.png",

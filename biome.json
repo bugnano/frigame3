@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,12 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": [
-      "src/**/*.ts",
-      "demo/**/*.ts",
-      "test/**/*.ts",
-      "!**/node_modules"
-    ]
+    "includes": ["src/**/*.ts", "demo/**/*.ts", "test/**/*.ts"]
   },
   "formatter": {
     "enabled": true,
@@ -29,6 +24,7 @@
         "useLiteralKeys": "off"
       },
       "correctness": {
+        "noUndeclaredDependencies": "error",
         "noUndeclaredVariables": "error",
         "noUnusedVariables": "error"
       },
@@ -36,6 +32,8 @@
         "noFloatingPromises": "error",
         "noIncrementDecrement": "error",
         "noMisusedPromises": "error",
+        "useArraySortCompare": "error",
+        "useExplicitReturnType": "error",
         "useExhaustiveSwitchCases": "error"
       },
       "style": {
