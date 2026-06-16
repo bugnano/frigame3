@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
   "vcs": {
     "enabled": false,
     "clientKind": "git",
@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["src/**/*.ts", "demo/**/*.ts", "test/**/*.ts"]
+    "includes": [
+      "src/**/*.ts",
+      "demo/**/*.ts",
+      "test/**/*.ts",
+      "frigame.css",
+      "demo/**/*.html",
+      "test/**/*.html"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -19,7 +26,7 @@
     },
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "complexity": {
         "useLiteralKeys": "off"
       },
@@ -30,9 +37,7 @@
       },
       "nursery": {
         "noFloatingPromises": "error",
-        "noIncrementDecrement": "error",
         "noMisusedPromises": "error",
-        "useArraySortCompare": "error",
         "useExplicitReturnType": "error",
         "useExhaustiveSwitchCases": "error"
       },
@@ -50,11 +55,13 @@
         "useSingleVarDeclarator": "error",
         "noUnusedTemplateLiteral": "error",
         "useNumberNamespace": "error",
-        "noInferrableTypes": "error"
+        "noInferrableTypes": "error",
+        "noIncrementDecrement": "error"
       },
       "suspicious": {
         "noEmptyBlockStatements": "error",
-        "useAwait": "error"
+        "useAwait": "error",
+        "useArraySortCompare": "error"
       }
     }
   },
@@ -69,6 +76,17 @@
       "source": {
         "organizeImports": "on"
       }
+    }
+  },
+  "html": {
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true
     }
   }
 }
