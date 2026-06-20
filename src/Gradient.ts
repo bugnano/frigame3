@@ -79,14 +79,14 @@ export class Gradient {
       if (startColor !== undefined) {
         if (Array.isArray(startColor)) {
           return [
-            startColor[0] ?? 0,
-            startColor[1] ?? 0,
-            startColor[2] ?? 0,
-            startColor[3] ?? 1,
+            startColor[0] || 0,
+            startColor[1] || 0,
+            startColor[2] || 0,
+            startColor[3] || 1,
           ];
         } else {
           const { r, g, b, a } = startColor;
-          return [r ?? 0, g ?? 0, b ?? 0, a ?? 1];
+          return [r || 0, g || 0, b || 0, a || 1];
         }
       } else {
         return [0, 0, 0, 1];
@@ -99,14 +99,14 @@ export class Gradient {
       const [r, g, b, a] = ((): ColorArr => {
         if (Array.isArray(endColor)) {
           return [
-            endColor[0] ?? 0,
-            endColor[1] ?? 0,
-            endColor[2] ?? 0,
-            endColor[3] ?? 1,
+            endColor[0] || 0,
+            endColor[1] || 0,
+            endColor[2] || 0,
+            endColor[3] || 1,
           ];
         } else {
           const { r, g, b, a } = endColor;
-          return [r ?? 0, g ?? 0, b ?? 0, a ?? 1];
+          return [r || 0, g || 0, b || 0, a || 1];
         }
       })();
 

@@ -144,10 +144,10 @@ export class Animation implements Resource {
 
         this.frameset.push({
           imageURL: imageURL,
-          numberOfFrame: options.numberOfFrame ?? 1,
+          numberOfFrame: options.numberOfFrame || 1,
           type: options.type ?? "horizontal",
-          offsetx: options.offsetx ?? 0,
-          offsety: options.offsety ?? 0,
+          offsetx: options.offsetx || 0,
+          offsety: options.offsety || 0,
 
           _img: getImage(imageURL),
           _deltax: 0,
@@ -157,7 +157,8 @@ export class Animation implements Resource {
         });
       }
 
-      if ((options.frameset?.length ?? 0) !== 0) {
+      const len_frameset = options.frameset?.length || 0;
+      if (len_frameset !== 0) {
         const frameset = options.frameset!;
 
         // The default imageURL is the one of the first element
@@ -186,10 +187,10 @@ export class Animation implements Resource {
 
             this.frameset.push({
               imageURL: url,
-              numberOfFrame: sprite_sheet.numberOfFrame ?? 1,
+              numberOfFrame: sprite_sheet.numberOfFrame || 1,
               type: sprite_sheet.type ?? "horizontal",
-              offsetx: sprite_sheet.offsetx ?? 0,
-              offsety: sprite_sheet.offsety ?? 0,
+              offsetx: sprite_sheet.offsetx || 0,
+              offsety: sprite_sheet.offsety || 0,
 
               _img: getImage(url),
               _deltax: 0,

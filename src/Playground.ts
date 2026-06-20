@@ -83,7 +83,7 @@ export class Playground extends EventTarget {
 
     this._callbacks.set(callbackId, {
       callback: callback,
-      rate: this.framesFromMs(rate ?? 0),
+      rate: this.framesFromMs(rate || 0),
       idleCounter: 0,
     });
 

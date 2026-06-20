@@ -273,8 +273,9 @@ export class SingleChannel extends Channel {
     // Make sure the audio is stopped before changing its options
     this.stop();
 
-    if ((options?.playbackRate ?? 0) !== 0) {
-      this._playbackRate = clamp(options!.playbackRate!, 0.25, 4) || 1;
+    const playbackRate = options?.playbackRate || 0;
+    if (playbackRate !== 0) {
+      this._playbackRate = clamp(playbackRate, 0.25, 4) || 1;
     } else {
       this._playbackRate = 1;
     }
@@ -462,7 +463,7 @@ export class MultiChannel extends Channel {
   // Public functions
 
   play(sound: Sound, options?: Partial<MultiChannelPlayOptions>): this {
-    const playbackRate = clamp(options?.playbackRate ?? 1, 0.25, 4) || 1;
+    const playbackRate = clamp(options?.playbackRate || 1, 0.25, 4) || 1;
 
     if (sound._audio !== null) {
       const audio = sound._audio;

@@ -156,10 +156,17 @@ export class Tweener extends EventTarget {
     const playground = this._playground.deref();
 
     if (playground !== undefined) {
-      const duration =
-        (typeof options?.duration === "string"
-          ? speeds[options.duration]
-          : options?.duration) ?? speeds._default;
+      const duration = ((): number => {
+        const duration = options?.duration;
+
+        if (typeof duration === "string") {
+          return speeds[duration];
+        } else if (duration === 0) {
+          return 0;
+        } else {
+          return duration || speeds._default;
+        }
+      })();
 
       const easing = options?.easing ?? swing;
 
