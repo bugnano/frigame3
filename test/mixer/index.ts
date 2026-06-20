@@ -7,11 +7,12 @@ import {
   SingleChannel,
   Sound,
 } from "frigame3/dist/plugins/mixer.js";
-import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { ResourceManager } from "frigame3/dist/ResourceManager.js";
 
 ((): void => {
   const sfx = new MultiChannel();
   const music = new SingleChannel();
+  const rm = new ResourceManager();
 
   const stereomp3 = rm.addResource(new Sound("news_intro.mp3"));
   const monomp3 = rm.addResource(new Sound("prova.mp3"));

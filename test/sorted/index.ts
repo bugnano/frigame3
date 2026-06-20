@@ -3,9 +3,11 @@ import { Playground } from "frigame3/dist/Playground.js";
 import { SortedAnimation } from "frigame3/dist/plugins/sorted/SortedAnimation.js";
 import { SortedGroup } from "frigame3/dist/plugins/sorted/SortedGroup.js";
 import { SortedSprite } from "frigame3/dist/plugins/sorted/SortedSprite.js";
-import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { ResourceManager } from "frigame3/dist/ResourceManager.js";
 
 void (async (): Promise<void> => {
+  const rm = new ResourceManager();
+
   const floor = rm.addResource(
     new SortedAnimation({
       imageURL: "Brown Block.png",

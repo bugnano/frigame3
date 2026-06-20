@@ -1,4 +1,4 @@
-import type { Resource } from "../resourceManager.js";
+import type { Resource } from "../ResourceManager.js";
 import { clamp, noop, pick } from "../utils.js";
 
 export interface ChannelOptions {

@@ -3,10 +3,12 @@ import { Playground } from "frigame3/dist/Playground.js";
 import { ISOSpriteGroup } from "frigame3/dist/plugins/isometric/ISOSpriteGroup.js";
 import { ISOTilemap } from "frigame3/dist/plugins/isometric/ISOTilemap.js";
 import { SortedAnimation } from "frigame3/dist/plugins/sorted/SortedAnimation.js";
-import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { ResourceManager } from "frigame3/dist/ResourceManager.js";
 import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
 
 void (async (): Promise<void> => {
+  const rm = new ResourceManager();
+
   const beach = rm.addResource(
     new SortedAnimation({
       imageURL: "beach.png",

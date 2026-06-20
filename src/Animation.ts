@@ -1,4 +1,4 @@
-import type { Resource } from "./resourceManager.js";
+import type { Resource } from "./ResourceManager.js";
 
 export type AnimationType = "vertical" | "horizontal";
 

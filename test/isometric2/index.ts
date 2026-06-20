@@ -4,10 +4,12 @@ import { ISOSprite } from "frigame3/dist/plugins/isometric/ISOSprite.js";
 import { ISOTilemap } from "frigame3/dist/plugins/isometric/ISOTilemap.js";
 import { gridFromScreen } from "frigame3/dist/plugins/isometric/utils.js";
 import { SortedAnimation } from "frigame3/dist/plugins/sorted/SortedAnimation.js";
-import { resourceManager as rm } from "frigame3/dist/resourceManager.js";
+import { ResourceManager } from "frigame3/dist/ResourceManager.js";
 import { SpriteGroup } from "frigame3/dist/SpriteGroup.js";
 
 void (async (): Promise<void> => {
+  const rm = new ResourceManager();
+
   const floor = rm.addResource(
     new SortedAnimation({
       imageURL: "tile.png",
