@@ -27,7 +27,7 @@ export const canPlay = {
 };
 
 // Setup Web Audio API
-const audioCtx = new AudioContext();
+export const _audioCtx: AudioContext = new AudioContext();
 
 // Setup HTML5 Audio
 ((): void => {
@@ -111,8 +111,8 @@ export class Sound implements Resource {
     if (!this._initialized) {
       this._initialized = true;
 
-      if (audioCtx.state !== "running") {
-        audioCtx.resume().catch(noop);
+      if (_audioCtx.state !== "running") {
+        _audioCtx.resume().catch(noop);
       }
 
       // Create the sound or the Audio element
@@ -130,7 +130,7 @@ export class Sound implements Resource {
             )
             .then(
               (arrayBuffer: ArrayBuffer): Promise<AudioBuffer> =>
-                audioCtx.decodeAudioData(arrayBuffer),
+                _audioCtx.decodeAudioData(arrayBuffer),
             )
             .then((audioBuffer: AudioBuffer): void => {
               this._audioBuffer = audioBuffer;
@@ -161,7 +161,7 @@ export class Sound implements Resource {
 
   onLoad(): void {
     if (this._audio !== null) {
-      this._source = new MediaElementAudioSourceNode(audioCtx, {
+      this._source = new MediaElementAudioSourceNode(_audioCtx, {
         mediaElement: this._audio,
       });
     }
@@ -219,10 +219,10 @@ class Channel {
   }
 
   constructor(options?: Partial<ChannelOptions>) {
-    this._panner = new StereoPannerNode(audioCtx);
-    this._panner.connect(audioCtx.destination);
+    this._panner = new StereoPannerNode(_audioCtx);
+    this._panner.connect(_audioCtx.destination);
 
-    this._gainNode = new GainNode(audioCtx);
+    this._gainNode = new GainNode(_audioCtx);
     this._gainNode.connect(this._panner);
 
     if (options !== undefined) {
@@ -257,7 +257,7 @@ export class SingleChannel extends Channel {
       if (this._audio !== null) {
         this._audio.playbackRate = playbackRate;
       } else {
-        const currentTime = this._pauseTime || audioCtx.currentTime;
+        const currentTime = this._pauseTime || _audioCtx.currentTime;
         const offset = (currentTime - this._startTime) * oldPlaybackRate;
 
         this._startTime = currentTime - offset / playbackRate;
@@ -317,7 +317,7 @@ export class SingleChannel extends Channel {
 
       this._audioBuffer = audioBuffer;
 
-      const source = new AudioBufferSourceNode(audioCtx, {
+      const source = new AudioBufferSourceNode(_audioCtx, {
         buffer: audioBuffer,
       });
       this._source = source;
@@ -342,7 +342,7 @@ export class SingleChannel extends Channel {
 
       source.playbackRate.value = this._playbackRate;
 
-      this._startTime = audioCtx.currentTime;
+      this._startTime = _audioCtx.currentTime;
       source.start();
     } else {
       // Make sure the callback gets called even if the sound cannot be played
@@ -395,7 +395,7 @@ export class SingleChannel extends Channel {
       source.loop = false;
       source.onended = null;
 
-      this._pauseTime = audioCtx.currentTime;
+      this._pauseTime = _audioCtx.currentTime;
       source.stop();
 
       this._source = null;
@@ -414,7 +414,7 @@ export class SingleChannel extends Channel {
       // containing all the values of the old source object
       const audioBuffer = this._audioBuffer!;
 
-      const source = new AudioBufferSourceNode(audioCtx, {
+      const source = new AudioBufferSourceNode(_audioCtx, {
         buffer: audioBuffer,
       });
       this._source = source;
@@ -434,7 +434,7 @@ export class SingleChannel extends Channel {
         audioBuffer.duration;
 
       this._pauseTime = 0;
-      this._startTime = audioCtx.currentTime - offset / playbackRate;
+      this._startTime = _audioCtx.currentTime - offset / playbackRate;
       source.start(0, offset);
     }
 
@@ -488,7 +488,7 @@ export class MultiChannel extends Channel {
     } else if (sound._audioBuffer !== null) {
       const audioBuffer = sound._audioBuffer;
 
-      const source = new AudioBufferSourceNode(audioCtx, {
+      const source = new AudioBufferSourceNode(_audioCtx, {
         buffer: audioBuffer,
       });
       source.connect(this._gainNode);
