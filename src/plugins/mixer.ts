@@ -232,8 +232,7 @@ class Channel {
 }
 
 export class SingleChannel extends Channel {
-  _audio: HTMLAudioElement | null = null;
-  _audioBuffer: AudioBuffer | null = null;
+  _sound: Sound | null = null;
   _source: AudioNode | null = null;
   _playbackRate = 1;
   _startTime = 0;
@@ -242,6 +241,10 @@ export class SingleChannel extends Channel {
   _old_onended: (() => void) | null = null;
 
   // Public functions
+
+  get sound(): Sound | null {
+    return this._sound;
+  }
 
   get playbackRate(): number {
     return this._playbackRate;
@@ -254,8 +257,9 @@ export class SingleChannel extends Channel {
     if (playbackRate !== oldPlaybackRate) {
       this._playbackRate = playbackRate;
 
-      if (this._audio !== null) {
-        this._audio.playbackRate = playbackRate;
+      const audio = this._sound?._audio ?? null;
+      if (audio !== null) {
+        audio.playbackRate = playbackRate;
       } else {
         const currentTime = this._pauseTime || _audioCtx.currentTime;
         const offset = (currentTime - this._startTime) * oldPlaybackRate;
@@ -273,6 +277,8 @@ export class SingleChannel extends Channel {
     // Make sure the audio is stopped before changing its options
     this.stop();
 
+    this._sound = sound;
+
     const playbackRate = options?.playbackRate || 0;
     if (playbackRate !== 0) {
       this._playbackRate = clamp(playbackRate, 0.25, 4) || 1;
@@ -282,8 +288,6 @@ export class SingleChannel extends Channel {
 
     if (sound._audio !== null) {
       const audio = sound._audio;
-
-      this._audio = audio;
 
       audio.pause();
       audio.currentTime = 0;
@@ -314,8 +318,6 @@ export class SingleChannel extends Channel {
       audio.play().catch(noop);
     } else if (sound._audioBuffer !== null) {
       const audioBuffer = sound._audioBuffer;
-
-      this._audioBuffer = audioBuffer;
 
       const source = new AudioBufferSourceNode(_audioCtx, {
         buffer: audioBuffer,
@@ -357,9 +359,10 @@ export class SingleChannel extends Channel {
   }
 
   stop(): this {
-    if (this._audio !== null) {
-      this._audio.pause();
-      this._audio.currentTime = 0;
+    const audio = this._sound?._audio ?? null;
+    if (audio !== null) {
+      audio.pause();
+      audio.currentTime = 0;
     }
 
     this._playbackRate = 1;
@@ -378,8 +381,9 @@ export class SingleChannel extends Channel {
   }
 
   pause(): this {
-    if (this._audio !== null) {
-      this._audio.pause();
+    const audio = this._sound?._audio ?? null;
+    if (audio !== null) {
+      audio.pause();
     }
 
     if (
@@ -405,14 +409,15 @@ export class SingleChannel extends Channel {
   }
 
   resume(): this {
-    if (this._audio !== null) {
-      this._audio.play().catch(noop);
+    const audio = this._sound?._audio ?? null;
+    if (audio !== null) {
+      audio.play().catch(noop);
     }
 
     if (this._pauseTime !== 0) {
       // Since pause / resume is not supported in the Web Audio API, a new source object is created
       // containing all the values of the old source object
-      const audioBuffer = this._audioBuffer!;
+      const audioBuffer = this._sound!._audioBuffer!;
 
       const source = new AudioBufferSourceNode(_audioCtx, {
         buffer: audioBuffer,
@@ -444,18 +449,18 @@ export class SingleChannel extends Channel {
   // Implementation details
 
   _disconnect = (): void => {
-    if (this._audio !== null) {
-      this._audio.loop = false;
+    const audio = this._sound?._audio ?? null;
+    if (audio !== null) {
+      audio.loop = false;
     }
-
-    this._audio = null;
 
     if (this._source instanceof AudioBufferSourceNode) {
       this._source.loop = false;
     }
 
     this._source = null;
-    this._audioBuffer = null;
+
+    this._sound = null;
   };
 }
 
