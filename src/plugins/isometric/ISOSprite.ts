@@ -37,13 +37,16 @@ export class ISOSprite extends ISOBaseSprite {
       super.width = width;
       super.height = height;
 
+      if (this._screen_obj !== null) {
+        this._screen_obj.animation = value;
+      }
+
+      // Given that changing the animation changes the originy,
+      // we need to update the originy *after* changing the animation
+      // on the screen obj
       if (value !== null) {
         this.originx = value.originx;
         this.originy = value.originy;
-      }
-
-      if (this._screen_obj !== null) {
-        this._screen_obj.animation = value;
       }
     }
   }

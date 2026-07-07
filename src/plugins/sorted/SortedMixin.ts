@@ -130,6 +130,61 @@ export function Sorted<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       }
     }
 
+    override drawFirst(): this {
+      super.drawFirst();
+
+      const parent = this.parent;
+      if (parent instanceof SortedGroup) {
+        parent._needsSorting = true;
+      }
+
+      return this;
+    }
+
+    override drawLast(): this {
+      super.drawLast();
+
+      const parent = this.parent;
+      if (parent instanceof SortedGroup) {
+        parent._needsSorting = true;
+      }
+
+      return this;
+    }
+
+    override drawTo(index: number): this {
+      super.drawTo(index);
+
+      const parent = this.parent;
+      if (parent instanceof SortedGroup) {
+        parent._needsSorting = true;
+      }
+
+      return this;
+    }
+
+    override drawBefore(sprite: BaseSprite): this {
+      super.drawBefore(sprite);
+
+      const parent = this.parent;
+      if (parent instanceof SortedGroup) {
+        parent._needsSorting = true;
+      }
+
+      return this;
+    }
+
+    override drawAfter(sprite: BaseSprite): this {
+      super.drawAfter(sprite);
+
+      const parent = this.parent;
+      if (parent instanceof SortedGroup) {
+        parent._needsSorting = true;
+      }
+
+      return this;
+    }
+
     _calcSortY(): number {
       let originy = this._originy;
 
