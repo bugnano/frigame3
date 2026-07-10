@@ -77,8 +77,6 @@ export class Tilemap extends SpriteGroup {
         const sprite_options = Object.assign({}, animation_options, {
           left,
           top,
-          width: tileWidth,
-          height: tileHeight,
         });
         this.addChild(new Sprite(sprite_options));
         locations[i_location] = layers.length - 1;
