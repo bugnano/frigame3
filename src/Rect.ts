@@ -139,7 +139,7 @@ export class Rect {
   }
 
   get radius(): number {
-    return Math.max(this._width, this._height) / 2;
+    return this._width / 2;
   }
 
   set radius(value: number) {
