@@ -12,6 +12,8 @@ export interface RectPosY {
   centery: number;
 }
 
+export interface RectPos extends RectPosX, RectPosY {}
+
 export interface RectSizeX {
   width: number;
   halfWidth: number;
@@ -24,9 +26,11 @@ export interface RectSizeY {
   radius: number;
 }
 
-export type RectOptions = RectPosX & RectPosY & RectSizeX & RectSizeY;
+export interface RectSize extends RectSizeX, RectSizeY {}
 
-export class Rect {
+export interface RectOptions extends RectPos, RectSize {}
+
+export class Rect implements RectOptions {
   // Implementation details
 
   _left = 0;

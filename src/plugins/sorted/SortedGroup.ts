@@ -1,14 +1,11 @@
-import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
-import type { RectSizeX, RectSizeY } from "../../Rect.js";
+import type { BaseSprite } from "../../BaseSprite.js";
 import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import { SpriteGroup } from "../../SpriteGroup.js";
 import type { SpriteRef } from "../../utils.js";
+import type { SortedOptions } from "./SortedMixin.js";
 import { Sorted } from "./SortedMixin.js";
 
-export interface SortedGroupOptions extends SpriteGroupOptions {
-  originx: keyof RectSizeX | number;
-  originy: keyof RectSizeY | number;
-}
+export interface SortedGroupOptions extends SpriteGroupOptions, SortedOptions {}
 
 const SortedBaseGroup = Sorted(SpriteGroup);
 
@@ -16,9 +13,7 @@ export class SortedGroup extends SortedBaseGroup {
   _needsSorting = false;
 
   constructor(
-    options?: Partial<BaseSpriteOptions & SortedGroupOptions> & {
-      ref?: SpriteRef<SortedGroup>;
-    },
+    options?: Partial<SortedGroupOptions> & { ref?: SpriteRef<SortedGroup> },
   ) {
     super(options);
 

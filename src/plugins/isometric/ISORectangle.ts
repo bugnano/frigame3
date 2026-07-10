@@ -1,25 +1,24 @@
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { ColorArr, ColorObj, Gradient } from "../../Gradient.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import type { RectangleOptions } from "../../Rectangle.js";
 import { Rectangle } from "../../Rectangle.js";
 import type { SpriteRef } from "../../utils.js";
 import { pick } from "../../utils.js";
+import type { SortedRectangleOptions } from "../sorted/SortedRectangle.js";
 import { SortedRectangle } from "../sorted/SortedRectangle.js";
+import type { ISOOptions } from "./ISOMixin.js";
 import { ISO } from "./ISOMixin.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
-export interface ISORectangleOptions extends RectangleOptions {
-  originx: keyof RectSizeX | number;
-  originy: keyof RectSizeY | number;
-  referencex: keyof RectSizeX | number;
-  referencey: keyof RectSizeY | number;
-  elevation: number;
-}
+export interface ISORectangleOptions
+  extends SortedRectangleOptions,
+    ISOOptions {}
 
 const ISOBaseRectangle = ISO(Rectangle);
 
-export class ISORectangle extends ISOBaseRectangle {
+export class ISORectangle
+  extends ISOBaseRectangle
+  implements ISORectangleOptions
+{
   override _screen_obj: SortedRectangle | null = null;
 
   // Proxy getters & setters
@@ -81,9 +80,7 @@ export class ISORectangle extends ISOBaseRectangle {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISORectangleOptions> & {
-      ref?: SpriteRef<ISORectangle>;
-    },
+    options?: Partial<ISORectangleOptions> & { ref?: SpriteRef<ISORectangle> },
   ) {
     super();
 

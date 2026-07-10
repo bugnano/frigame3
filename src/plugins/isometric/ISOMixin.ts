@@ -3,9 +3,16 @@ import type { RectPosX, RectPosY, RectSizeX, RectSizeY } from "../../Rect.js";
 import { Rect } from "../../Rect.js";
 import type { GConstructor } from "../../utils.js";
 import type { SortedGroup } from "../sorted/SortedGroup.js";
+import type { SortedOptions } from "../sorted/SortedMixin.js";
 import type { SortedRectangle } from "../sorted/SortedRectangle.js";
 import type { SortedSprite } from "../sorted/SortedSprite.js";
 import { screenFromGrid } from "./utils.js";
+
+export interface ISOOptions extends SortedOptions {
+  referencex: keyof RectSizeX | number;
+  referencey: keyof RectSizeY | number;
+  elevation: number;
+}
 
 // biome-ignore lint/nursery/useExplicitReturnType: reason
 export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
@@ -89,15 +96,11 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Proxy getters & setters
 
-    override get transformOrigin():
-      | (keyof RectSizeX & keyof RectSizeY)
-      | number {
+    override get transformOrigin(): number {
       return super.transformOrigin;
     }
 
-    override set transformOrigin(value:
-      | (keyof RectSizeX & keyof RectSizeY)
-      | number) {
+    override set transformOrigin(value: number) {
       super.transformOrigin = value;
 
       if (this._screen_obj !== null) {

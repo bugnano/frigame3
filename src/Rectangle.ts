@@ -5,14 +5,14 @@ import { Gradient } from "./Gradient.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
-export interface RectangleOptions {
+export interface RectangleOptions extends BaseSpriteOptions {
   background: Gradient | Partial<ColorObj> | Partial<ColorArr> | null;
   borderRadius: number;
   borderWidth: number;
   borderColor: Gradient | Partial<ColorObj> | Partial<ColorArr> | null;
 }
 
-export class Rectangle extends BaseSprite {
+export class Rectangle extends BaseSprite implements RectangleOptions {
   _background: Gradient | null = null;
   _borderRadius = 0;
   _borderWidth = 1;
@@ -67,9 +67,7 @@ export class Rectangle extends BaseSprite {
   }
 
   constructor(
-    options?: Partial<
-      BaseSpriteOptions & RectangleOptions & { ref?: SpriteRef<Rectangle> }
-    >,
+    options?: Partial<RectangleOptions & { ref?: SpriteRef<Rectangle> }>,
   ) {
     super(options);
 

@@ -72,7 +72,7 @@ const imagesRegistry = new FinalizationRegistry((imageURLs: string[]): void => {
   }
 });
 
-export class Animation implements Resource {
+export class Animation implements Resource, AnimationOptions, FrameOptions {
   rate = 0;
   once = false;
   pingpong = false;

@@ -7,11 +7,11 @@ export interface ColorObj {
   a: number;
 }
 
-export type ColorArr = [number, number, number, number];
+export type ColorArr = [r: number, g: number, b: number, a: number];
 
 export type GradientType = "vertical" | "horizontal";
 
-class Color {
+class Color implements ColorObj {
   _r = 0;
   _g = 0;
   _b = 0;

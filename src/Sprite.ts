@@ -4,14 +4,14 @@ import { BaseSprite } from "./BaseSprite.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
-export interface SpriteOptions extends AnimationOptions {
+export interface SpriteOptions extends BaseSpriteOptions, AnimationOptions {
   animation: Animation | null;
   animationIndex: number;
   callback: (() => void) | null;
   paused: boolean;
 }
 
-export class Sprite extends BaseSprite {
+export class Sprite extends BaseSprite implements SpriteOptions {
   _animation: Animation | null = null;
   _animationIndex = 0;
   _callback: (() => void) | null = null;
@@ -153,11 +153,7 @@ export class Sprite extends BaseSprite {
     }
   }
 
-  constructor(
-    options?: Partial<BaseSpriteOptions & SpriteOptions> & {
-      ref?: SpriteRef<Sprite>;
-    },
-  ) {
+  constructor(options?: Partial<SpriteOptions> & { ref?: SpriteRef<Sprite> }) {
     super(options);
 
     if (options !== undefined) {

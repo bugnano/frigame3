@@ -1,25 +1,18 @@
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
-import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import type { SpriteOptions } from "../../Sprite.js";
 import { Sprite } from "../../Sprite.js";
 import type { SpriteRef } from "../../utils.js";
 import { pick } from "../../utils.js";
 import type { SortedAnimation } from "../sorted/SortedAnimation.js";
+import type { SortedSpriteOptions } from "../sorted/SortedSprite.js";
 import { SortedSprite } from "../sorted/SortedSprite.js";
+import type { ISOOptions } from "./ISOMixin.js";
 import { ISO } from "./ISOMixin.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
-export interface ISOSpriteOptions extends SpriteOptions {
-  originx: keyof RectSizeX | number;
-  originy: keyof RectSizeY | number;
-  referencex: keyof RectSizeX | number;
-  referencey: keyof RectSizeY | number;
-  elevation: number;
-}
+export interface ISOSpriteOptions extends SortedSpriteOptions, ISOOptions {}
 
 const ISOBaseSprite = ISO(Sprite);
 
-export class ISOSprite extends ISOBaseSprite {
+export class ISOSprite extends ISOBaseSprite implements ISOSpriteOptions {
   override _screen_obj: SortedSprite | null = null;
 
   // Proxy getters & setters
@@ -137,9 +130,7 @@ export class ISOSprite extends ISOBaseSprite {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISOSpriteOptions> & {
-      ref?: SpriteRef<ISOSprite>;
-    },
+    options?: Partial<ISOSpriteOptions> & { ref?: SpriteRef<ISOSprite> },
   ) {
     super();
 

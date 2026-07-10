@@ -1,20 +1,21 @@
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
-import type { RectSizeX, RectSizeY } from "../../Rect.js";
 import type { RectangleOptions } from "../../Rectangle.js";
 import { Rectangle } from "../../Rectangle.js";
 import type { SpriteRef } from "../../utils.js";
+import type { SortedOptions } from "./SortedMixin.js";
 import { Sorted } from "./SortedMixin.js";
 
-export interface SortedRectangleOptions extends RectangleOptions {
-  originx: keyof RectSizeX | number;
-  originy: keyof RectSizeY | number;
-}
+export interface SortedRectangleOptions
+  extends RectangleOptions,
+    SortedOptions {}
 
 const SortedBaseRectangle = Sorted(Rectangle);
 
-export class SortedRectangle extends SortedBaseRectangle {
+export class SortedRectangle
+  extends SortedBaseRectangle
+  implements SortedRectangleOptions
+{
   constructor(
-    options?: Partial<BaseSpriteOptions & SortedRectangleOptions> & {
+    options?: Partial<SortedRectangleOptions> & {
       ref?: SpriteRef<SortedRectangle>;
     },
   ) {

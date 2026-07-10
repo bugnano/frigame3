@@ -1,4 +1,4 @@
-import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
+import type { BaseSprite } from "../../BaseSprite.js";
 import type { SpriteRef } from "../../utils.js";
 import type { ISORectangleOptions } from "./ISORectangle.js";
 import { ISORectangle } from "./ISORectangle.js";
@@ -8,15 +8,16 @@ import type { ISOGroupOptions } from "./ISOSpriteGroup.js";
 import { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
 // animationList MUST have at least `animation` or `background`
+export type ISOTileOptions =
+  | (Pick<ISOSpriteOptions, "animation"> & Partial<ISOSpriteOptions>)
+  | (Pick<ISORectangleOptions, "background"> & Partial<ISORectangleOptions>);
+
 export interface ISOTilemapOptions {
   sizex: number; // Num tiles
   sizey: number; // Num tiles
   tileSize: number; // Pixel
   data: number[]; // (sizex * sizey) members, indices of animationList
-  animationList: Record<
-    number,
-    Partial<ISOSpriteOptions> | Partial<ISORectangleOptions>
-  >;
+  animationList: Record<number, ISOTileOptions>;
 }
 
 export class ISOTilemap extends ISOSpriteGroup {
@@ -28,9 +29,7 @@ export class ISOTilemap extends ISOSpriteGroup {
 
   constructor(
     options: ISOTilemapOptions &
-      Partial<BaseSpriteOptions & ISOGroupOptions> & {
-        ref?: SpriteRef<ISOTilemap>;
-      },
+      Partial<ISOGroupOptions> & { ref?: SpriteRef<ISOTilemap> },
   ) {
     super(options);
 

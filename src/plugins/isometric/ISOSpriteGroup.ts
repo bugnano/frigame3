@@ -1,19 +1,13 @@
-import type { BaseSpriteOptions } from "../../BaseSprite.js";
 import type { RectSizeX, RectSizeY } from "../../Rect.js";
-import type { SpriteGroupOptions } from "../../SpriteGroup.js";
 import { SpriteGroup } from "../../SpriteGroup.js";
 import type { SpriteRef } from "../../utils.js";
 import { pick } from "../../utils.js";
+import type { SortedGroupOptions } from "../sorted/SortedGroup.js";
 import { SortedGroup } from "../sorted/SortedGroup.js";
+import type { ISOOptions } from "./ISOMixin.js";
 import { ISO } from "./ISOMixin.js";
 
-export interface ISOGroupOptions extends SpriteGroupOptions {
-  originx: keyof RectSizeX | number;
-  originy: keyof RectSizeY | number;
-  referencex: keyof RectSizeX | number;
-  referencey: keyof RectSizeY | number;
-  elevation: number;
-}
+export interface ISOGroupOptions extends SortedGroupOptions, ISOOptions {}
 
 const ISOBaseGroup = ISO(SpriteGroup);
 
@@ -51,9 +45,7 @@ export class ISOSpriteGroup extends ISOBaseGroup {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISOGroupOptions> & {
-      ref?: SpriteRef<ISOSpriteGroup>;
-    },
+    options?: Partial<ISOGroupOptions> & { ref?: SpriteRef<ISOSpriteGroup> },
   ) {
     super();
 

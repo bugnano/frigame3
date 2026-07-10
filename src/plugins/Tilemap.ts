@@ -1,4 +1,4 @@
-import type { BaseSprite, BaseSpriteOptions } from "../BaseSprite.js";
+import type { BaseSprite } from "../BaseSprite.js";
 import type { RectangleOptions } from "../Rectangle.js";
 import { Rectangle } from "../Rectangle.js";
 import type { SpriteOptions } from "../Sprite.js";
@@ -8,16 +8,17 @@ import { SpriteGroup } from "../SpriteGroup.js";
 import type { SpriteRef } from "../utils.js";
 
 // animationList MUST have at least `animation` or `background`
+export type TileOptions =
+  | (Pick<SpriteOptions, "animation"> & Partial<SpriteOptions>)
+  | (Pick<RectangleOptions, "background"> & Partial<RectangleOptions>);
+
 export interface TilemapOptions {
   sizex: number; // Num tiles
   sizey: number; // Num tiles
   tileWidth: number; // Pixel
   tileHeight: number; // Pixel
   data: number[]; // (sizex * sizey) members, indices of animationList
-  animationList: Record<
-    number,
-    Partial<SpriteOptions> | Partial<RectangleOptions>
-  >;
+  animationList: Record<number, TileOptions>;
 }
 
 export class Tilemap extends SpriteGroup {
@@ -30,9 +31,7 @@ export class Tilemap extends SpriteGroup {
 
   constructor(
     options: TilemapOptions &
-      Partial<BaseSpriteOptions & SpriteGroupOptions> & {
-        ref?: SpriteRef<Tilemap>;
-      },
+      Partial<SpriteGroupOptions> & { ref?: SpriteRef<Tilemap> },
   ) {
     super(options);
 

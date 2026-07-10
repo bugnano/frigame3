@@ -3,7 +3,7 @@ import { BaseSprite } from "./BaseSprite.js";
 import type { SpriteRef } from "./utils.js";
 import { pick } from "./utils.js";
 
-export interface SpriteGroupOptions {
+export interface SpriteGroupOptions extends BaseSpriteOptions {
   crop: boolean;
   borderRadius: number;
   children: BaseSprite[];
@@ -35,9 +35,7 @@ export class SpriteGroup extends BaseSprite {
   _updateList: BaseSprite[] = [];
 
   constructor(
-    options?: Partial<BaseSpriteOptions & SpriteGroupOptions> & {
-      ref?: SpriteRef<SpriteGroup>;
-    },
+    options?: Partial<SpriteGroupOptions> & { ref?: SpriteRef<SpriteGroup> },
   ) {
     super(options);
 

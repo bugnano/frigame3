@@ -1,8 +1,8 @@
 import type { Playground } from "./Playground.js";
 import type {
   RectOptions,
-  RectPosX,
-  RectPosY,
+  RectPos,
+  RectSize,
   RectSizeX,
   RectSizeY,
 } from "./Rect.js";
@@ -14,7 +14,7 @@ import { clamp, pick } from "./utils.js";
 export type BlendMode = "normal" | "add" | "multiply" | "screen";
 
 export interface TransformOptions {
-  transformOrigin: (keyof RectSizeX & keyof RectSizeY) | number;
+  transformOrigin: number;
   transformOriginx: keyof RectSizeX | number;
   transformOriginy: keyof RectSizeY | number;
 
@@ -34,9 +34,9 @@ export interface TransformOptions {
   blendMode: BlendMode;
 }
 
-export type BaseSpriteOptions = RectOptions & TransformOptions;
+export interface BaseSpriteOptions extends RectOptions, TransformOptions {}
 
-export class BaseSprite extends Rect {
+export class BaseSprite extends Rect implements BaseSpriteOptions {
   _playground?: WeakRef<Playground>;
   _parent?: WeakRef<SpriteGroup>;
 
@@ -77,13 +77,17 @@ export class BaseSprite extends Rect {
     return this._parent?.deref();
   }
 
-  get transformOrigin(): (keyof RectSizeX & keyof RectSizeY) | number {
-    return this._transformOriginx as
-      | (keyof RectSizeX & keyof RectSizeY)
-      | number;
+  get transformOrigin(): number {
+    const origin = this._transformOriginx;
+
+    if (typeof origin === "string") {
+      return this[origin];
+    } else {
+      return origin;
+    }
   }
 
-  set transformOrigin(value: (keyof RectSizeX & keyof RectSizeY) | number) {
+  set transformOrigin(value: number) {
     this._transformOriginx = value;
     this._transformOriginy = value;
   }
@@ -567,7 +571,7 @@ export class BaseSprite extends Rect {
 
   // Implementation details
 
-  _resize(prop: keyof RectSizeX | keyof RectSizeY, value: number): void {
+  _resize(prop: keyof RectSize, value: number): void {
     const left = this._left;
     const top = this._top;
     const prevLeft = this._prevLeft;
@@ -583,7 +587,7 @@ export class BaseSprite extends Rect {
     this._frameCounterLastMove = frameCounterLastMove;
   }
 
-  _move(prop: keyof RectPosX | keyof RectPosY, value: number): void {
+  _move(prop: keyof RectPos, value: number): void {
     const playground = this.playground;
 
     if (playground !== undefined) {

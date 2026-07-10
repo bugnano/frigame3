@@ -11,7 +11,10 @@ export interface SortedAnimationOptions extends AnimationOptions {
   originy: keyof RectSizeY | number;
 }
 
-export class SortedAnimation extends Animation {
+export class SortedAnimation
+  extends Animation
+  implements SortedAnimationOptions
+{
   originx: keyof RectSizeX | number = "halfWidth";
   originy: keyof RectSizeY | number = "height";
 
