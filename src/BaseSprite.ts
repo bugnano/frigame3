@@ -8,7 +8,7 @@ import type {
 } from "./Rect.js";
 import { Rect } from "./Rect.js";
 import type { SpriteGroup } from "./SpriteGroup.js";
-import { clamp, pick } from "./utils.js";
+import { clamp, lerp, pick } from "./utils.js";
 
 // source-over, lighter, multiply, screen
 export type BlendMode = "normal" | "add" | "multiply" | "screen";
@@ -652,15 +652,17 @@ export class BaseSprite extends Rect implements BaseSpriteOptions {
       const myTop = this._top;
       const prevLeft = this._prevLeft;
       const prevTop = this._prevTop;
+      const truncPrevLeft = trunc(prevLeft);
+      const truncPrevTop = trunc(prevTop);
       let left = trunc(myLeft);
       let top = trunc(myTop);
 
-      if (left !== prevLeft || top !== prevTop) {
+      if (left !== truncPrevLeft || top !== truncPrevTop) {
         if (this._frameCounterLastMove === playground.frameCounter - 1) {
           const round = Math.round;
 
-          left = round(left * interp + trunc(prevLeft) * (1 - interp));
-          top = round(top * interp + trunc(prevTop) * (1 - interp));
+          left = round(lerp(truncPrevLeft, left, interp));
+          top = round(lerp(truncPrevTop, top, interp));
         } else {
           this._prevLeft = myLeft;
           this._prevTop = myTop;

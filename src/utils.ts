@@ -39,6 +39,11 @@ export function mod(n: number, m: number): number {
   return ((n % m) + m) % m;
 }
 
+// t = (x - x0) / (x1 - x0)
+export function lerp(y0: number, y1: number, t: number): number {
+  return y0 + t * (y1 - y0);
+}
+
 export interface SpriteRef<T> {
   current?: T;
 }

@@ -1,4 +1,5 @@
 import type { Playground } from "../../Playground.js";
+import { lerp } from "../../utils.js";
 import { swing } from "./easing.js";
 
 export type Speed = "slow" | "fast";
@@ -13,7 +14,6 @@ export interface TweenOptions {
 interface TweenProp {
   start_value: number;
   target_value: number;
-  change: number;
 }
 
 interface TweenObj<T extends object> {
@@ -74,14 +74,13 @@ export class Tweener extends EventTarget {
           // Remove this tween
           this._tween_queue.delete(tweenId);
         } else {
-          const step = tween_obj.easing(
-            tween_obj.current_step / tween_obj.num_step,
-          );
-
           // Set the properties to the current value
           for (const [property, tween_prop] of tween_obj.property_list) {
-            target_obj[property] =
-              tween_prop.start_value + tween_prop.change * step;
+            target_obj[property] = lerp(
+              tween_prop.start_value,
+              tween_prop.target_value,
+              tween_obj.easing(tween_obj.current_step / tween_obj.num_step),
+            );
           }
         }
       }
@@ -185,13 +184,9 @@ export class Tweener extends EventTarget {
       const property_list = tween_obj.property_list;
 
       for (const [property, value] of Object.entries(properties)) {
-        const start_value = target_obj[property as keyof T] as number;
-        const target_value = value as number;
-
         property_list.set(property as keyof T, {
-          start_value: start_value,
-          target_value: target_value,
-          change: target_value - start_value,
+          start_value: target_obj[property as keyof T] as number,
+          target_value: value as number,
         });
       }
 
