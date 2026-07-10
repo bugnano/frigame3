@@ -1,29 +1,21 @@
 import type { BaseSprite, BlendMode } from "../../BaseSprite.js";
 import type { RectPosX, RectPosY, RectSizeX, RectSizeY } from "../../Rect.js";
+import { Rect } from "../../Rect.js";
 import type { GConstructor } from "../../utils.js";
 import type { SortedGroup } from "../sorted/SortedGroup.js";
 import type { SortedRectangle } from "../sorted/SortedRectangle.js";
 import type { SortedSprite } from "../sorted/SortedSprite.js";
-import { ISORect } from "./ISORect.js";
 import { screenFromGrid } from "./utils.js";
 
 // biome-ignore lint/nursery/useExplicitReturnType: reason
 export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
   return class ISOMixin extends Base {
-    _elevation = 0;
     _originx: keyof RectSizeX | number = "halfWidth";
     _originy: keyof RectSizeY | number = "height";
     _referencex: keyof RectSizeX | number = "halfWidth";
     _referencey: keyof RectSizeY | number = "halfHeight";
+    _elevation = 0;
     _screen_obj: SortedGroup | SortedSprite | SortedRectangle | null = null;
-
-    get elevation(): number {
-      return this._elevation;
-    }
-
-    set elevation(value: number) {
-      this._move("elevation", value);
-    }
 
     get originx(): keyof RectSizeX | number {
       return this._originx;
@@ -69,16 +61,6 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
       this._move(null, 0);
     }
 
-    get reference(): (keyof RectSizeX & keyof RectSizeY) | number {
-      return this._referencex as (keyof RectSizeX & keyof RectSizeY) | number;
-    }
-
-    set reference(value: (keyof RectSizeX & keyof RectSizeY) | number) {
-      this._referencex = value;
-      this._referencey = value;
-      this._move(null, 0);
-    }
-
     get referencex(): keyof RectSizeX | number {
       return this._referencex;
     }
@@ -95,6 +77,14 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
     set referencey(value: keyof RectSizeY | number) {
       this._referencey = value;
       this._move(null, 0);
+    }
+
+    get elevation(): number {
+      return this._elevation;
+    }
+
+    set elevation(value: number) {
+      this._move("elevation", value);
     }
 
     // Proxy getters & setters
@@ -261,73 +251,30 @@ export function ISO<TBase extends GConstructor<BaseSprite>>(Base: TBase) {
 
     // Public functions
 
-    getScreenRect(screenRect?: ISORect): ISORect | null {
+    getScreenRect(screenRect?: Rect): Rect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj !== null) {
-        let originx = this._originx;
-
-        if (typeof originx === "string") {
-          originx = screen_obj[originx];
-        }
-
-        let originy = this._originy;
-
-        if (typeof originy === "string") {
-          originy = screen_obj[originy];
-        }
-
-        let screen_rect: ISORect;
-
         if (screenRect !== undefined) {
-          screen_rect = screenRect;
-          screen_rect.left = screen_obj.left;
-          screen_rect.top = screen_obj.top;
-          screen_rect.width = screen_obj.width;
-          screen_rect.height = screen_obj.height;
+          screenRect.left = screen_obj.left;
+          screenRect.top = screen_obj.top;
+          screenRect.width = screen_obj.width;
+          screenRect.height = screen_obj.height;
+
+          return screenRect;
         } else {
-          screen_rect = new ISORect(screen_obj);
+          return new Rect(screen_obj);
         }
-
-        screen_rect.originx = originx;
-        screen_rect.originy = originy;
-        screen_rect.elevation = this._elevation;
-
-        return screen_rect;
       }
 
       return null;
     }
 
-    getScreenAbsRect(absRect?: ISORect): ISORect | null {
+    getScreenAbsRect(absRect?: Rect): Rect | null {
       const screen_obj = this._screen_obj;
 
       if (screen_obj !== null) {
-        let originx = this._originx;
-
-        if (typeof originx === "string") {
-          originx = screen_obj[originx];
-        }
-
-        let originy = this._originy;
-
-        if (typeof originy === "string") {
-          originy = screen_obj[originy];
-        }
-
-        let screen_rect: ISORect;
-
-        if (absRect !== undefined) {
-          screen_rect = screen_obj.getAbsRect(absRect) as ISORect;
-        } else {
-          screen_rect = new ISORect(screen_obj.getAbsRect());
-        }
-
-        screen_rect.originx = originx;
-        screen_rect.originy = originy;
-        screen_rect.elevation = this._elevation;
-
-        return screen_rect;
+        return screen_obj.getAbsRect(absRect);
       }
 
       return null;

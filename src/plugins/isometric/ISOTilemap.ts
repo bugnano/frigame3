@@ -1,6 +1,5 @@
 import type { BaseSprite, BaseSpriteOptions } from "../../BaseSprite.js";
 import type { SpriteRef } from "../../utils.js";
-import type { ISORectOptions } from "./ISORect.js";
 import type { ISORectangleOptions } from "./ISORectangle.js";
 import { ISORectangle } from "./ISORectangle.js";
 import type { ISOSpriteOptions } from "./ISOSprite.js";
@@ -29,7 +28,7 @@ export class ISOTilemap extends ISOSpriteGroup {
 
   constructor(
     options: ISOTilemapOptions &
-      Partial<BaseSpriteOptions & ISORectOptions & ISOGroupOptions> & {
+      Partial<BaseSpriteOptions & ISOGroupOptions> & {
         ref?: SpriteRef<ISOTilemap>;
       },
   ) {

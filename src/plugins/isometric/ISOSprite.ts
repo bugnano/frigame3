@@ -7,13 +7,14 @@ import { pick } from "../../utils.js";
 import type { SortedAnimation } from "../sorted/SortedAnimation.js";
 import { SortedSprite } from "../sorted/SortedSprite.js";
 import { ISO } from "./ISOMixin.js";
-import type { ISORectOptions } from "./ISORect.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
 export interface ISOSpriteOptions extends SpriteOptions {
-  reference: (keyof RectSizeX & keyof RectSizeY) | number;
+  originx: keyof RectSizeX | number;
+  originy: keyof RectSizeY | number;
   referencex: keyof RectSizeX | number;
   referencey: keyof RectSizeY | number;
+  elevation: number;
 }
 
 const ISOBaseSprite = ISO(Sprite);
@@ -136,7 +137,7 @@ export class ISOSprite extends ISOBaseSprite {
   }
 
   constructor(
-    options?: Partial<BaseSpriteOptions & ISORectOptions & ISOSpriteOptions> & {
+    options?: Partial<BaseSpriteOptions & ISOSpriteOptions> & {
       ref?: SpriteRef<ISOSprite>;
     },
   ) {

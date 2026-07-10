@@ -7,13 +7,14 @@ import type { SpriteRef } from "../../utils.js";
 import { pick } from "../../utils.js";
 import { SortedRectangle } from "../sorted/SortedRectangle.js";
 import { ISO } from "./ISOMixin.js";
-import type { ISORectOptions } from "./ISORect.js";
 import type { ISOSpriteGroup } from "./ISOSpriteGroup.js";
 
 export interface ISORectangleOptions extends RectangleOptions {
-  reference: (keyof RectSizeX & keyof RectSizeY) | number;
+  originx: keyof RectSizeX | number;
+  originy: keyof RectSizeY | number;
   referencex: keyof RectSizeX | number;
   referencey: keyof RectSizeY | number;
+  elevation: number;
 }
 
 const ISOBaseRectangle = ISO(Rectangle);
@@ -80,9 +81,9 @@ export class ISORectangle extends ISOBaseRectangle {
   }
 
   constructor(
-    options?: Partial<
-      BaseSpriteOptions & ISORectOptions & ISORectangleOptions
-    > & { ref?: SpriteRef<ISORectangle> },
+    options?: Partial<BaseSpriteOptions & ISORectangleOptions> & {
+      ref?: SpriteRef<ISORectangle>;
+    },
   ) {
     super();
 
