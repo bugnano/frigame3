@@ -234,8 +234,15 @@ export class SpriteGroup extends BaseSprite {
 
       renderer.drawGroupBeforeChildren(this, interp);
 
-      for (const sprite of this._layers) {
-        sprite._draw(interp);
+      if (
+        this._opacity !== 0 &&
+        this._scaleh !== 0 &&
+        this._scalev !== 0 &&
+        !this._hidden
+      ) {
+        for (const sprite of this._layers) {
+          sprite._draw(interp);
+        }
       }
 
       renderer.drawGroupAfterChildren(this, interp);
